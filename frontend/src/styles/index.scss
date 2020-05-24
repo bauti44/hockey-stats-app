@@ -1,10 +1,7 @@
 @import "./partial";
 
 // Pages
-@import "../pages/Home/Home";
-@import "../pages/Dashboard/Dashboard";
 @import "../pages/NotFound/NotFound";
-
 
 // Components
 @import "../components/Menu/Menu";
@@ -53,5 +50,4 @@ ion-label {
     --ion-color-contrast: var(--ion-color-primary-contrast, #fff)!important;
     --ion-color-contrast-rgb: var(--ion-color-primary-contrast-rgb, 255, 255, 255)!important;
 }
-
   

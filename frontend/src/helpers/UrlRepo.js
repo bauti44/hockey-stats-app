@@ -3,7 +3,6 @@ const URL_REPO = {
   LOGIN: '/login',
   UNAUTHORIZED: '/unauthorized',
   NOTFOUND: '*',
-  DASHBOARD: '/dashboard',
   MATCH_CREATE: '/match/create',
   MATCH_LIST: '/match/list',
   STAT_ADD: '/match/:id/stat/add'
