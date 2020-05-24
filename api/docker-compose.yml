@@ -1,0 +1,40 @@
+version: '3.7'
+services:
+  app:
+    container_name: zwitter-api
+    restart: unless-stopped
+    build: .
+    environment:
+      - MONGODB_HOSTNAME=mongodb
+      - NODE_ENV=dev
+      - ENCRYPTION_KEY=super-secret-key
+    ports:
+      - 5001:5001
+    networks:
+      - app-network
+
+  mongodb:
+    container_name: mongodb
+    image: mongo:latest
+#    environment:
+#     - MONGO_INITDB_ROOT_USERNAME=root
+#     - MONGO_INITDB_ROOT_PASSWORD=password
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_datadb:/data/db
+      - mongodb_configdb:/data/configdb
+    networks:
+      - app-network  
+
+volumes:
+  mongodb_datadb:
+  mongodb_configdb:
+
+networks:
+  app-network:
+    driver: bridge
+
+networks:
+  app-network:
+    driver: bridge

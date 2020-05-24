@@ -1,0 +1,150 @@
+{
+	"info": {
+		"_postman_id": "d9026ba4-4b2e-4d60-acbc-13562a3949c3",
+		"name": "hockey-stats",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Tweets",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWI4NGViNzQxM2M2MzAwMWY5ZGE4YjciLCJ1c2VybmFtZSI6ImJhdXRpdGVzdCIsInBhc3N3b3JkIjoiJDJiJDEwJC9GM0Z0cHk5LmMwRGdIZVRrQlNEUWVNbVVLd3hPVW1FNDRwNlE2NzlKLjlOYmJ5UnU3emZPIiwiY3JlYXRlZEF0IjoiMjAyMC0wNS0xMFQxODo1Nzo1OS4wMzlaIiwiX192IjowLCJpYXQiOjE1ODkxMzcwODV9.AgTPxHNMfWTuOiKyZPGRF12qkLvqjadDzlq3Rtis2UY",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:5001/tweets",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"tweets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Matches",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWI4NGViNzQxM2M2MzAwMWY5ZGE4YjciLCJ1c2VybmFtZSI6ImJhdXRpdGVzdCIsInBhc3N3b3JkIjoiJDJiJDEwJC9GM0Z0cHk5LmMwRGdIZVRrQlNEUWVNbVVLd3hPVW1FNDRwNlE2NzlKLjlOYmJ5UnU3emZPIiwiY3JlYXRlZEF0IjoiMjAyMC0wNS0xMFQxODo1Nzo1OS4wMzlaIiwiX192IjowLCJpYXQiOjE1ODkxMzcwODV9.AgTPxHNMfWTuOiKyZPGRF12qkLvqjadDzlq3Rtis2UY",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:5001/matches",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"matches"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stats",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWI4NGViNzQxM2M2MzAwMWY5ZGE4YjciLCJ1c2VybmFtZSI6ImJhdXRpdGVzdCIsInBhc3N3b3JkIjoiJDJiJDEwJC9GM0Z0cHk5LmMwRGdIZVRrQlNEUWVNbVVLd3hPVW1FNDRwNlE2NzlKLjlOYmJ5UnU3emZPIiwiY3JlYXRlZEF0IjoiMjAyMC0wNS0xMFQxODo1Nzo1OS4wMzlaIiwiX192IjowLCJpYXQiOjE1ODkxMzcwODV9.AgTPxHNMfWTuOiKyZPGRF12qkLvqjadDzlq3Rtis2UY"
+					}
+				],
+				"url": {
+					"raw": "localhost:5001/stats",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"stats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Matches Add",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-access-token",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWI4NGViNzQxM2M2MzAwMWY5ZGE4YjciLCJ1c2VybmFtZSI6ImJhdXRpdGVzdCIsInBhc3N3b3JkIjoiJDJiJDEwJC9GM0Z0cHk5LmMwRGdIZVRrQlNEUWVNbVVLd3hPVW1FNDRwNlE2NzlKLjlOYmJ5UnU3emZPIiwiY3JlYXRlZEF0IjoiMjAyMC0wNS0xMFQxODo1Nzo1OS4wMzlaIiwiX192IjowLCJpYXQiOjE1ODkxMzcwODV9.AgTPxHNMfWTuOiKyZPGRF12qkLvqjadDzlq3Rtis2UY"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"teamHome\": \"Ciudad\",\n    \"teamAway\": \"River\",\n    \"category\": \"1A\",\n    \"gender\": \"femenino\"\n}"
+				},
+				"url": {
+					"raw": "localhost:5001/match/add",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"match",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stats Add",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-access-token",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWI4NGViNzQxM2M2MzAwMWY5ZGE4YjciLCJ1c2VybmFtZSI6ImJhdXRpdGVzdCIsInBhc3N3b3JkIjoiJDJiJDEwJC9GM0Z0cHk5LmMwRGdIZVRrQlNEUWVNbVVLd3hPVW1FNDRwNlE2NzlKLjlOYmJ5UnU3emZPIiwiY3JlYXRlZEF0IjoiMjAyMC0wNS0xMFQxODo1Nzo1OS4wMzlaIiwiX192IjowLCJpYXQiOjE1ODkxMzcwODV9.AgTPxHNMfWTuOiKyZPGRF12qkLvqjadDzlq3Rtis2UY"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"matchId\": \"5eb84985703fa5001fc5256c\",\n    \"areaEntryType\": \"Control\",\n    \"areaEntryZone\": \"Central\",\n    \"definitionGesture\": \"Push\",\n    \"definitionZone\": \"AreaChica\",\n    \"result\": \"Gol\"\n}"
+				},
+				"url": {
+					"raw": "localhost:5001/stat/add",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"stat",
+						"add"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

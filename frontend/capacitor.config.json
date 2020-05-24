@@ -1,0 +1,7 @@
+{
+  "appId": "com.poc.reactCapacitor",
+  "appName": "poc",
+  "bundledWebRuntime": false,
+  "npmClient": "yarn",
+  "webDir": "build"
+}

@@ -1,0 +1,57 @@
+@import "./partial";
+
+// Pages
+@import "../pages/Home/Home";
+@import "../pages/Dashboard/Dashboard";
+@import "../pages/NotFound/NotFound";
+
+
+// Components
+@import "../components/Menu/Menu";
+
+ion-segment-button {
+    --color-checked:#134f5c;
+}
+ion-icon {
+    fill: rgba( 0,0,0 ,0.6);
+    &.sc-ion-back-button-md {
+        fill: #fff;
+    }
+    &[name='add'], &[name='save'],&[name='home'] {
+        fill: #fff;    
+    }
+}
+ion-fab-button {
+   --background: #134f5c;
+}
+
+.item-has-focus {
+    --highlight-background: #134f5c;
+}
+
+ion-label {
+    color: rgba( 0,0,0 ,0.6) !important;
+    font-weight: 500 !important;
+}
+.ion-color-salmon {
+    --ion-color-base: #e06666;
+    --ion-color-shade: var(--ion-color-light-shade, #d7d8da) !important;
+    color: rgba( 0,0,0 ,0.6) !important;
+    font-weight: 500 !important;
+}
+
+.ion-color-lightBlue {
+    --ion-color-base: #a1c4c9;
+    --ion-color-shade: var(--ion-color-light-shade, #d7d8da) !important;
+    color: rgba( 0,0,0 ,0.6) !important;
+    font-weight: 500 !important;
+}
+
+.ion-color-darkBlue {
+    --ion-color-base: #134f5c;
+    --ion-color-shade: var(--ion-color-light-shade, #d7d8da) !important;
+    --ion-color-contrast: var(--ion-color-primary-contrast, #fff)!important;
+    --ion-color-contrast-rgb: var(--ion-color-primary-contrast-rgb, 255, 255, 255)!important;
+}
+
+  
