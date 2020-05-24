@@ -9,6 +9,9 @@ let MatchSchema = mongoose.Schema({
   teamAway: String,
   category: String,
   gender: String,
+  notes: String,
+  playerList: Array,
+  userId: String,
   createdAt: Date
 })
 

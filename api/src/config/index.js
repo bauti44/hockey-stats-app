@@ -10,7 +10,7 @@ const {
 const config = {
   port: 5001,
   secret: `${ENCRYPTION_KEY}`,
-  databaseUrl:  `mongodb://${MONGODB_HOSTNAME}/zwitter`,
+  databaseUrl:  `mongodb://${MONGODB_HOSTNAME}/hockeystats`,
   saltRounds: 10
 }
 

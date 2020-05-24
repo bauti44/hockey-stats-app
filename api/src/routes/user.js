@@ -81,6 +81,8 @@ userRoutes.post('/user/register', (request, response) => {
             let user = {
               username: request.body.username,
               password: hashPassword,
+              role: request.body.role,
+              group: request.body.group,
               createdAt: new Date()
             }
 

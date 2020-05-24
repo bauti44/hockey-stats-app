@@ -7,6 +7,8 @@ const mongoose = require('mongoose')
 let UserSchema = mongoose.Schema({
   username: String,
   password: String,
+  role: String,
+  group: String,
   createdAt: Date
 })
 

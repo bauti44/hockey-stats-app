@@ -20,13 +20,20 @@ statRoutes.get('/stats', authMiddleware, (request, response) => {
     data: [],
     errors: []
   }
-
-  Stat.find({}).exec(function (error, documents) {
-    if (documents.length > 0) {
+  var filters = request.query;
+  var count = request.query.count;
+  var query = undefined;
+  if(request.query.count) {
+    delete filters['count'];
+    query = Stat.countDocuments(filters);
+  } else {
+    query = Stat.find(filters);
+  }
+  query.exec(function (error, documents) {
+    if (count || documents.length > 0) {
       responseData.data = documents
       responseData.success = true
     }
-
     response.json(responseData)
   })
 })
@@ -38,18 +45,16 @@ statRoutes.post('/stat/add', authMiddleware, (request, response) => {
     data: {},
     errors: []
   }
-
   if (!isEmpty(request.user)) {
     if (request.body.matchId != '' && request.body.result != '') {
       let stat = {
         matchId: request.body.matchId,
-        areaEntryType: request.body.areaEntryType,
-        areaEntryZone: request.body.areaEntryZone,
-        definitionGesture: request.body.definitionGesture,
-        definitionZone: request.body.definitionZone,
-        result: request.body.result
+        quarter: request.body.quarter,
+        statType: request.body.statType,
+        statZoneType: request.body.statZoneType,
+        statZoneValue: request.body.statZoneValue,
+        player: request.body.player,      
       }
-
       Stat.create(stat, (error, document) => {
         if (error) {
           responseData.errors.push({type: 'critical', message: error})
@@ -63,7 +68,6 @@ statRoutes.post('/stat/add', authMiddleware, (request, response) => {
             responseData.errors.push({type: 'default', message: 'Please try again.'})
           }
         }
-
         response.json(responseData)
       })
     } else {
