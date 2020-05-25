@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
-import { createMatch } from '../../actions/match'
+import { fetchMatches } from '../../actions/match'
 import { connect } from 'react-redux'
 import { IonList, IonItemSliding, IonItem, IonLabel, IonItemOptions, IonItemOption, IonListHeader, IonFab, IonFabButton, IonIcon } from '@ionic/react';
+import AuthRedirect from '../user/AuthRedirect';
 
 class MatchList extends Component {
 
@@ -10,13 +11,14 @@ class MatchList extends Component {
     super(props);
   }
 
-  componentDidMount () {
+  componentDidMount() {
     global.backFunction = global.defaultBackFunction;
     global.homeFunction = () => this.props.history.push('/match/list');
+    this.props.fetchMatches()
   }
 
   createStat(id) {
-    let url = `/match/$id/stat/add`;
+    let url = '/match/' + id + '/stat/add';
     this.props.history.push(url);
   }
 
@@ -32,13 +34,14 @@ class MatchList extends Component {
             <IonLabel><h1>Partidos</h1></IonLabel>
           </IonListHeader>
           {
-            this.props.matchList.map(({ id, name }) => (
-              <IonItemSliding key={id}>
+            this.props.matchList.list.map(({ _id, teamHome, teamAway, category, gender, notes }) => (
+              <IonItemSliding key={_id}>
                 <IonItem>
-                  <IonLabel>{name}</IonLabel>
+                  <IonLabel>{teamHome} - {teamAway}</IonLabel>
+                  <IonLabel class="label-secondary">{category} {gender} {notes}</IonLabel>
                 </IonItem>
                 <IonItemOptions side="end">
-                  <IonItemOption color="darkBlue" onClick={this.createStat.bind(this, id)}>Agregar</IonItemOption>
+                  <IonItemOption color="darkBlue" onClick={this.createStat.bind(this, _id)}>Agregar</IonItemOption>
                   <IonItemOption color="lightBlue" onClick={() => console.log('unread clicked')}>Ver</IonItemOption>
                 </IonItemOptions>
               </IonItemSliding>
@@ -50,19 +53,28 @@ class MatchList extends Component {
             <IonIcon name="add" onClick={this.onCreateMatchClick.bind(this)} />
           </IonFabButton>
         </IonFab>
+        <AuthRedirect />
       </>
     );
   }
 }
 
 MatchList.propTypes = {
-  matchList: PropTypes.array.isRequired
+  matchList: PropTypes.object.isRequired,
+  fetchMatches: PropTypes.func.isRequired
 }
 
-const mapStateToProps = (state) => {
-  return {
-    matchList: [{ id: "1", name: "GEBA - LICEO" }, { id: "2", name: "LICEO - RIVER" }]
+MatchList.defaultProps = {
+  matchList: {
+    list: []
   }
 }
 
-export default connect(mapStateToProps, { createMatch })(MatchList)
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    matchList: state.matches
+  }
+}
+
+export default connect(mapStateToProps, { fetchMatches })(MatchList)

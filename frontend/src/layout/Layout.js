@@ -1,28 +1,35 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import { Route } from 'react-router-dom';
+// Imports
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import { IonContent } from '@ionic/react';
 
-// components
-import Menu from '../components/Menu/Menu';
-
-import { IonApp, IonPage, IonContent } from '@ionic/react';
+// App Imports
 
 class Layout extends Component {
-  static propTypes = { component: PropTypes.object };
+  constructor(props) {
+    super(props);
+  }
 
   render() {
-
-    const {
-      component: Component,
-      ...props
-    } = this.props;
+    const { isAuthenticated } = this.props.user
 
     return (
-      <Fragment>
-        
-      </Fragment>
+      <IonContent>
+        {this.props.children}
+      </IonContent>
     )
   }
 }
 
-export default Layout;
+Layout.propTypes = {
+  user: PropTypes.object.isRequired,
+}
+
+function mapStateToProps(state) {
+  return {
+    user: state.user
+  }
+}
+
+export default connect(mapStateToProps, {})(Layout)

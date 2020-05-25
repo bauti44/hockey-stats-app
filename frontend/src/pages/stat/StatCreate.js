@@ -14,6 +14,7 @@ import StatType from './StatType';
 import FieldZone from './FieldZone';
 import StatPlayer from './StatPlayer';
 import AreaZone from './AreaZone';
+import AuthRedirect from '../user/AuthRedirect';
 
 class StatCreate extends Component {
 
@@ -101,6 +102,7 @@ class StatCreate extends Component {
         {this.state.renderStatPlayer ? <StatPlayer selectPlayer={this.selectPlayer} playerList={this.props.playerList} /> : <> </>}
         <IonLoading isOpen={this.state.showLoading} message={'Por favor espere...'} />
         <IonToast color="success" isOpen={this.state.showToast} onDidDismiss={() => { this.setState({ showToast: false }) }} message="La estadística se creo exitosamente" duration={2000} />
+        <AuthRedirect />
       </>
     );
   }

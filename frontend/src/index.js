@@ -13,7 +13,7 @@ import jwtDecode from 'jwt-decode'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { setCurrentUser } from './actions/user';
-import './global.js'
+import global from "./global"
 
 const store = createStore(
     rootReducer,

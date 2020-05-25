@@ -5,7 +5,8 @@ const URL_REPO = {
   NOTFOUND: '*',
   MATCH_CREATE: '/match/create',
   MATCH_LIST: '/match/list',
-  STAT_ADD: '/match/:id/stat/add'
+  STAT_ADD: '/match/:id/stat/add',
+  USER_LOGIN: '/user/login'
 }
 
 export default URL_REPO;

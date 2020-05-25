@@ -29,6 +29,11 @@ ion-fab-button {
 ion-label {
     color: rgba( 0,0,0 ,0.6) !important;
     font-weight: 500 !important;
+
+    &.label-secondary {
+        color: rgba( 0,0,0 ,0.4) !important;
+        font-weight: 400 !important;
+    }
 }
 .ion-color-salmon {
     --ion-color-base: #e06666;

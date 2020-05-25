@@ -7,6 +7,8 @@ import MatchPlayerList from './MatchPlayerList';
 import {
   IonButton, IonLoading, IonToast, IonListHeader, IonList, IonItem, IonInput, IonLabel,
 } from '@ionic/react';
+import AuthRedirect from '../user/AuthRedirect';
+
 
 class MatchCreate extends Component {
 
@@ -58,7 +60,6 @@ class MatchCreate extends Component {
 
   onSave() {
     this.props.createMatch({}).then((response) => {
-      console.log("hola")
       if (response.success) {
       } else {
       }
@@ -92,6 +93,7 @@ class MatchCreate extends Component {
           : <></>}
         {this.state.renderPlayerList ? <MatchPlayerList onSave={this.onSavePlayers} playerList={this.state.playerList} /> : <> </>}
         {this.state.renderPlayerFromAllMatchesList ? <MatchPlayerList selectPlayer={this.selectPlayer} playerList={this.state.playerList} /> : <> </>}
+        <AuthRedirect />
       </>
     );
   }
