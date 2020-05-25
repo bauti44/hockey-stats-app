@@ -55,7 +55,6 @@ matchRoutes.get('/matches/players', authMiddleware, (request, response) => {
       filters["userId"] = request.user._id;
     }
     Match.find(filters, 'playerList').exec(function (error, documents) {
-      console.log(documents)
       if (documents.length > 0) {
         responseData.data = documents
         responseData.success = true

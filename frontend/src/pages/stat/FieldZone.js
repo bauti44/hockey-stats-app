@@ -13,7 +13,7 @@ class FieldZone extends Component {
 
   render() {
     return (
-      <IonImg src="/assets/field.png" onClick={this.props.selectZone.bind(this)} />
+      <IonImg src="/assets/field.png" onClick={this.props.selectZone.bind(this, 10)} />
     );
   }
 }

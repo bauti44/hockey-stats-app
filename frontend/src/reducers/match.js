@@ -5,7 +5,6 @@ import update from 'immutability-helper'
 import { FETCH_MATCHES_BEGIN, SET_MATCHES, FETCH_MATCH_BEGIN, SET_MATCH } from '../actions/match'
 
 export function matches(state = { list: [], error: false, loading: false }, action = {}) {
-  console.log(action);
   switch (action.type) {
     
     case FETCH_MATCHES_BEGIN:

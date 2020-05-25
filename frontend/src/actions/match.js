@@ -48,6 +48,31 @@ export function fetchMatchesPlayers() {
   }
 }
 
+export function fetchMatch (matchId) {
+  return dispatch => {
+    dispatch({
+      type: FETCH_MATCH_BEGIN
+    })
+
+    return fetch(`${ config.url.api }match/${ matchId }`).then(function (response) {
+      if (response.ok) {
+        response.json().then(function (response) {
+          if (response.success) {
+            dispatch({
+              type: SET_MATCH,
+              match: response.data
+            })
+          }
+        })
+      } else {
+        console.log('Looks like the response wasn\'t perfect, got status', response.status)
+      }
+    }, function (e) {
+      console.log('Fetch failed!', e)
+    })
+  }
+}
+
 export function createMatch(match) {
   const token = localStorage.getItem('token')
 

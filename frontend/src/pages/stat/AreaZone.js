@@ -13,7 +13,7 @@ class AreaZone extends Component {
 
   render() {
     return (
-      <IonImg src="/assets/area.png" onClick={this.props.selectZone.bind(this)} />
+      <IonImg src="/assets/area.png" onClick={this.props.selectZone.bind(this, "a0")} />
     );
   }
 }

@@ -11,16 +11,16 @@ import {
 } from '@ionic/react';
 
 const statTypeList = [
-  { name: 'Salida', zone: 'field' },
-  { name: 'Bloqueo', zone: 'field' },
-  { name: 'Perdida', zone: 'field' },
-  { name: 'Recupero', zone: 'field' },
-  { name: 'Ingreso 25', zone: 'area' },
-  { name: 'Ingreso area', zone: 'area' },
-  { name: 'Tiro al arco', zone: 'area' },
-  { name: 'Corner corto', zone: 'area' },
-  { name: 'Gol', zone: 'area' },
-  { name: 'Penal', zone: 'area' },
+  { name: 'Salida', value: 'st', zone: 'field' },
+  { name: 'Bloqueo', value: 'bl',zone: 'field' },
+  { name: 'Perdida', value: 'lost',zone: 'field' },
+  { name: 'Recupero', value: 'rec',zone: 'field' },
+  { name: 'Ingreso 25', value: 'eyrd',zone: 'area' },
+  { name: 'Ingreso area', value: 'earea',zone: 'area' },
+  { name: 'Tiro al arco', value: 'sht',zone: 'area' },
+  { name: 'Corner corto', value: 'pc',zone: 'area' },
+  { name: 'Gol', value: 'g',zone: 'area' },
+  { name: 'Penal', value: 'ps',zone: 'area' },
 ];
 
 const quarterList = [
