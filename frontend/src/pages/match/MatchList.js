@@ -2,19 +2,28 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { fetchMatches } from '../../actions/match'
 import { connect } from 'react-redux'
-import { IonList, IonItemSliding, IonItem, IonLabel, IonItemOptions, IonItemOption, IonListHeader, IonFab, IonFabButton, IonIcon } from '@ionic/react';
+import { IonList, IonItemSliding, IonItem, IonLabel, IonItemOptions, IonItemOption, IonListHeader, IonFab, IonFabButton, IonIcon, IonRefresher, IonRefresherContent, IonToast } from '@ionic/react';
 import AuthRedirect from '../user/AuthRedirect';
 
 class MatchList extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      showToast: false
+    }
   }
 
   componentDidMount() {
     global.backFunction = global.defaultBackFunction;
     global.homeFunction = () => this.props.history.push('/match/list');
     this.props.fetchMatches()
+
+    setTimeout(() => {
+      let showSuccess = window.location.search?.indexOf('showSuccess') !== -1;
+      this.setState({ showToast: showSuccess })
+    }, 500)
   }
 
   createStat(id) {
@@ -26,9 +35,18 @@ class MatchList extends Component {
     this.props.history.push('/match/create');
   }
 
+  doRefresh(event) {
+    this.props.fetchMatches().then(() => {
+      event.detail.complete()
+    })
+  }
+
   render() {
     return (
       <>
+        <IonRefresher slot="fixed" onIonRefresh={this.doRefresh.bind(this)}>
+          <IonRefresherContent></IonRefresherContent>
+        </IonRefresher>
         <IonList>
           <IonListHeader>
             <IonLabel><h1>Partidos</h1></IonLabel>
@@ -48,6 +66,7 @@ class MatchList extends Component {
             ))
           }
         </IonList>
+        <IonToast color="success" isOpen={this.state.showToast} onDidDismiss={() => { this.setState({ showToast: false }) }} message="El partido se creo exitosamente" duration={2000} />
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton id="fabButtonAdd" name="ion-fab-button">
             <IonIcon name="add" onClick={this.onCreateMatchClick.bind(this)} />
@@ -71,7 +90,7 @@ MatchList.defaultProps = {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
+
   return {
     matchList: state.matches
   }

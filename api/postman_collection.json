@@ -1,34 +1,10 @@
 {
 	"info": {
-		"_postman_id": "d9026ba4-4b2e-4d60-acbc-13562a3949c3",
+		"_postman_id": "d0dd3752-c010-422d-9e8e-bb54a8d82055",
 		"name": "hockey-stats",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
-		{
-			"name": "Tweets",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "x-access-token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWI4NGViNzQxM2M2MzAwMWY5ZGE4YjciLCJ1c2VybmFtZSI6ImJhdXRpdGVzdCIsInBhc3N3b3JkIjoiJDJiJDEwJC9GM0Z0cHk5LmMwRGdIZVRrQlNEUWVNbVVLd3hPVW1FNDRwNlE2NzlKLjlOYmJ5UnU3emZPIiwiY3JlYXRlZEF0IjoiMjAyMC0wNS0xMFQxODo1Nzo1OS4wMzlaIiwiX192IjowLCJpYXQiOjE1ODkxMzcwODV9.AgTPxHNMfWTuOiKyZPGRF12qkLvqjadDzlq3Rtis2UY",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "localhost:5001/tweets",
-					"host": [
-						"localhost"
-					],
-					"port": "5001",
-					"path": [
-						"tweets"
-					]
-				}
-			},
-			"response": []
-		},
 		{
 			"name": "Matches",
 			"request": {
@@ -54,6 +30,56 @@
 			"response": []
 		},
 		{
+			"name": "Match delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-access-token",
+						"type": "text",
+						"value": "{{token}}"
+					}
+				],
+				"url": {
+					"raw": "localhost:5001/match/5ecc2b74f67a7c001f166cf1",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"match",
+						"5ecc2b74f67a7c001f166cf1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Matches Players",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:5001/matches/players",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"matches",
+						"players"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Stats",
 			"request": {
 				"method": "GET",
@@ -61,7 +87,7 @@
 					{
 						"key": "x-access-token",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWI4NGViNzQxM2M2MzAwMWY5ZGE4YjciLCJ1c2VybmFtZSI6ImJhdXRpdGVzdCIsInBhc3N3b3JkIjoiJDJiJDEwJC9GM0Z0cHk5LmMwRGdIZVRrQlNEUWVNbVVLd3hPVW1FNDRwNlE2NzlKLjlOYmJ5UnU3emZPIiwiY3JlYXRlZEF0IjoiMjAyMC0wNS0xMFQxODo1Nzo1OS4wMzlaIiwiX192IjowLCJpYXQiOjE1ODkxMzcwODV9.AgTPxHNMfWTuOiKyZPGRF12qkLvqjadDzlq3Rtis2UY"
+						"value": "{{token}}"
 					}
 				],
 				"url": {
@@ -78,6 +104,97 @@
 			"response": []
 		},
 		{
+			"name": "User Register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\" : \"bauti\",\n\t\"password\": \"bauti\",\n\t\"role\": \"USER\",\n\t\"group\": \"LICEO\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5001/user/register",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Login",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1d1b16a1-19dd-4f7c-8e3c-6676b2d79b47",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c5f4fd95-878f-4dfb-86be-ae62f57e435c",
+						"exec": [
+							"var token = pm.response.json().data.token;",
+							"pm.globals.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\" : \"bauti\",\n\t\"password\": \"bauti\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5001/user/login",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Matches Add",
 			"request": {
 				"method": "POST",
@@ -85,7 +202,7 @@
 					{
 						"key": "x-access-token",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWI4NGViNzQxM2M2MzAwMWY5ZGE4YjciLCJ1c2VybmFtZSI6ImJhdXRpdGVzdCIsInBhc3N3b3JkIjoiJDJiJDEwJC9GM0Z0cHk5LmMwRGdIZVRrQlNEUWVNbVVLd3hPVW1FNDRwNlE2NzlKLjlOYmJ5UnU3emZPIiwiY3JlYXRlZEF0IjoiMjAyMC0wNS0xMFQxODo1Nzo1OS4wMzlaIiwiX192IjowLCJpYXQiOjE1ODkxMzcwODV9.AgTPxHNMfWTuOiKyZPGRF12qkLvqjadDzlq3Rtis2UY"
+						"value": "{{token}}"
 					},
 					{
 						"key": "Content-Type",
@@ -95,7 +212,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"teamHome\": \"Ciudad\",\n    \"teamAway\": \"River\",\n    \"category\": \"1A\",\n    \"gender\": \"femenino\"\n}"
+					"raw": "{\n    \"teamHome\": \"SAN LORENZO\",\n    \"teamAway\": \"LICEO\",\n    \"category\": \"1A\",\n    \"gender\": \"F\",\n    \"notes\": \"R1F4\",\n    \"playerList\": [\"MAYRA\",\"LUCHI\",\"DELPI\",\"MICA\",\"VICHI\",\"LULI\",\"INE\",\"VENE\",\"ABRU\",\"FRANCIA\",\"MARTU\"]\n}"
 				},
 				"url": {
 					"raw": "localhost:5001/match/add",
@@ -119,7 +236,7 @@
 					{
 						"key": "x-access-token",
 						"type": "text",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWI4NGViNzQxM2M2MzAwMWY5ZGE4YjciLCJ1c2VybmFtZSI6ImJhdXRpdGVzdCIsInBhc3N3b3JkIjoiJDJiJDEwJC9GM0Z0cHk5LmMwRGdIZVRrQlNEUWVNbVVLd3hPVW1FNDRwNlE2NzlKLjlOYmJ5UnU3emZPIiwiY3JlYXRlZEF0IjoiMjAyMC0wNS0xMFQxODo1Nzo1OS4wMzlaIiwiX192IjowLCJpYXQiOjE1ODkxMzcwODV9.AgTPxHNMfWTuOiKyZPGRF12qkLvqjadDzlq3Rtis2UY"
+						"value": "{{token}}"
 					},
 					{
 						"key": "Content-Type",
@@ -129,7 +246,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"matchId\": \"5eb84985703fa5001fc5256c\",\n    \"areaEntryType\": \"Control\",\n    \"areaEntryZone\": \"Central\",\n    \"definitionGesture\": \"Push\",\n    \"definitionZone\": \"AreaChica\",\n    \"result\": \"Gol\"\n}"
+					"raw": "{\n    \"matchId\": \"5ecaf2610a4bb6002ae48f61\",\n    \"quarter\":\"q1\",\n    \"statType\": \"bl\",\n\t\"statZoneType\": \"field\",\n\t\"statZoneValue\": \"10\",\n\t\"player\": \"LULU\"\n}"
 				},
 				"url": {
 					"raw": "localhost:5001/stat/add",

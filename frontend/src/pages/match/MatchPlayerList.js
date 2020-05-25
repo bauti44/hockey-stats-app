@@ -12,6 +12,8 @@ import {
   IonButton,
   IonFabList,
 } from '@ionic/react';
+import { connect } from 'react-redux';
+import { fetchMatchesPlayers } from '../../actions/match'
 
 class MatchPlayerList extends Component {
 
@@ -43,11 +45,19 @@ class MatchPlayerList extends Component {
   }
 
   importPlayers() {
-    var playerListTemp = [...this.state.playerList];
-    playerListTemp.push("Mayra", "Luchi", "Depli", "Mica", "Vichi", "Ine", "Rochi", "Vene", "Fiore", "Lulu", "Martu", "Abru")
-    this.setState({ playerList: playerListTemp, newPlayerName: '' })
+    this.props.fetchMatchesPlayers().then(response => {
+      if(response.success) {
+        let playerAgreggatedList = []
+        if(response.data.length>0) {
+          response.data.forEach(matchPlayersItem => {
+            playerAgreggatedList.push(...matchPlayersItem.playerList)
+          });
+          this.setState({ playerList: Array.from(new Set(playerAgreggatedList)), newPlayerName: '' })
+        }
+      }
+    })
   }
-
+  
   render() {
     return (
       <>
@@ -71,7 +81,7 @@ class MatchPlayerList extends Component {
             <IonIcon name="add" onClick={() => this.setState({ showNewPlayer: true })} />
           </IonFabButton>
           <IonFabList side="top">
-            <IonFabButton onClick={this.importPlayers.bind(this)}><IonIcon name="save"/></IonFabButton>
+            <IonFabButton onClick={this.importPlayers.bind(this)}><IonIcon name="save" /></IonFabButton>
           </IonFabList>
         </IonFab>
       </>
@@ -82,10 +92,11 @@ class MatchPlayerList extends Component {
 MatchPlayerList.propTypes = {
   playerList: PropTypes.array,
   onSave: PropTypes.func.isRequired,
+  fetchMatchesPlayers: PropTypes.func.isRequired
 }
 
 MatchPlayerList.defaultProps = {
   playerList: []
 }
 
-export default MatchPlayerList;
+export default connect(null, { fetchMatchesPlayers })(MatchPlayerList)

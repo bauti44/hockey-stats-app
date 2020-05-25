@@ -23,7 +23,7 @@ matchRoutes.get('/matches', authMiddleware, (request, response) => {
 
   if (!isEmpty(request.user)) {
     var filters = {}
-    if(request.user.role != 'ADMIN'){
+    if (request.user.role != 'ADMIN') {
       filters["userId"] = request.user._id;
     }
     Match.find(filters).sort('-createdAt').exec(function (error, documents) {
@@ -51,7 +51,7 @@ matchRoutes.get('/matches/players', authMiddleware, (request, response) => {
 
   if (!isEmpty(request.user)) {
     var filters = {}
-    if(request.user.role != 'ADMIN'){
+    if (request.user.role != 'ADMIN') {
       filters["userId"] = request.user._id;
     }
     Match.find(filters, 'playerList').exec(function (error, documents) {
@@ -118,6 +118,30 @@ matchRoutes.post('/match/add', authMiddleware, (request, response) => {
     response.json(responseData)
   }
 })
+
+// Single Match delete (/match/matchId)
+matchRoutes.delete('/match/:matchId', authMiddleware, (request, response) => {
+  let responseData = {
+    success: false,
+    data: {},
+    errors: []
+  }
+  if (!isEmpty(request.user)) {
+    var filters = {_id: request.params.matchId}
+    if (request.user.role != 'ADMIN') {
+      filters["userId"] = request.user._id;
+    }
+    Match.deleteOne(filters).exec(function (error, document) {
+      if (document.ok) {
+        responseData.success = true
+      }
+      response.json(responseData)
+    })
+  } else {
+    responseData.errors.push({ type: 'critical', message: 'You are not signed in. Please sign in to delete a match.' })
+    response.json(responseData)
+  }
+}),
 
 // Single Matches (/match/matchId)
 matchRoutes.get('/match/:matchId', authMiddleware, (request, response) => {

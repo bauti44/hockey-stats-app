@@ -35,11 +35,24 @@ export function fetchMatches() {
   }
 }
 
+export function fetchMatchesPlayers() {
+  const token = localStorage.getItem('token')
+  return dispatch => {
+    return fetch(`${config.url.api}matches/players`, {
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': token
+      }
+    }).then(response => response.json())
+  }
+}
+
 export function createMatch(match) {
   const token = localStorage.getItem('token')
 
   return dispatch => {
-    return fetch(`${config.url.api}match/create`, {
+    return fetch(`${config.url.api}match/add`, {
       method: 'post',
 
       body: JSON.stringify(match),
@@ -49,6 +62,6 @@ export function createMatch(match) {
         'x-access-token': token
       }
     })
-    // .then(response => response.json())
+      .then(response => response.json())
   }
 }
