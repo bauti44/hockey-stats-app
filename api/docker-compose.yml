@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   app:
-    container_name: zwitter-api
+    container_name: hockey-stats-app-api
     restart: unless-stopped
     build: .
     environment:
@@ -30,10 +30,6 @@ services:
 volumes:
   mongodb_datadb:
   mongodb_configdb:
-
-networks:
-  app-network:
-    driver: bridge
 
 networks:
   app-network:
