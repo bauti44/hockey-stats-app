@@ -17,7 +17,6 @@ class MatchList extends Component {
 
   componentDidMount() {
     global.backFunction = global.defaultBackFunction;
-    global.homeFunction = () => this.props.history.push('/match/list');
     this.props.fetchMatches()
 
     setTimeout(() => {

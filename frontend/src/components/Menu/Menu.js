@@ -10,6 +10,7 @@ import {
   IonButton,
 } from '@ionic/react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types'
 
 class Menu extends Component {
 
@@ -21,22 +22,24 @@ class Menu extends Component {
     global.backFunction()
   }
 
-  goHome() {
-    global.homeFunction()
-  }
-
   render() {
+    const { isAuthenticated } = this.props.user
     return (
       <IonHeader>
         <IonToolbar color="darkBlue">
-          <IonButtons slot="start">
-            <IonBackButton defaultHref="/" onClick={this.goBack.bind(this)} />
-          </IonButtons>
-          <IonButtons slot="end">
-            <IonButton slot="icon-only" onClick={this.goHome.bind(this)}>
-              <IonIcon size="large" name="home" />
-            </IonButton>
-          </IonButtons>
+          {isAuthenticated ?
+            <>
+              <IonButtons slot="start">
+                <IonBackButton defaultHref="/" onClick={this.goBack.bind(this)} />
+              </IonButtons>
+              <IonButtons slot="end">
+                <IonButton slot="icon-only">
+                  <a href="/match/list">
+                    <IonIcon size="large" name="home" />
+                  </a>
+                </IonButton>
+              </IonButtons>
+            </> : <></>}
           <IonTitle>Estadisticas Hockey</IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -44,4 +47,14 @@ class Menu extends Component {
   }
 }
 
-export default connect(null, {})(Menu);
+Menu.propTypes = {
+  user: PropTypes.object.isRequired,
+}
+
+function mapStateToProps(state) {
+  return {
+    user: state.user
+  }
+}
+
+export default connect(mapStateToProps, {})(Menu);

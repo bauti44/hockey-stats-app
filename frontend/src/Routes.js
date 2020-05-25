@@ -13,6 +13,7 @@ import StatCreate from './pages/stat/StatCreate';
 import Menu from './components/Menu/Menu';
 import Layout from './layout/Layout';
 import UserLogin from './pages/user/UserLogin';
+import Home from './pages/Home';
 
 const Routes = () => (
     <IonApp>
@@ -20,6 +21,7 @@ const Routes = () => (
             <Menu />
             <Layout>
                 <Switch>
+                    <Route exact path={URL_REPO.ROOT} component={Home} />
                     <Route path={URL_REPO.USER_LOGIN} component={UserLogin} />
                     <Route path={URL_REPO.MATCH_CREATE} component={MatchCreate} />
                     <Route path={URL_REPO.MATCH_LIST} component={MatchList} />

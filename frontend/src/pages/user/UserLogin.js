@@ -4,10 +4,9 @@ import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-
 // App Imports
 import { postLogin } from '../../actions/user'
-import { IonInput, IonButton, IonList, IonLabel, IonItem, IonListHeader } from '@ionic/react'
+import { IonInput, IonButton, IonList, IonLabel, IonItem, IonListHeader, IonToast } from '@ionic/react'
 
 class UserLogin extends Component {
   constructor(props) {
@@ -19,7 +18,7 @@ class UserLogin extends Component {
       error: '',
       isLoading: false,
       isLoggingIn: false,
-      notification: false,
+      showToast: false,
       logged: false
     }
   }
@@ -39,7 +38,7 @@ class UserLogin extends Component {
           this.setState({
             isLoading: false,
             isLoggingIn: false,
-            notification: true,
+            showToast: false,
             username: '',
             password: '',
             error: ''
@@ -54,14 +53,9 @@ class UserLogin extends Component {
             isLoading: false,
             isLoggingIn: false,
             error: response.errors[0].message,
-            notification: false
+            showToast: true
           })
         }
-      })
-    } else {
-      this.setState({
-        error: 'Please enter your username and password.',
-        notification: false
       })
     }
   }
@@ -91,6 +85,7 @@ class UserLogin extends Component {
           </IonList>
 
           <IonButton color="darkBlue" type="submit" size="medium" expand="block" >Iniciar sesion</IonButton>
+          <IonToast color="danger" isOpen={this.state.showToast} onDidDismiss={() => { this.setState({ showToast: false }) }} message={this.state.error} duration={2000} />
         </form>
 
         {this.state.logged ? <Redirect to="/match/list" /> : ''}
