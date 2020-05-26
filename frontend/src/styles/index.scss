@@ -14,13 +14,47 @@ ion-icon {
     &.sc-ion-back-button-md {
         fill: #fff;
     }
-    &[name='add'], &[name='save'],&[name='home'] {
+    &[name='add'], &[name='save'],&[name='list'] {
         fill: #fff;    
     }
 }
 ion-fab-button {
    --background: #134f5c;
 }
+
+ion-grid {
+    &.field {
+        background: url('/assets/field.png') no-repeat center fixed;     
+        background-size: cover;
+
+        ion-col {
+            border: solid 1px #ddd;
+            height: 7rem;
+            background-color: rgba($color: #134f5c, $alpha: 0.2);
+            
+            &.left {
+                margin: 0.4rem 0rem 0.4rem 1rem;
+            }
+            &.center {
+                margin: 0.4rem 1rem 0.4rem 1rem;
+            }
+            &.right {
+                margin: 0.4rem 1rem 0.4rem 0rem;
+            }
+        }
+    }
+    &.area {
+        background: url('/assets/area.png') no-repeat center fixed;     
+        background-size: cover;
+
+        ion-col {
+            height: 5.2rem;           
+            margin: 0.1em 0em;
+        }
+    }
+}
+
+
 
 .item-has-focus {
     --highlight-background: #134f5c;

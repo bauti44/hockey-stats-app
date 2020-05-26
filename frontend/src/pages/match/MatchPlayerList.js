@@ -11,6 +11,7 @@ import {
   IonInput,
   IonButton,
   IonFabList,
+  IonButtons,
 } from '@ionic/react';
 import { connect } from 'react-redux';
 import { fetchMatchesPlayers } from '../../actions/match'
@@ -30,25 +31,29 @@ class MatchPlayerList extends Component {
     if (this.state.newPlayerName == '') {
       return;
     }
-    var playerListTemp = [...this.state.playerList];
-    playerListTemp.push(this.state.newPlayerName.toUpperCase())
-    this.setState({ playerList: playerListTemp, newPlayerName: '' })
+    setTimeout(() => {
+      var playerListTemp = [...this.state.playerList];
+      playerListTemp.push(this.state.newPlayerName.toUpperCase())
+      this.setState({ playerList: playerListTemp, newPlayerName: '' })
+    }, 300);
   }
 
   removePlayer(player) {
-    var playerListTemp = [...this.state.playerList];
-    var index = playerListTemp.indexOf(player)
-    if (index !== -1) {
-      playerListTemp.splice(index, 1);
-      this.setState({ playerList: playerListTemp });
-    }
+    setTimeout(() => {
+      var playerListTemp = [...this.state.playerList];
+      var index = playerListTemp.indexOf(player)
+      if (index !== -1) {
+        playerListTemp.splice(index, 1);
+        this.setState({ playerList: playerListTemp });
+      }
+    }, 300);
   }
 
   importPlayers() {
     this.props.fetchMatchesPlayers().then(response => {
-      if(response.success) {
+      if (response.success) {
         let playerAgreggatedList = []
-        if(response.data.length>0) {
+        if (response.data.length > 0) {
           response.data.forEach(matchPlayersItem => {
             playerAgreggatedList.push(...matchPlayersItem.playerList)
           });
@@ -57,7 +62,7 @@ class MatchPlayerList extends Component {
       }
     })
   }
-  
+
   render() {
     return (
       <>
@@ -66,13 +71,21 @@ class MatchPlayerList extends Component {
             this.state.playerList.map((player) => (
               <IonItem key={player} button >
                 <IonLabel>{player.toUpperCase()}</IonLabel>
-                <IonIcon name="trash" value={player} onClick={(e) => this.removePlayer(e.target.value)} />
+                <IonButtons>
+                  <IonButton shape="round" slot="icon-only" value={player} onClick={(e) => this.removePlayer(e.target.value)}>
+                    <IonIcon name="trash" />
+                  </IonButton>
+                </IonButtons>
               </IonItem>
             ))
           }
           <IonItem key="new-player">
             <IonInput value={this.state.newPlayerName} onIonChange={(e) => this.setState({ newPlayerName: e.target.value })} placeholder="NUEVA JUGADORA"></IonInput>
-            <IonIcon name="person-add" spot="end" onClick={this.addPlayer.bind(this)} />
+            <IonButtons>
+              <IonButton shape="round" slot="icon-only" onClick={this.addPlayer.bind(this)}>
+                <IonIcon name="person-add" spot="end" />
+              </IonButton>
+            </IonButtons>
           </IonItem>
         </IonList>
         <IonButton color="lightBlue" size="medium" onClick={this.props.onSave.bind(this, this.state.playerList)} expand="block" >Guardar</IonButton>

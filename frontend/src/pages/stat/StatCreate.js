@@ -20,7 +20,7 @@ class StatCreate extends Component {
     super(props);
     this.state = {
       matchId: this.props.match.params.id,
-      quarter: '',
+      quarter: 'q1',
       statType: '',
       statZoneType: '',
       statZoneValue: '',
@@ -48,8 +48,10 @@ class StatCreate extends Component {
         global.defaultBackFunction()
       } else if (this.state.renderStatZoneField || this.state.renderStatZoneArea) {
         this.setState({ renderStatType: true })
-      } else if (this.state.renderStatPlayer) {
-        this.setState({ renderStatZoneField: true }) //TODO ver que tipo de estadistica era
+      } else if (this.state.renderStatPlayer && this.state.statZoneType == "field") {
+        this.setState({ renderStatZoneField: true })
+      } else if (this.state.renderStatPlayer && this.state.statZoneType == "area") {
+        this.setState({ renderStatZoneArea: true })
       }
     }
     this.props.fetchMatch(this.state.matchId);
@@ -79,6 +81,7 @@ class StatCreate extends Component {
   }
 
   selectZone(value) {
+    console.log(value)
     this.resetRender()
     this.setState({ renderStatPlayer: true, statZoneValue: value });
   }
@@ -108,7 +111,6 @@ class StatCreate extends Component {
 
   onSuccess() {
     this.setState({
-      quarter: '',
       statType: '',
       statZoneType: '',
       statZoneValue: '',
@@ -127,7 +129,7 @@ class StatCreate extends Component {
   render() {
     return (
       <>
-        {this.state.renderStatType ? <StatType selectType={this.selectType} selectQuarter={this.selectQuarter} /> : <> </>}
+        {this.state.renderStatType ? <StatType value={this.state.quarter} selectType={this.selectType} selectQuarter={this.selectQuarter} /> : <> </>}
         {this.state.renderStatZoneField ? <FieldZone selectZone={this.selectZone} /> : <> </>}
         {this.state.renderStatZoneArea ? <AreaZone selectZone={this.selectZone} /> : <> </>}
         {this.state.renderStatPlayer ? <StatPlayer selectPlayer={this.selectPlayer} playerList={this.props.playerList} /> : <> </>}

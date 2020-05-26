@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { fetchMatches } from '../../actions/match'
 import { connect } from 'react-redux'
-import { IonList, IonItemSliding, IonItem, IonLabel, IonItemOptions, IonItemOption, IonListHeader, IonFab, IonFabButton, IonIcon, IonRefresher, IonRefresherContent, IonToast } from '@ionic/react';
+import { IonList, IonItemSliding, IonItem, IonLabel, IonItemOptions, IonItemOption, IonListHeader, IonFab, IonFabButton, IonIcon, IonRefresher, IonRefresherContent, IonToast, IonSearchbar, IonButton, IonItemDivider, IonButtons } from '@ionic/react';
 import AuthRedirect from '../user/AuthRedirect';
 
 class MatchList extends Component {
@@ -11,7 +11,9 @@ class MatchList extends Component {
     super(props);
 
     this.state = {
-      showToast: false
+      showToast: false,
+      showSearch: false,
+      searchText: ''
     }
   }
 
@@ -40,6 +42,22 @@ class MatchList extends Component {
     })
   }
 
+  toggleSearch() {
+    let newShowSearch = !this.state.showSearch
+    this.setState({ showSearch: newShowSearch })
+  }
+
+  onSearch(value) {
+    this.setState({ searchText: value })
+  }
+
+  joinText(...values) {
+    if (!values && values.length == 0) {
+      return '';
+    }
+    return values.join('').toLowerCase();
+  }
+
   render() {
     return (
       <>
@@ -49,20 +67,29 @@ class MatchList extends Component {
         <IonList>
           <IonListHeader>
             <IonLabel><h1>Partidos</h1></IonLabel>
+            <IonButtons>
+              <IonButton shape="round" slot="icon-only" style={{ paddingRight: '0.5rem' }} onClick={this.toggleSearch.bind(this)}>
+                <IonIcon name="options" style={{ fontSize: '24px'}}/>
+              </IonButton>
+            </IonButtons>
           </IonListHeader>
-          {
-            this.props.matchList.list.map(({ _id, teamHome, teamAway, category, gender, notes }) => (
-              <IonItemSliding key={_id}>
-                <IonItem>
-                  <IonLabel>{teamHome} - {teamAway}</IonLabel>
-                  <IonLabel class="label-secondary">{category} {gender} {notes}</IonLabel>
-                </IonItem>
-                <IonItemOptions side="end">
-                  <IonItemOption color="darkBlue" onClick={this.createStat.bind(this, _id)}>Agregar</IonItemOption>
-                  <IonItemOption color="lightBlue" onClick={() => console.log('unread clicked')}>Ver</IonItemOption>
-                </IonItemOptions>
-              </IonItemSliding>
-            ))
+          <IonItemDivider style={{minHeight: '0.5rem'}}/>
+          {this.state.showSearch ?
+            <IonSearchbar value={this.state.searchText} placeholder="Buscar" onIonChange={e => this.onSearch(e.detail.value)}></IonSearchbar>
+            : <></>}
+          {this.props.matchList.list.map(({ _id, teamHome, teamAway, category, gender, notes }) => (
+            <IonItemSliding key={_id}
+              style={{ display: (this.joinText(teamHome, teamAway, category, gender, notes).indexOf(this.state.searchText.toLowerCase()) !== -1) ? 'block' : 'none' }}>
+              <IonItem>
+                <IonLabel>{teamHome} - {teamAway}</IonLabel>
+                <IonLabel class="label-secondary">{category} {gender} {notes}</IonLabel>
+              </IonItem>
+              <IonItemOptions side="end">
+                <IonItemOption color="darkBlue" onClick={this.createStat.bind(this, _id)}>Agregar</IonItemOption>
+                <IonItemOption color="lightBlue" onClick={() => console.log('unread clicked')}>Ver</IonItemOption>
+              </IonItemOptions>
+            </IonItemSliding>
+          ))
           }
         </IonList>
         <IonToast color="success" isOpen={this.state.showToast} onDidDismiss={() => { this.setState({ showToast: false }) }} message="El partido se creo exitosamente" duration={2000} />
@@ -89,7 +116,6 @@ MatchList.defaultProps = {
 }
 
 const mapStateToProps = (state) => {
-
   return {
     matchList: state.matches
   }

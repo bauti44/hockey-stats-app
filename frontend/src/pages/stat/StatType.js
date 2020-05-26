@@ -37,7 +37,7 @@ class StatType extends Component {
   render() {
     return (
       <>
-        <IonSegment onIonChange={(e) => this.props.selectQuarter(e.target.value)}>
+        <IonSegment value={this.props.value} onIonChange={(e) => this.props.selectQuarter(e.target.value)}>
           {
             quarterList.map((quarterItem) => (
               <IonSegmentButton key={quarterItem.value} value={quarterItem.value}>
@@ -65,6 +65,11 @@ class StatType extends Component {
 StatType.propTypes = {
   selectType: PropTypes.func.isRequired,
   selectQuarter: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired
+}
+
+StatType.defaultProps = {
+  value: 'q1'
 }
 
 export default StatType;

@@ -33,9 +33,9 @@ class Menu extends Component {
                 <IonBackButton defaultHref="/" onClick={this.goBack.bind(this)} />
               </IonButtons>
               <IonButtons slot="end">
-                <IonButton slot="icon-only">
+                <IonButton shape="round" slot="icon-only">
                   <a href="/match/list">
-                    <IonIcon size="large" name="home" />
+                    <IonIcon size="large" name="list" />
                   </a>
                 </IonButton>
               </IonButtons>
