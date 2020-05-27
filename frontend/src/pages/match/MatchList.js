@@ -32,6 +32,11 @@ class MatchList extends Component {
     this.props.history.push(url);
   }
 
+  viewStat(id) {
+    let url = '/match/' + id + '/stat/view';
+    this.props.history.push(url);
+  }
+
   onCreateMatchClick() {
     this.props.history.push('/match/create');
   }
@@ -86,7 +91,7 @@ class MatchList extends Component {
               </IonItem>
               <IonItemOptions side="end">
                 <IonItemOption color="darkBlue" onClick={this.createStat.bind(this, _id)}>Agregar</IonItemOption>
-                <IonItemOption color="lightBlue" onClick={() => console.log('unread clicked')}>Ver</IonItemOption>
+                <IonItemOption color="lightBlue" onClick={this.viewStat.bind(this, _id)}>Ver</IonItemOption>
               </IonItemOptions>
             </IonItemSliding>
           ))

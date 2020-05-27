@@ -1,7 +1,7 @@
 import React, { Fragment, Component } from 'react'
 import PropTypes from 'prop-types';
-import { fetchMatch } from '../../actions/match'
-import { postStat } from '../../actions/stat'
+import { fetchMatch } from '../../../actions/match'
+import { postStat } from '../../../actions/stat'
 import { connect } from 'react-redux'
 
 import {
@@ -12,7 +12,7 @@ import StatType from './StatType';
 import FieldZone from './FieldZone';
 import StatPlayer from './StatPlayer';
 import AreaZone from './AreaZone';
-import AuthRedirect from '../user/AuthRedirect';
+import AuthRedirect from '../../user/AuthRedirect';
 
 class StatCreate extends Component {
 

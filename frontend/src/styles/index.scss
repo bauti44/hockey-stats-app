@@ -8,10 +8,16 @@
 
 ion-segment-button {
     --color-checked:#134f5c;
+    --border-color: #134f5c;
+    --background-checked: #d1dcde;
+    min-height: 3rem;
 }
 ion-icon {
     fill: rgba( 0,0,0 ,0.6);
     &.sc-ion-back-button-md {
+        fill: #fff;
+    }
+    &.sc-ion-back-button-ios {
         fill: #fff;
     }
     &[name='add'], &[name='save'],&[name='list'] {
@@ -22,10 +28,36 @@ ion-fab-button {
    --background: #134f5c;
 }
 
+ion-button {
+    &.statViewButton {
+        height: 85%;
+        white-space: normal;
+        --border-color: #134f5c;
+        --color: #134f5c;
+        --color-activated: rgba($color: #134f5c, $alpha: 0.5);
+        background: rgba($color: #134f5c, $alpha: 0.2);
+        --padding-start: 10px;
+        --padding-end: 10px;
+    }
+}
+
 ion-grid {
-    &.field {
-        background: url('/assets/field.png') no-repeat center fixed;     
+    &.statViewGrid {
+        background: url('/assets/stat-bg.png') no-repeat center fixed;     
         background-size: cover;
+        height: 100%;
+        ion-row {
+            height: 33%;
+        }
+        ion-button {
+            min-width: 100%;
+            --background-activated: #a1c4c9;        
+        }
+    }
+
+    &.field {
+        background: url('/assets/field.png') no-repeat center;     
+        background-size: contain;
 
         ion-col {
             border: solid 1px #ddd;
@@ -44,7 +76,7 @@ ion-grid {
         }
     }
     &.area {
-        background: url('/assets/area.png') no-repeat center fixed;     
+        background: url('/assets/area.png') no-repeat center;     
         background-size: cover;
 
         ion-col {
@@ -53,7 +85,6 @@ ion-grid {
         }
     }
 }
-
 
 
 .item-has-focus {

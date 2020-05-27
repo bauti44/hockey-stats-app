@@ -16,7 +16,7 @@ class AreaZone extends Component {
       <>
         <IonGrid class="area" fixed={true} >
           <IonRow>
-            <IonCol/>
+            <IonCol onClick={this.props.selectZone.bind(this, 'er')}/>
             <IonCol onClick={this.props.selectZone.bind(this, 'er')} />
             <IonCol onClick={this.props.selectZone.bind(this, 'er')} />
             <IonCol onClick={this.props.selectZone.bind(this, 'er')} />
@@ -51,7 +51,7 @@ class AreaZone extends Component {
             <IonCol onClick={this.props.selectZone.bind(this, 'yl')} />
           </IonRow>
           <IonRow>
-            <IonCol />
+            <IonCol onClick={this.props.selectZone.bind(this, 'el')}/>
             <IonCol onClick={this.props.selectZone.bind(this, 'el')} />
             <IonCol onClick={this.props.selectZone.bind(this, 'el')} />
             <IonCol onClick={this.props.selectZone.bind(this, 'el')} />

@@ -69,7 +69,7 @@ class MatchPlayerList extends Component {
         <IonList>
           {
             this.state.playerList.map((player) => (
-              <IonItem key={player} button >
+              <IonItem key={player} >
                 <IonLabel>{player.toUpperCase()}</IonLabel>
                 <IonButtons>
                   <IonButton shape="round" slot="icon-only" value={player} onClick={(e) => this.removePlayer(e.target.value)}>
