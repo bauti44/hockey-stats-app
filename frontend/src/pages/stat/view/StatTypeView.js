@@ -37,22 +37,12 @@ class StatType extends Component {
   render() {
     return (
       <>
-        <IonSegment value={this.props.value} onIonChange={(e) => this.props.selectQuarter(e.target.value)}>
-          {
-            quarterList.map((quarterItem) => (
-              <IonSegmentButton key={quarterItem.value} value={quarterItem.value}>
-                <IonLabel>{quarterItem.name}</IonLabel>
-              </IonSegmentButton>
-            ))
-          }
-        </IonSegment>
         <IonList>
           {
             statTypeList.map((statTypeItem) => (
               <IonItem key={statTypeItem.name} color={statTypeItem.zone == 'area' ? "lightBlue" : "salmon"} button
                 onClick={this.props.selectType.bind(this, statTypeItem)}>
                 <IonLabel>{statTypeItem.name.toUpperCase()}</IonLabel>
-                <IonIcon slot="end" name="ios-arrow-forward" />
               </IonItem>
             ))
           }

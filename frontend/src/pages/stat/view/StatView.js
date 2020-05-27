@@ -1,24 +1,21 @@
 import React, { Fragment, Component } from 'react'
 import PropTypes from 'prop-types';
 import { fetchMatch } from '../../../actions/match'
-import { postStat } from '../../../actions/stat'
 import { connect } from 'react-redux'
 
 import {
   IonLoading,
   IonToast,
-  IonButtons,
-  IonContent,
   IonGrid,
   IonRow,
   IonCol,
   IonButton,
-  IonLabel
+  IonLabel,
 } from '@ionic/react';
-import StatType from './StatType';
-import FieldZone from './FieldZone';
-import StatPlayer from './StatPlayer';
-import AreaZone from './AreaZone';
+import StatTypeView from './StatTypeView';
+import FieldZoneView from './FieldZoneView';
+import StatPlayerView from './StatPlayerView';
+import AreaZoneView from './AreaZoneView';
 import AuthRedirect from '../../user/AuthRedirect';
 
 class StatView extends Component {
@@ -32,6 +29,7 @@ class StatView extends Component {
       statZoneType: '',
       statZoneValue: '',
       player: '',
+      renderStatViewMain: true,
       renderStatType: false,
       renderStatZoneField: false,
       renderStatZoneArea: false,
@@ -51,14 +49,10 @@ class StatView extends Component {
   componentDidMount() {
     global.backFunction = () => {
       this.resetRender()
-      if (this.state.renderStatType) {
+      if (this.state.renderStatViewMain) {
         global.defaultBackFunction()
-      } else if (this.state.renderStatZoneField || this.state.renderStatZoneArea) {
-        this.setState({ renderStatType: true })
-      } else if (this.state.renderStatPlayer && this.state.statZoneType == "field") {
-        this.setState({ renderStatZoneField: true })
-      } else if (this.state.renderStatPlayer && this.state.statZoneType == "area") {
-        this.setState({ renderStatZoneArea: true })
+      } else if (this.state.renderStatType || this.state.renderStatPlayer) {
+        this.setState({ renderStatViewMain: true })
       }
     }
     this.props.fetchMatch(this.state.matchId);
@@ -66,11 +60,22 @@ class StatView extends Component {
 
   resetRender() {
     this.setState({
+      renderStatViewMain: false,
       renderStatType: false,
       renderStatZoneField: false,
       renderStatZoneArea: false,
       renderStatPlayer: false,
     })
+  }
+
+  onStatType() {
+    this.resetRender()
+    this.setState({ renderStatType: true });
+  }
+
+  onPlayer() {
+    this.resetRender()
+    this.setState({ renderStatPlayer: true });
   }
 
   selectType(statType) {
@@ -88,7 +93,6 @@ class StatView extends Component {
   }
 
   selectZone(value) {
-    console.log(value)
     this.resetRender()
     this.setState({ renderStatPlayer: true, statZoneValue: value });
   }
@@ -136,22 +140,30 @@ class StatView extends Component {
   render() {
     return (
       <>
-        <IonGrid fixed={true} class="statViewGrid">
-          <IonRow>
-            <IonCol>
-              
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol><IonButton class="statViewButton" fill="outline" size="large">Por tipo estadistica</IonButton></IonCol>
-            <IonCol><IonButton class="statViewButton" fill="outline" size="large">Por jugador</IonButton></IonCol>
-          </IonRow>
-          <IonRow></IonRow>
-        </IonGrid>
-        {this.state.renderStatType ? <StatType value={this.state.quarter} selectType={this.selectType} selectQuarter={this.selectQuarter} /> : <> </>}
-        {this.state.renderStatZoneField ? <FieldZone selectZone={this.selectZone} /> : <> </>}
-        {this.state.renderStatZoneArea ? <AreaZone selectZone={this.selectZone} /> : <> </>}
-        {this.state.renderStatPlayer ? <StatPlayer selectPlayer={this.selectPlayer} playerList={this.props.playerList} /> : <> </>}
+        {this.state.renderStatViewMain ?
+          <IonGrid fixed={true} class="statViewGrid">
+            <IonRow>
+              <IonCol>
+                <br />
+                <IonLabel><h1>{this.props.matchDetails.teamHome} - {this.props.matchDetails.teamAway}</h1></IonLabel>
+                <IonLabel><h2>{this.props.matchDetails.category} {this.props.matchDetails.gender} {this.props.matchDetails.notes}</h2></IonLabel>
+              </IonCol>
+            </IonRow>
+            <IonRow>
+              <IonCol>
+                <IonButton class="statViewButton" fill="outline" size="large" onClick={this.onStatType.bind(this)}>Por tipo estadistica</IonButton>
+              </IonCol>
+              <IonCol>
+                <IonButton class="statViewButton" fill="outline" size="large" onClick={this.onPlayer.bind(this)}>Por jugador</IonButton>
+              </IonCol>
+            </IonRow>
+            <IonRow />
+          </IonGrid>
+          : <></>}
+        {this.state.renderStatType ? <StatTypeView value={this.state.quarter} selectType={this.selectType} selectQuarter={this.selectQuarter} /> : <> </>}
+        {this.state.renderStatZoneField ? <FieldZoneView selectZone={this.selectZone} statType={this.state.statZoneType} /> : <> </>}
+        {this.state.renderStatZoneArea ? <AreaZoneView selectZone={this.selectZone} /> : <> </>}
+        {this.state.renderStatPlayer ? <StatPlayerView selectPlayer={this.selectPlayer} playerList={this.props.matchDetails.playerList} /> : <> </>}
         <IonLoading isOpen={this.state.showLoading} message={'Por favor espere...'} />
         <IonToast color="success" isOpen={this.state.showToast} onDidDismiss={() => { this.setState({ showToast: false }) }} message="La estadística se creo exitosamente" duration={2000} />
         <IonToast color="danger" isOpen={this.state.showToastError} onDidDismiss={() => { this.setState({ showToastError: false }) }} message={this.state.error} duration={2000} />
@@ -163,14 +175,13 @@ class StatView extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    playerList: state.match.details.playerList
+    matchDetails: state.match.details,
   }
 }
 
 StatView.propTypes = {
   fetchMatch: PropTypes.func.isRequired,
-  postStat: PropTypes.func.isRequired,
-  playerList: PropTypes.array.isRequired
+  matchDetails: PropTypes.object.isRequired
 }
 
-export default connect(mapStateToProps, { fetchMatch, postStat })(StatView)
+export default connect(mapStateToProps, { fetchMatch })(StatView)

@@ -5,7 +5,7 @@ import {
   IonGrid, IonRow, IonCol
 } from '@ionic/react';
 
-class AreaZone extends Component {
+class AreaZoneView extends Component {
 
   constructor(props) {
     super(props);
@@ -63,8 +63,8 @@ class AreaZone extends Component {
   }
 }
 
-AreaZone.propTypes = {
+AreaZoneView.propTypes = {
   selectZone: PropTypes.func.isRequired
 }
 
-export default AreaZone;
+export default AreaZoneView;

@@ -63,7 +63,7 @@ ion-grid {
             border: solid 1px #ddd;
             height: 7rem;
             background-color: rgba($color: #134f5c, $alpha: 0.2);
-            
+            text-align: center;
             &.left {
                 margin: 0.4rem 0rem 0.4rem 1rem;
             }
@@ -72,6 +72,10 @@ ion-grid {
             }
             &.right {
                 margin: 0.4rem 1rem 0.4rem 0rem;
+            }
+            ion-label {
+                font-size: 4rem;
+                line-height: 6rem;
             }
         }
     }
