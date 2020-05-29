@@ -6,7 +6,10 @@ import { connect } from 'react-redux'
 
 import {
   IonLoading,
-  IonToast
+  IonToast,
+  IonListHeader,
+  IonLabel,
+  IonItemDivider,
 } from '@ionic/react';
 import StatType from './StatType';
 import FieldZone from './FieldZone';
@@ -99,9 +102,10 @@ class StatCreate extends Component {
       statZoneType: this.state.statZoneType,
       statZoneValue: this.state.statZoneValue,
       player: this.state.player,
+      matchId: this.state.matchId,
     }
     this.props.postStat(stat).then(response => {
-      if(response.success) {
+      if (response.success) {
         setTimeout(() => this.onSuccess(), 500);
       } else {
         this.setState({ isLoading: false, showToastError: true, error: response.errors[0].message })
@@ -129,6 +133,10 @@ class StatCreate extends Component {
   render() {
     return (
       <>
+        <IonListHeader>
+          <IonLabel><h1>{this.props.matchDetails.teamHome} - {this.props.matchDetails.teamAway}</h1></IonLabel>
+        </IonListHeader>
+        <IonItemDivider style={{ minHeight: '0.5rem' }} />
         {this.state.renderStatType ? <StatType value={this.state.quarter} selectType={this.selectType} selectQuarter={this.selectQuarter} /> : <> </>}
         {this.state.renderStatZoneField ? <FieldZone selectZone={this.selectZone} /> : <> </>}
         {this.state.renderStatZoneArea ? <AreaZone selectZone={this.selectZone} /> : <> </>}
@@ -144,14 +152,16 @@ class StatCreate extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    playerList: state.match.details.playerList
+    playerList: state.match.details.playerList,
+    matchDetails: state.match.details,
   }
 }
 
 StatCreate.propTypes = {
   fetchMatch: PropTypes.func.isRequired,
   postStat: PropTypes.func.isRequired,
-  playerList: PropTypes.array.isRequired
+  playerList: PropTypes.array.isRequired,
+  matchDetails: PropTypes.object.isRequired,
 }
 
 export default connect(mapStateToProps, { fetchMatch, postStat })(StatCreate)

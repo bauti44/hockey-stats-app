@@ -6,26 +6,9 @@ export const FETCH_STATS_BEGIN = 'FETCH_STATS_BEGIN'
 export const SET_STAT = 'SET_STAT'
 export const FETCH_STAT_BEGIN = 'FETCH_STAT_BEGIN'
 
-export function fetchStats () {
+export function fetchStats (matchId) {
   return dispatch => {
-    dispatch({
-      type: FETCH_STATS_BEGIN
-    })
-
-    return fetch(`${ config.url.api }stats`).then(function (response) {
-      if (response.ok) {
-        response.json().then(function (response) {
-          dispatch({
-            type: SET_STATS,
-            stats: response.data
-          })
-        })
-      } else {
-        console.log('Looks like the response wasn\'t perfect, got status', response.status)
-      }
-    }, function (e) {
-      console.log('Fetch failed!', e)
-    })
+    return fetch(`${ config.url.api }stats?matchId=${ matchId }`).then(response => response.json())
   }
 }
 
@@ -35,7 +18,7 @@ export function fetchStat (statId) {
       type: FETCH_STAT_BEGIN
     })
 
-    return fetch(`${ config.url.api }stat/${ statId }`).then(function (response) {
+    return fetch(`${ config.url.api }stat/${ statId }`).then(response => {
       if (response.ok) {
         response.json().then(function (response) {
           if (response.success) {

@@ -1,61 +1,71 @@
 import React, { Fragment, Component } from 'react'
 import PropTypes from 'prop-types';
+import { fetchStats } from '../../../actions/stat'
+import { connect } from 'react-redux'
 
 import {
-  IonGrid, IonRow, IonCol
+  IonGrid, IonRow, IonCol, IonLabel
 } from '@ionic/react';
 
 class AreaZoneView extends Component {
-
   constructor(props) {
     super(props);
+    this.state = {
+      statsZoneMap: {
+        'er': 0, 'yr': 0,
+        'ar': 0,
+        'a0': 0, 'ac': 0, 'ec': 0, 'yc': 0,
+        'al': 0,
+        'el': 0, 'yl': 0,
+      }
+    }
+  }
+
+  componentDidMount() {
+    this.props.fetchStats(this.props.matchId).then(response => {
+      var updatedStatsZoneMap = this.state.statsZoneMap
+      Object.keys(this.state.statsZoneMap).forEach(key => {
+        updatedStatsZoneMap[key] = response.data.filter(item => {
+          return item.statZoneValue == key && item.statType == this.props.statType
+        }).length
+      })
+      this.setState({ statsZoneMap: updatedStatsZoneMap })
+    })
   }
 
   render() {
     return (
       <>
-        <IonGrid class="area" fixed={true} >
+        <IonGrid class="areaView" fixed={true} >
           <IonRow>
-            <IonCol onClick={this.props.selectZone.bind(this, 'er')}/>
-            <IonCol onClick={this.props.selectZone.bind(this, 'er')} />
-            <IonCol onClick={this.props.selectZone.bind(this, 'er')} />
-            <IonCol onClick={this.props.selectZone.bind(this, 'er')} />
-            <IonCol onClick={this.props.selectZone.bind(this, 'yr')} />
+            <IonCol  ><IonLabel></IonLabel></IonCol>
+            <IonCol offset="-1" ><IonLabel class="first">{this.state.statsZoneMap['er']}</IonLabel></IonCol>
+            <IonCol ><IonLabel></IonLabel></IonCol>
+            <IonCol ><IonLabel class="first">{this.state.statsZoneMap['yr']}</IonLabel></IonCol>
           </IonRow>
           <IonRow>
-            <IonCol onClick={this.props.selectZone.bind(this, 'ar')} />
-            <IonCol onClick={this.props.selectZone.bind(this, 'ar')} />
-            <IonCol offset="1" onClick={this.props.selectZone.bind(this, 'er')} />
-            <IonCol onClick={this.props.selectZone.bind(this, 'er')} />
-            <IonCol onClick={this.props.selectZone.bind(this, 'yr')} />
+            <IonCol offset="1" ><IonLabel>{this.state.statsZoneMap['ar']}</IonLabel></IonCol>
+            <IonCol ><IonLabel></IonLabel></IonCol>
+            <IonCol ><IonLabel></IonLabel></IonCol>
+            <IonCol ><IonLabel></IonLabel></IonCol>
           </IonRow>
           <IonRow>
-            <IonCol onClick={this.props.selectZone.bind(this, 'a0')} />
-            <IonCol offset="-1" onClick={this.props.selectZone.bind(this, 'a0')} />
-            <IonCol onClick={this.props.selectZone.bind(this, 'ac')} />
-            <IonCol onClick={this.props.selectZone.bind(this, 'ec')} />
-            <IonCol onClick={this.props.selectZone.bind(this, 'yc')} />
+            <IonCol  ><IonLabel>{this.state.statsZoneMap['a0']}</IonLabel></IonCol>
+            <IonCol offset="1"><IonLabel>{this.state.statsZoneMap['ac']}</IonLabel></IonCol>
+            <IonCol ><IonLabel>{this.state.statsZoneMap['ec']}</IonLabel></IonCol>
+            <IonCol ><IonLabel>{this.state.statsZoneMap['yc']}</IonLabel></IonCol>
           </IonRow>
           <IonRow>
-          <IonCol onClick={this.props.selectZone.bind(this, 'a0')} />
-            <IonCol offset="-1" onClick={this.props.selectZone.bind(this, 'a0')} />
-            <IonCol onClick={this.props.selectZone.bind(this, 'ac')} />
-            <IonCol onClick={this.props.selectZone.bind(this, 'ec')} />
-            <IonCol onClick={this.props.selectZone.bind(this, 'yc')} />
+            <IonCol offset="1" ><IonLabel>{this.state.statsZoneMap['al']}</IonLabel></IonCol>
+            <IonCol ><IonLabel></IonLabel></IonCol>
+            <IonCol ><IonLabel></IonLabel></IonCol>
+            <IonCol ><IonLabel></IonLabel></IonCol>
           </IonRow>
           <IonRow>
-            <IonCol onClick={this.props.selectZone.bind(this, 'al')} />
-            <IonCol onClick={this.props.selectZone.bind(this, 'al')} />
-            <IonCol offset="1" onClick={this.props.selectZone.bind(this, 'el')} />
-            <IonCol onClick={this.props.selectZone.bind(this, 'el')} />
-            <IonCol onClick={this.props.selectZone.bind(this, 'yl')} />
-          </IonRow>
-          <IonRow>
-            <IonCol onClick={this.props.selectZone.bind(this, 'el')}/>
-            <IonCol onClick={this.props.selectZone.bind(this, 'el')} />
-            <IonCol onClick={this.props.selectZone.bind(this, 'el')} />
-            <IonCol onClick={this.props.selectZone.bind(this, 'el')} />
-            <IonCol onClick={this.props.selectZone.bind(this, 'yl')} />
+            <IonCol ><IonLabel></IonLabel></IonCol>
+            <IonCol offset="-1" ><IonLabel class="last">{this.state.statsZoneMap['el']}</IonLabel></IonCol>
+            <IonCol ><IonLabel></IonLabel></IonCol>
+            <IonCol ><IonLabel class="last">{this.state.statsZoneMap['yl']}</IonLabel></IonCol>
           </IonRow>
         </IonGrid>
       </>
@@ -64,7 +74,15 @@ class AreaZoneView extends Component {
 }
 
 AreaZoneView.propTypes = {
-  selectZone: PropTypes.func.isRequired
+  statType: PropTypes.string.isRequired,
+  fetchStats: PropTypes.func.isRequired,
+  matchId: PropTypes.string.isRequired,
 }
 
-export default AreaZoneView;
+const mapStateToProps = (state) => {
+  return {
+    statList: state.stats.list,
+  }
+}
+
+export default connect(mapStateToProps, { fetchStats })(AreaZoneView);

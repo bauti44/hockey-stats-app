@@ -12,15 +12,15 @@ import {
 
 const statTypeList = [
   { name: 'Salida', value: 'st', zone: 'field' },
-  { name: 'Bloqueo', value: 'bl',zone: 'field' },
-  { name: 'Perdida', value: 'lost',zone: 'field' },
-  { name: 'Recupero', value: 'rec',zone: 'field' },
-  { name: 'Ingreso 25', value: 'eyrd',zone: 'area' },
-  { name: 'Ingreso area', value: 'earea',zone: 'area' },
-  { name: 'Tiro al arco', value: 'sht',zone: 'area' },
-  { name: 'Corner corto', value: 'pc',zone: 'area' },
-  { name: 'Gol', value: 'g',zone: 'area' },
-  { name: 'Penal', value: 'ps',zone: 'area' },
+  { name: 'Bloqueo', value: 'bl', zone: 'field' },
+  { name: 'Perdida', value: 'lost', zone: 'field' },
+  { name: 'Recupero', value: 'rec', zone: 'field' },
+  { name: 'Ingreso 25', value: 'eyrd', zone: 'area' },
+  { name: 'Ingreso area', value: 'earea', zone: 'area' },
+  { name: 'Tiro al arco', value: 'sht', zone: 'area' },
+  { name: 'Corner corto', value: 'pc', zone: 'area' },
+  { name: 'Gol', value: 'g', zone: 'area' },
+  { name: 'Penal', value: 'ps', zone: 'area' },
 ];
 
 const quarterList = [
@@ -49,7 +49,7 @@ class StatType extends Component {
         <IonList>
           {
             statTypeList.map((statTypeItem) => (
-              <IonItem key={statTypeItem.name} color={statTypeItem.zone == 'area' ? "lightBlue" : "salmon"} button
+              <IonItem key={statTypeItem.name} color={statTypeItem.zone == 'area' ? "itemColorLightBlue" : "itemColorBlue"} button
                 onClick={this.props.selectType.bind(this, statTypeItem)}>
                 <IonLabel>{statTypeItem.name.toUpperCase()}</IonLabel>
               </IonItem>

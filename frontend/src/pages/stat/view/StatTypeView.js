@@ -5,9 +5,6 @@ import {
   IonList,
   IonItem,
   IonLabel,
-  IonIcon,
-  IonSegment,
-  IonSegmentButton,
 } from '@ionic/react';
 
 const statTypeList = [
@@ -40,7 +37,7 @@ class StatType extends Component {
         <IonList>
           {
             statTypeList.map((statTypeItem) => (
-              <IonItem key={statTypeItem.name} color={statTypeItem.zone == 'area' ? "lightBlue" : "salmon"} button
+              <IonItem key={statTypeItem.name} color={statTypeItem.zone == 'area' ? "itemColorLightBlue" : "itemColorBlue"} button
                 onClick={this.props.selectType.bind(this, statTypeItem)}>
                 <IonLabel>{statTypeItem.name.toUpperCase()}</IonLabel>
               </IonItem>

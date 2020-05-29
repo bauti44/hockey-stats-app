@@ -6,10 +6,14 @@
 // Components
 @import "../components/Menu/Menu";
 
+
+h1 {
+    font-size: 1.2rem !important;
+}
 ion-segment-button {
     --color-checked:#134f5c;
     --border-color: #134f5c;
-    --background-checked: #d1dcde;
+    --background-checked: #edf3f4;
     min-height: 3rem;
 }
 ion-icon {
@@ -30,7 +34,7 @@ ion-fab-button {
 
 ion-button {
     &.statViewButton {
-        height: 85%;
+        height: 60%;
         white-space: normal;
         --border-color: #134f5c;
         --color: #134f5c;
@@ -74,7 +78,7 @@ ion-grid {
                 margin: 0.4rem 1rem 0.4rem 0rem;
             }
             ion-label {
-                font-size: 4rem;
+                font-size: 3rem;
                 line-height: 6rem;
             }
         }
@@ -86,6 +90,27 @@ ion-grid {
         ion-col {
             height: 5.2rem;           
             margin: 0.1em 0em;
+        }
+    }
+    &.areaView {
+        background: url('/assets/area.png') no-repeat center;     
+        background-size: cover;
+
+        ion-col {
+            height: 4.8rem;           
+            margin: 1em 0em;
+            text-align: center;
+
+            ion-label {
+                font-size: 2rem;
+                line-height: 4.5rem;
+                &.first {
+                    line-height: 7rem;
+                }
+                &.last {
+                    line-height: 1rem;
+                }
+            }
         }
     }
 }
@@ -104,12 +129,22 @@ ion-label {
         font-weight: 400 !important;
     }
 }
-.ion-color-salmon {
-    --ion-color-base: #e06666;
+
+.ion-color-itemColorLightBlue {
+    --ion-color-base: #d0e1e4;
     --ion-color-shade: var(--ion-color-light-shade, #d7d8da) !important;
     color: rgba( 0,0,0 ,0.6) !important;
     font-weight: 500 !important;
 }
+
+.ion-color-itemColorBlue {
+    --ion-color-base: #89a7ad;
+    --ion-color-shade: var(--ion-color-light-shade, #d7d8da) !important;
+    color: rgba( 0,0,0 ,0.6) !important;
+    font-weight: 500 !important;
+}
+
+
 
 .ion-color-lightBlue {
     --ion-color-base: #a1c4c9;
