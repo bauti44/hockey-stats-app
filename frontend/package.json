@@ -13,6 +13,7 @@
     "@types/react-router": "^5.0.2",
     "@types/react-router-dom": "^4.3.4",
     "babel-core": "^7.0.0-bridge.0",
+    "chart.js": "^2.9.3",
     "classnames": "^2.2.6",
     "immutability-helper": "3.0.2",
     "jwt-decode": "^2.2.0",
