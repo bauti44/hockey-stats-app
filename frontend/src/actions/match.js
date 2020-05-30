@@ -48,13 +48,13 @@ export function fetchMatchesPlayers() {
   }
 }
 
-export function fetchMatch (matchId) {
+export function fetchMatch(matchId) {
   return dispatch => {
     dispatch({
       type: FETCH_MATCH_BEGIN
     })
 
-    return fetch(`${ config.url.api }match/${ matchId }`).then(function (response) {
+    return fetch(`${config.url.api}match/${matchId}`).then(function (response) {
       if (response.ok) {
         response.json().then(function (response) {
           if (response.success) {
@@ -70,6 +70,19 @@ export function fetchMatch (matchId) {
     }, function (e) {
       console.log('Fetch failed!', e)
     })
+  }
+}
+
+export function removeMatch(matchId) {
+  const token = localStorage.getItem('token')
+  return dispatch => {
+    return fetch(`${config.url.api}match/${matchId}`, {
+      method: 'delete',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': token
+      }
+    }).then(response => response.json())
   }
 }
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
-import { fetchMatches } from '../../actions/match'
+import { fetchMatches, removeMatch } from '../../actions/match'
 import { connect } from 'react-redux'
 import { IonList, IonItemSliding, IonItem, IonLabel, IonItemOptions, IonItemOption, IonListHeader, IonFab, IonFabButton, IonIcon, IonRefresher, IonRefresherContent, IonToast, IonSearchbar, IonButton, IonItemDivider, IonButtons } from '@ionic/react';
 import AuthRedirect from '../user/AuthRedirect';
@@ -13,7 +13,8 @@ class MatchList extends Component {
     this.state = {
       showToast: false,
       showSearch: false,
-      searchText: ''
+      searchText: '',
+      message: 'El partido se creo exitosamente'
     }
   }
 
@@ -52,6 +53,15 @@ class MatchList extends Component {
     this.setState({ showSearch: newShowSearch })
   }
 
+  removeMatch(matchId) {
+    this.props.removeMatch(matchId).then((response) => {
+      if(response.success) {
+        this.setState({showToast: true, message: 'El partido se eliminó exitosamente'})
+      }
+      this.props.fetchMatches()
+    })
+  }
+
   onSearch(value) {
     this.setState({ searchText: value })
   }
@@ -74,11 +84,11 @@ class MatchList extends Component {
             <IonLabel><h1>Partidos</h1></IonLabel>
             <IonButtons>
               <IonButton shape="round" slot="icon-only" style={{ paddingRight: '0.5rem' }} onClick={this.toggleSearch.bind(this)}>
-                <IonIcon name="options" style={{ fontSize: '24px'}}/>
+                <IonIcon name="options" style={{ fontSize: '24px' }} />
               </IonButton>
             </IonButtons>
           </IonListHeader>
-          <IonItemDivider style={{minHeight: '0.5rem'}}/>
+          <IonItemDivider style={{ minHeight: '0.5rem' }} />
           {this.state.showSearch ?
             <IonSearchbar value={this.state.searchText} placeholder="Buscar" onIonChange={e => this.onSearch(e.detail.value)}></IonSearchbar>
             : <></>}
@@ -89,6 +99,11 @@ class MatchList extends Component {
                 <IonLabel>{teamHome} - {teamAway}</IonLabel>
                 <IonLabel class="label-secondary">{category} {gender} {notes}</IonLabel>
               </IonItem>
+              <IonItemOptions side="start">
+                <IonItemOption color="salmon" onClick={this.removeMatch.bind(this, _id)}>
+                  <IonIcon name="trash" style={{ fontSize: '1.5rem' }} />
+                </IonItemOption>
+              </IonItemOptions>
               <IonItemOptions side="end">
                 <IonItemOption color="darkBlue" onClick={this.createStat.bind(this, _id)}>Agregar</IonItemOption>
                 <IonItemOption color="lightBlue" onClick={this.viewStat.bind(this, _id)}>Ver</IonItemOption>
@@ -97,7 +112,7 @@ class MatchList extends Component {
           ))
           }
         </IonList>
-        <IonToast color="success" isOpen={this.state.showToast} onDidDismiss={() => { this.setState({ showToast: false }) }} message="El partido se creo exitosamente" duration={2000} />
+        <IonToast color="success" isOpen={this.state.showToast} onDidDismiss={() => { this.setState({ showToast: false }) }} message={this.state.message} duration={2000} />
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton id="fabButtonAdd" name="ion-fab-button">
             <IonIcon name="add" onClick={this.onCreateMatchClick.bind(this)} />
@@ -111,7 +126,8 @@ class MatchList extends Component {
 
 MatchList.propTypes = {
   matchList: PropTypes.object.isRequired,
-  fetchMatches: PropTypes.func.isRequired
+  fetchMatches: PropTypes.func.isRequired,
+  removeMatch: PropTypes.func.isRequired
 }
 
 MatchList.defaultProps = {
@@ -126,4 +142,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchMatches })(MatchList)
+export default connect(mapStateToProps, { fetchMatches, removeMatch })(MatchList)

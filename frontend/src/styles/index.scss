@@ -144,8 +144,6 @@ ion-label {
     font-weight: 500 !important;
 }
 
-
-
 .ion-color-lightBlue {
     --ion-color-base: #a1c4c9;
     --ion-color-shade: var(--ion-color-light-shade, #d7d8da) !important;
@@ -155,6 +153,13 @@ ion-label {
 
 .ion-color-darkBlue {
     --ion-color-base: #134f5c;
+    --ion-color-shade: var(--ion-color-light-shade, #d7d8da) !important;
+    --ion-color-contrast: var(--ion-color-primary-contrast, #fff)!important;
+    --ion-color-contrast-rgb: var(--ion-color-primary-contrast-rgb, 255, 255, 255)!important;
+}
+
+.ion-color-salmon {
+    --ion-color-base: salmon;
     --ion-color-shade: var(--ion-color-light-shade, #d7d8da) !important;
     --ion-color-contrast: var(--ion-color-primary-contrast, #fff)!important;
     --ion-color-contrast-rgb: var(--ion-color-primary-contrast-rgb, 255, 255, 255)!important;
