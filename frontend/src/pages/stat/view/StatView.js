@@ -13,6 +13,7 @@ import {
   IonListHeader,
   IonButtons,
   IonIcon,
+  IonChip,
 } from '@ionic/react';
 import StatTypeView from './StatTypeView';
 import StatPlayerView from './StatPlayerView';
@@ -62,9 +63,9 @@ class StatView extends Component {
   }
 
   resetToMainState() {
-    this.setState({ 
-      renderStatViewMain: true, 
-      fromStatZone: false, 
+    this.setState({
+      renderStatViewMain: true,
+      fromStatZone: false,
       fromStatTypeGraph: false,
       quarter: 'q1',
       statType: '',
@@ -96,6 +97,12 @@ class StatView extends Component {
       renderStatPlayer: false,
       renderStatTypeGraphView: false,
     })
+  }
+
+  refreshRender() {
+    var tempState = this.state;
+    this.resetRender()
+    this.setState(tempState)
   }
 
   onStatType() {
@@ -171,15 +178,38 @@ class StatView extends Component {
     }
   }
 
+  onMatchRemove() {
+    this.props.history.push('/match/all/stat/view')
+    this.setState({ matchId: "all" })
+    this.fetchAllPlayers()
+    setTimeout(() => {
+      this.refreshRender()
+    }, 100);
+  }
+
+  onPlayerRemove() {
+    this.setState({player: ''})
+    setTimeout(() => {
+      this.refreshRender()
+    }, 100);
+  }
+
   render() {
     return (
       <>
         <IonListHeader>
           {this.state.matchId == "all" ? <></> :
-            <IonLabel><h1>{this.props.matchDetails.teamHome} - {this.props.matchDetails.teamAway}</h1></IonLabel>
+            <IonChip color="itemColorLightBlue" onClick={this.onMatchRemove.bind(this)}>
+              <IonLabel><h2>{this.props.matchDetails.teamHome} - {this.props.matchDetails.teamAway}</h2></IonLabel>
+              <IonIcon name="close-circle" />
+            </IonChip>
           }
-          {this.state.renderStatZone ?
-            <IonLabel><h1>{this.state.player}</h1></IonLabel> : <></>}
+          {this.state.renderStatZone && this.state.player ?
+            <IonChip color="itemColorLightBlue" onClick={this.onPlayerRemove.bind(this)}>
+              <IonLabel><h2>{this.state.player}</h2></IonLabel>
+              <IonIcon name="close-circle" />
+            </IonChip>
+            : <IonLabel></IonLabel>}
           <IonButtons >
             {this.state.renderStatTypeGraphView || this.state.renderStatZone ?
               <IonButton onClick={this.onPlayersFilter.bind(this)} shape="round" slot="icon-only" style={{ paddingRight: '0.5rem' }}>

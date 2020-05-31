@@ -135,6 +135,7 @@ ion-label {
     --ion-color-shade: var(--ion-color-light-shade, #d7d8da) !important;
     color: rgba( 0,0,0 ,0.6) !important;
     font-weight: 500 !important;
+    --ion-color-base-rgb: var(--ion-color-primary-rgb, 20, 80, 91) !important;
 }
 
 .ion-color-itemColorBlue {
