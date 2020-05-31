@@ -8,7 +8,13 @@ export const FETCH_STAT_BEGIN = 'FETCH_STAT_BEGIN'
 
 export function fetchStats (matchId) {
   return dispatch => {
-    return fetch(`${ config.url.api }stats?matchId=${ matchId }`).then(response => response.json())
+    var uri;
+    if(matchId == "all") {
+      uri = `${ config.url.api }stats`
+    } else {
+      uri = `${ config.url.api }stats?matchId=${ matchId }`
+    }
+    return fetch(uri).then(response => response.json())
   }
 }
 

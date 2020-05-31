@@ -24,7 +24,7 @@ ion-icon {
     &.sc-ion-back-button-ios {
         fill: #fff;
     }
-    &[name='add'], &[name='save'],&[name='list'] {
+    &[name='add'], &[name='save'],&[name='create'],&[name='list'] {
         fill: #fff;    
     }
 }
@@ -159,9 +159,7 @@ ion-label {
 }
 
 .ion-color-salmon {
-    --ion-color-base: salmon;
+    --ion-color-base: #ffc1b9;
     --ion-color-shade: var(--ion-color-light-shade, #d7d8da) !important;
-    --ion-color-contrast: var(--ion-color-primary-contrast, #fff)!important;
-    --ion-color-contrast-rgb: var(--ion-color-primary-contrast-rgb, 255, 255, 255)!important;
+    color: rgba( 0,0,0 ,0.6) !important;
 }
-  

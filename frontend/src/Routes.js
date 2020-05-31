@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import { withCookies } from 'react-cookie';
 import URL_REPO from './helpers/UrlRepo'
 
-import { IonApp, IonPage, IonContent } from '@ionic/react';
+import { IonApp, IonPage } from '@ionic/react';
 // pages
 import NotFound from './pages/NotFound/NotFound';
 import MatchCreate from './pages/match/MatchCreate';
@@ -14,6 +14,7 @@ import Menu from './components/Menu/Menu';
 import Layout from './layout/Layout';
 import UserLogin from './pages/user/UserLogin';
 import Home from './pages/Home';
+import Toolbar from './components/Toolbar/Toolbar';
 
 const Routes = () => (
     <IonApp>
@@ -30,6 +31,7 @@ const Routes = () => (
                     <Route path={URL_REPO.NOTFOUND} component={NotFound} />
                 </Switch>
             </Layout>
+            {/*<Toolbar />*/}
         </IonPage>
     </IonApp>
 

@@ -16,6 +16,12 @@ class StatPlayer extends Component {
   render() {
     return (
       <IonList>
+        <IonItem key="no-player" button color="itemColorLightBlue" onClick={this.props.selectPlayer.bind(this, "")}>
+          <IonLabel>SALTEAR</IonLabel>
+        </IonItem>
+        <IonItem key="rival-player" button color="salmon" onClick={this.props.selectPlayer.bind(this, "RIVAL")}>
+          <IonLabel>RIVAL</IonLabel>
+        </IonItem>
         {
           this.props.playerList.map((player) => (
             <IonItem key={player} button onClick={this.props.selectPlayer.bind(this, player)}>

@@ -23,6 +23,10 @@ class StatTypeGraphView extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      allPlayers: this.props.player == "",
+      rivalPlayers: this.props.player == "RIVAL"
+    }
   }
 
   componentDidMount() {
@@ -42,22 +46,38 @@ class StatTypeGraphView extends Component {
           team: teamQty
         }
       })
-      this.bars = new Chart("barChart", {
-        type: 'bar',
-        data: {
-          labels: Object.keys(updatedMap),
-          datasets: [{
+
+      var graphDatasets = []
+      if (this.state.rivalPlayers) {
+        graphDatasets.push({
+          label: "RIVAL",
+          data: Object.values(updatedMap).map(item => item.player),
+          backgroundColor: '#ffc1b9', // array should have same number of elements as number of dataset
+          borderWidth: 0
+        })
+      } else {
+        graphDatasets.push({
+          label: 'EQUIPO',
+          data: Object.values(updatedMap).map(item => item.team),
+          backgroundColor: 'rgb(161, 196, 201, 0.5)', // array should have same number of elements as number of dataset
+          borderWidth: 0
+        })
+
+        if(!this.state.allPlayers) {
+          graphDatasets.push({
             label: this.props.player,
             data: Object.values(updatedMap).map(item => item.player),
             backgroundColor: 'rgb(19, 79, 92, 0.5)', // array should have same number of elements as number of dataset
             borderWidth: 0
-          },
-          {
-            label: 'EQUIPO',
-            data: Object.values(updatedMap).map(item => item.team),
-            backgroundColor: 'rgb(161, 196, 201, 0.5)', // array should have same number of elements as number of dataset
-            borderWidth: 0
-          }]
+          })
+        }
+      }
+
+      this.bars = new Chart("barChart", {
+        type: 'bar',
+        data: {
+          labels: Object.keys(updatedMap),
+          datasets: graphDatasets
         },
         options: {
           scales: {

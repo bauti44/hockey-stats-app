@@ -55,8 +55,8 @@ class MatchList extends Component {
 
   removeMatch(matchId) {
     this.props.removeMatch(matchId).then((response) => {
-      if(response.success) {
-        this.setState({showToast: true, message: 'El partido se eliminó exitosamente'})
+      if (response.success) {
+        this.setState({ showToast: true, message: 'El partido se eliminó exitosamente' })
       }
       this.props.fetchMatches()
     })
@@ -101,12 +101,16 @@ class MatchList extends Component {
               </IonItem>
               <IonItemOptions side="start">
                 <IonItemOption color="salmon" onClick={this.removeMatch.bind(this, _id)}>
-                  <IonIcon name="trash" style={{ fontSize: '1.5rem' }} />
+                  <IonIcon name="trash" style={{ fontSize: '1.7rem' }} />
                 </IonItemOption>
               </IonItemOptions>
               <IonItemOptions side="end">
-                <IonItemOption color="darkBlue" onClick={this.createStat.bind(this, _id)}>Agregar</IonItemOption>
-                <IonItemOption color="lightBlue" onClick={this.viewStat.bind(this, _id)}>Ver</IonItemOption>
+                <IonItemOption color="darkBlue" onClick={this.createStat.bind(this, _id)}>
+                  <IonIcon name="create" style={{ fontSize: '1.5rem' }} />
+                </IonItemOption>
+                <IonItemOption color="lightBlue" onClick={this.viewStat.bind(this, _id)}>
+                  <IonIcon name="eye" style={{ fontSize: '1.7rem' }} />
+                </IonItemOption>
               </IonItemOptions>
             </IonItemSliding>
           ))

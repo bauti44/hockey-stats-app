@@ -1,6 +1,6 @@
 import React, { Fragment, Component } from 'react'
 import PropTypes from 'prop-types';
-import { fetchMatch } from '../../../actions/match'
+import { fetchMatch, fetchMatchesPlayers } from '../../../actions/match'
 import { connect } from 'react-redux'
 
 import {
@@ -15,11 +15,10 @@ import {
   IonIcon,
 } from '@ionic/react';
 import StatTypeView from './StatTypeView';
-import FieldZoneView from './FieldZoneView';
 import StatPlayerView from './StatPlayerView';
-import AreaZoneView from './AreaZoneView';
 import AuthRedirect from '../../user/AuthRedirect';
 import StatTypeGraphView from './StatTypeGraphView';
+import ZoneView from './ZoneView';
 
 class StatView extends Component {
 
@@ -32,10 +31,10 @@ class StatView extends Component {
       statZoneType: '',
       statZoneValue: '',
       player: '',
+      playerAgreggatedList: [],
       renderStatViewMain: true,
       renderStatType: false,
-      renderStatZoneField: false,
-      renderStatZoneArea: false,
+      renderStatZone: false,
       renderStatPlayer: false,
       renderStatTypeGraphView: false,
     }
@@ -52,18 +51,48 @@ class StatView extends Component {
       if (this.state.renderStatViewMain) {
         global.defaultBackFunction()
       } else {
-        this.setState({ renderStatViewMain: true })
+        this.resetToMainState()
       }
     }
-    this.props.fetchMatch(this.state.matchId);
+    if (this.state.matchId == "all") {
+      this.fetchAllPlayers()
+    } else {
+      this.props.fetchMatch(this.state.matchId);
+    }
+  }
+
+  resetToMainState() {
+    this.setState({ 
+      renderStatViewMain: true, 
+      fromStatZone: false, 
+      fromStatTypeGraph: false,
+      quarter: 'q1',
+      statType: '',
+      statZoneType: '',
+      statZoneValue: '',
+      player: '',
+    })
+  }
+
+  fetchAllPlayers() {
+    this.props.fetchMatchesPlayers().then(response => {
+      if (response.success) {
+        let playerAgreggatedListTemp = []
+        if (response.data.length > 0) {
+          response.data.forEach(matchPlayersItem => {
+            playerAgreggatedListTemp.push(...matchPlayersItem.playerList)
+          });
+          this.setState({ playerAgreggatedList: Array.from(new Set(playerAgreggatedListTemp)) })
+        }
+      }
+    })
   }
 
   resetRender() {
     this.setState({
       renderStatViewMain: false,
       renderStatType: false,
-      renderStatZoneField: false,
-      renderStatZoneArea: false,
+      renderStatZone: false,
       renderStatPlayer: false,
       renderStatTypeGraphView: false,
     })
@@ -71,21 +100,21 @@ class StatView extends Component {
 
   onStatType() {
     this.resetRender()
-    this.setState({ renderStatType: true });
+    this.setState({ renderStatType: true, fromStatZone: true });
   }
 
   onPlayer() {
     this.resetRender()
-    this.setState({ renderStatPlayer: true });
+    this.setState({ renderStatPlayer: true, fromStatTypeGraph: true })
   }
 
   selectType(statType) {
     this.resetRender()
-    this.setState({ statType: statType.value, statZoneType: statType.zone });
-    if (statType.zone == 'field') {
-      this.setState({ renderStatZoneField: true });
-    } else {
-      this.setState({ renderStatZoneArea: true });
+    this.setState({ statType: statType.value, statZoneType: statType.zone })
+    if (this.state.fromStatTypeGraph) {
+      this.setState({ renderStatTypeGraphView: true })
+    } else if (this.state.fromStatZone) {
+      this.setState({ renderStatZone: true })
     }
   }
 
@@ -100,16 +129,26 @@ class StatView extends Component {
 
   selectPlayer(value) {
     this.resetRender();
-    this.setState({ player: value, renderStatTypeGraphView: true });
+    this.setState({ player: value })
+    if (this.state.fromStatTypeGraph) {
+      this.setState({ renderStatTypeGraphView: true })
+    } else {
+      this.setState({ renderStatZone: true })
+    }
   }
 
-  onOptions() {
+  onPlayersFilter() {
     this.resetRender()
-    if (this.state.renderStatTypeGraphView) {
-      this.setState({ renderStatPlayer: true })
-    } else if (this.state.renderStatZoneField || this.state.renderStatZoneArea) {
-      this.setState({ renderStatType: true })
-    }
+    this.setState({ renderStatPlayer: true })
+  }
+
+  onStatFilter() {
+    this.setState({
+      fromStatTypeGraph: this.state.renderStatTypeGraphView,
+      fromStatZone: this.state.renderStatZone
+    })
+    this.resetRender()
+    this.setState({ renderStatType: true })
   }
 
   onSuccess() {
@@ -119,24 +158,41 @@ class StatView extends Component {
       statZoneValue: '',
       player: '',
       renderStatType: true,
-      renderStatZoneField: false,
-      renderStatZoneArea: false,
+      renderStatZone: false,
       renderStatPlayer: false,
     });
+  }
+
+  getPlayerList() {
+    if (this.state.matchId == "all") {
+      return this.state.playerAgreggatedList
+    } else {
+      return this.props.matchDetails.playerList
+    }
   }
 
   render() {
     return (
       <>
         <IonListHeader>
-          <IonLabel><h1>{this.props.matchDetails.teamHome} - {this.props.matchDetails.teamAway}</h1></IonLabel>
-          {this.state.renderStatTypeGraphView || this.state.renderStatZoneField || this.state.renderStatZoneArea ?
-            <IonButtons>
-              <IonButton onClick={this.onOptions.bind(this)} shape="round" slot="icon-only" style={{ paddingRight: '0.5rem' }}>
+          {this.state.matchId == "all" ? <></> :
+            <IonLabel><h1>{this.props.matchDetails.teamHome} - {this.props.matchDetails.teamAway}</h1></IonLabel>
+          }
+          {this.state.renderStatZone ?
+            <IonLabel><h1>{this.state.player}</h1></IonLabel> : <></>}
+          <IonButtons >
+            {this.state.renderStatTypeGraphView || this.state.renderStatZone ?
+              <IonButton onClick={this.onPlayersFilter.bind(this)} shape="round" slot="icon-only" style={{ paddingRight: '0.5rem' }}>
+                <IonIcon name="people" style={{ fontSize: '24px' }} />
+              </IonButton>
+              : <></>}
+            {this.state.renderStatZone ?
+              <IonButton onClick={this.onStatFilter.bind(this)} shape="round" slot="icon-only" style={{ paddingRight: '0.5rem' }}>
                 <IonIcon name="options" style={{ fontSize: '24px' }} />
               </IonButton>
-            </IonButtons>
-            : <></>}
+              : <></>
+            }
+          </IonButtons>
         </IonListHeader>
         <IonItemDivider style={{ minHeight: '0.5rem' }} />
         {this.state.renderStatViewMain ?
@@ -157,9 +213,8 @@ class StatView extends Component {
           </IonGrid>
           : <></>}
         {this.state.renderStatType ? <StatTypeView value={this.state.quarter} selectType={this.selectType} selectQuarter={this.selectQuarter} /> : <> </>}
-        {this.state.renderStatZoneField ? <FieldZoneView matchId={this.state.matchId} selectZone={this.selectZone} statType={this.state.statType} /> : <> </>}
-        {this.state.renderStatZoneArea ? <AreaZoneView matchId={this.state.matchId} selectZone={this.selectZone} statType={this.state.statType} /> : <> </>}
-        {this.state.renderStatPlayer ? <StatPlayerView selectPlayer={this.selectPlayer} playerList={this.props.matchDetails.playerList} /> : <> </>}
+        {this.state.renderStatZone ? <ZoneView player={this.state.player} statZoneType={this.state.statZoneType} matchId={this.state.matchId} selectZone={this.selectZone} statType={this.state.statType} /> : <> </>}
+        {this.state.renderStatPlayer ? <StatPlayerView selectPlayer={this.selectPlayer} playerList={this.getPlayerList()} /> : <> </>}
         {this.state.renderStatTypeGraphView ? <StatTypeGraphView matchId={this.state.matchId} player={this.state.player} /> : <> </>}
         <AuthRedirect />
       </>
@@ -175,7 +230,8 @@ const mapStateToProps = (state) => {
 
 StatView.propTypes = {
   fetchMatch: PropTypes.func.isRequired,
+  fetchMatchesPlayers: PropTypes.func.isRequired,
   matchDetails: PropTypes.object.isRequired
 }
 
-export default connect(mapStateToProps, { fetchMatch })(StatView)
+export default connect(mapStateToProps, { fetchMatch, fetchMatchesPlayers })(StatView)
