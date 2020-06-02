@@ -39,7 +39,7 @@ statRoutes.get('/stats', authMiddleware, (request, response) => {
       response.json(responseData)
     })
   } else {
-    responseData.errors.push({ type: 'critical', message: 'You are not signed in. Please sign in to create a match.' })
+    responseData.errors.push({ type: 'critical', message: 'You are not signed in. Please sign in to list stats.' })
     response.json(responseData)
   }
 })
@@ -110,7 +110,31 @@ statRoutes.get('/stat/:statId', authMiddleware, (request, response) => {
       response.json(responseData)
     }
   } else {
-    responseData.errors.push({ type: 'critical', message: 'You are not signed in. Please sign in to create a match.' })
+    responseData.errors.push({ type: 'critical', message: 'You are not signed in. Please sign in to get a stat.' })
+    response.json(responseData)
+  }
+})
+
+// Single Stat delete (/stat/statId)
+statRoutes.delete('/stast/:statId', authMiddleware, (request, response) => {
+  let responseData = {
+    success: false,
+    data: {},
+    errors: []
+  }
+  if (!isEmpty(request.user)) {
+    var filters = {_id: request.params.statId}
+    if (request.user.role != 'ADMIN') {
+      filters["userId"] = request.user._id;
+    }
+    Stat.deleteOne(filters).exec(function (error, document) {
+      if (document.ok) {
+        responseData.success = true
+      }
+      response.json(responseData)
+    })
+  } else {
+    responseData.errors.push({ type: 'critical', message: 'You are not signed in. Please sign in to delete a stat.' })
     response.json(responseData)
   }
 })
