@@ -1,0 +1,93 @@
+@media screen and (min-width: 501px) {
+    ion-grid {
+        height: 90%;
+    
+        &.statViewGrid {
+            background: url('/assets/stat-bg.png') no-repeat center fixed;     
+            background-size: cover;
+            height: 100%;
+            ion-row {
+                height: 33%;
+            }
+            ion-button {
+                min-width: 100%;
+                --background-activated: #a1c4c9;        
+            }
+        }
+    
+        &.field {
+            background: url('/assets/field.png') no-repeat center;     
+            background-size: contain;
+            height: 90%;
+            
+            ion-row {
+                height: 25%;
+                width: 90%;
+                margin-left: 5%;
+                margin-right: 5%;
+            }
+
+            ion-col {
+                border: solid 1px #ddd;
+                background-color: rgba($color: #134f5c, $alpha: 0.2);
+                text-align: center;
+                height: 90%;
+                margin-top: 2%;
+                &.left {
+                    margin-left: 0rem;
+                    margin-right: 1%;
+                }
+                &.center {
+                    margin-left: 1%;
+                    margin-right: 1%;
+                }
+                &.right {
+                    margin-left: 1%;
+                    margin-right: 0rem;
+                }
+                ion-label {
+                    font-size: 3rem;
+                    line-height: 4;
+                }
+            }
+        }
+        &.area {
+            background: url('/assets/area.png') no-repeat center;     
+            background-size: cover;
+    
+            ion-row {
+                height: 17.1%;
+            }
+
+            ion-col {
+                height: 100%;
+                margin: 0;
+            }
+        }
+        &.areaView {
+            background: url('/assets/area.png') no-repeat center;     
+            background-size: cover;
+    
+            ion-row {
+                height: 20%;
+            }
+    
+            ion-col {
+                height: 100%;           
+                margin: 2% 0;
+                text-align: center;
+    
+                ion-label {
+                    font-size: 3rem;
+                    line-height: 3;
+                    &.first {
+                        line-height: 3;
+                    }
+                    &.last {
+                        line-height: 3;
+                    }
+                }
+            }
+        }
+    }
+}

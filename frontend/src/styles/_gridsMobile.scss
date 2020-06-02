@@ -1,0 +1,71 @@
+@media screen and (max-width: 500px) {
+    ion-grid {
+        &.statViewGrid {
+            background: url('/assets/stat-bg.png') no-repeat center fixed;     
+            background-size: cover;
+            height: 100%;
+            ion-row {
+                height: 33%;
+            }
+            ion-button {
+                min-width: 100%;
+                --background-activated: #a1c4c9;        
+            }
+        }
+    
+        &.field {
+            background: url('/assets/field.png') no-repeat center;     
+            background-size: contain;
+    
+            ion-col {
+                border: solid 1px #ddd;
+                height: 7rem;
+                background-color: rgba($color: #134f5c, $alpha: 0.2);
+                text-align: center;
+                &.left {
+                    margin: 0.4rem 0rem 0.4rem 1rem;
+                }
+                &.center {
+                    margin: 0.4rem 1rem 0.4rem 1rem;
+                }
+                &.right {
+                    margin: 0.4rem 1rem 0.4rem 0rem;
+                }
+                ion-label {
+                    font-size: 3rem;
+                    line-height: 6rem;
+                }
+            }
+        }
+        &.area {
+            background: url('/assets/area.png') no-repeat center;     
+            background-size: cover;
+    
+            ion-col {
+                height: 5.2rem;           
+                margin: 0.1em 0em;
+            }
+        }
+        &.areaView {
+            background: url('/assets/area.png') no-repeat center;     
+            background-size: cover;
+    
+            ion-col {
+                height: 4.8rem;           
+                margin: 1em 0em;
+                text-align: center;
+    
+                ion-label {
+                    font-size: 2rem;
+                    line-height: 4.5rem;
+                    &.first {
+                        line-height: 7rem;
+                    }
+                    &.last {
+                        line-height: 1rem;
+                    }
+                }
+            }
+        }
+    }
+}
