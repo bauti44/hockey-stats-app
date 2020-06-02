@@ -116,7 +116,7 @@ statRoutes.get('/stat/:statId', authMiddleware, (request, response) => {
 })
 
 // Single Stat delete (/stat/statId)
-statRoutes.delete('/stast/:statId', authMiddleware, (request, response) => {
+statRoutes.delete('/stat/:statId', authMiddleware, (request, response) => {
   let responseData = {
     success: false,
     data: {},
