@@ -42,13 +42,18 @@ ion-icon {
     &.sc-ion-back-button-ios {
         fill: #fff;
     }
-    &[name='add'], &[name='save'],&[name='create'],&[name='list'],&[name='square'],&[name='mic'] {
+    &[name='add'], &[name='save'],&[name='create'],&[name='list'],&[name='square'],&[name='mic'],&[name='menu'] {
         fill: #fff;    
     }
 }
+
 ion-fab-button {
    --background: #134f5c;
    --background-activated: #89a7ad;
+}
+
+ion-menu-button {
+    color: #fff !important;
 }
 
 ion-button {
