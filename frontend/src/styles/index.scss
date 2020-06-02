@@ -6,6 +6,16 @@
 // Components
 @import "../components/Menu/Menu";
 
+// Stat view
+@import "../pages/stat/view/StatView";
+
+// Match View
+@import "../pages/match/MatchList";
+
+
+ion-item-divider {
+    min-height: 0.5rem !important;
+}
 
 h1 {
     font-size: 1.2rem !important;

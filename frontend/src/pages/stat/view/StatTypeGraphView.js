@@ -1,9 +1,10 @@
-import React, { Fragment, Component } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { fetchStats } from '../../../actions/stat'
 import { connect } from 'react-redux'
 
 import { Chart } from 'chart.js';
+import CONSTANTS from '../../../helpers/Constants';
 
 const statTypeList =
 {
@@ -24,8 +25,8 @@ class StatTypeGraphView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      allPlayers: this.props.player == "",
-      rivalPlayers: this.props.player == "RIVAL"
+      allPlayers: this.props.player === CONSTANTS.EMPTY_PLAYERS,
+      rivalPlayers: this.props.player === CONSTANTS.RIVAL
     }
   }
 
@@ -34,11 +35,11 @@ class StatTypeGraphView extends Component {
       var updatedMap = {}
       Object.keys(statTypeList).forEach(key => {
         var playerQty = response.data.filter(item => {
-          return item.player == this.props.player && item.statType == key
+          return item.player === this.props.player && item.statType === key
         }).length
 
         var teamQty = response.data.filter(item => {
-          return item.statType == key
+          return item.statType === key
         }).length
 
         updatedMap[statTypeList[key]] = {

@@ -4,6 +4,8 @@ import { fetchMatches, removeMatch } from '../../actions/match'
 import { connect } from 'react-redux'
 import { IonList, IonItemSliding, IonItem, IonLabel, IonItemOptions, IonItemOption, IonListHeader, IonFab, IonFabButton, IonIcon, IonRefresher, IonRefresherContent, IonToast, IonSearchbar, IonButton, IonItemDivider, IonButtons } from '@ionic/react';
 import AuthRedirect from '../user/AuthRedirect';
+import CONSTANTS from '../../helpers/Constants';
+import URL_REPO from '../../helpers/UrlRepo';
 
 class MatchList extends Component {
 
@@ -23,9 +25,9 @@ class MatchList extends Component {
     this.props.fetchMatches()
 
     setTimeout(() => {
-      let showSuccess = window.location.search?.indexOf('showSuccess') !== -1;
+      let showSuccess = window.location.search?.indexOf(CONSTANTS.SHOW_SUCCESS_FLAG) !== -1;
       this.setState({ showToast: showSuccess })
-    }, 500)
+    }, CONSTANTS.TIMEOUT)
   }
 
   createStat(id) {
@@ -39,7 +41,7 @@ class MatchList extends Component {
   }
 
   onCreateMatchClick() {
-    this.props.history.push('/match/create');
+    this.props.history.push(URL_REPO.MATCH_CREATE);
   }
 
   doRefresh(event) {
@@ -67,7 +69,7 @@ class MatchList extends Component {
   }
 
   joinText(...values) {
-    if (!values && values.length == 0) {
+    if (!values && values.length === 0) {
       return '';
     }
     return values.join('').toLowerCase();
@@ -83,12 +85,12 @@ class MatchList extends Component {
           <IonListHeader>
             <IonLabel><h1>Partidos</h1></IonLabel>
             <IonButtons>
-              <IonButton shape="round" slot="icon-only" style={{ paddingRight: '0.5rem' }} onClick={this.toggleSearch.bind(this)}>
-                <IonIcon name="options" style={{ fontSize: '24px' }} />
+              <IonButton class="matchListOptionButton" shape="round" slot="icon-only" onClick={this.toggleSearch.bind(this)}>
+                <IonIcon class="matchListOptionIcon" name="options" />
               </IonButton>
             </IonButtons>
           </IonListHeader>
-          <IonItemDivider style={{ minHeight: '0.5rem' }} />
+          <IonItemDivider />
           {this.state.showSearch ?
             <IonSearchbar value={this.state.searchText} placeholder="Buscar" onIonChange={e => this.onSearch(e.detail.value)}></IonSearchbar>
             : <></>}
@@ -101,15 +103,15 @@ class MatchList extends Component {
               </IonItem>
               <IonItemOptions side="start">
                 <IonItemOption color="salmon" onClick={this.removeMatch.bind(this, _id)}>
-                  <IonIcon name="trash" style={{ fontSize: '1.7rem' }} />
+                  <IonIcon class="sliderIcon" name="trash" />
                 </IonItemOption>
               </IonItemOptions>
               <IonItemOptions side="end">
                 <IonItemOption color="darkBlue" onClick={this.createStat.bind(this, _id)}>
-                  <IonIcon name="create" style={{ fontSize: '1.5rem' }} />
+                  <IonIcon name="create" />
                 </IonItemOption>
                 <IonItemOption color="lightBlue" onClick={this.viewStat.bind(this, _id)}>
-                  <IonIcon name="eye" style={{ fontSize: '1.7rem' }} />
+                  <IonIcon name="eye" />
                 </IonItemOption>
               </IonItemOptions>
             </IonItemSliding>

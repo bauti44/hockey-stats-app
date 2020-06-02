@@ -5,10 +5,11 @@ import { connect } from 'react-redux'
 import MatchPlayerList from './MatchPlayerList';
 
 import {
-  IonButton, IonLoading, IonToast, IonListHeader, IonList, IonItem, IonInput, IonLabel, IonSelect, IonSelectOption,
+  IonButton, IonLoading, IonToast, IonList, IonItem, IonInput, IonLabel, IonSelect, IonSelectOption,
 } from '@ionic/react';
 import AuthRedirect from '../user/AuthRedirect';
-
+import URL_REPO from '../../helpers/UrlRepo';
+import CONSTANTS from '../../helpers/Constants';
 
 class MatchCreate extends Component {
 
@@ -78,7 +79,7 @@ class MatchCreate extends Component {
     this.props.createMatch(match).then((response) => {
       if (response.success) {
         this.setState({ isLoading: false })
-        this.props.history.push('/match/list?showSuccess')
+        this.props.history.push(URL_REPO.MATCH_LIST + '?' + CONSTANTS.SHOW_SUCCESS_FLAG)
       } else {
         this.setState({ isLoading: false, showToast: true, error: response.errors[0].message })
       }
@@ -135,13 +136,6 @@ class MatchCreate extends Component {
 
 MatchCreate.propTypes = {
   createMatch: PropTypes.func.isRequired,
-  playerFromAllMatchesList: PropTypes.array.isRequired,
 }
 
-const mapStateToProps = (state) => {
-  return {
-    playerFromAllMatchesList: ["Luchi", "Delpi", "Mica", "Ines", "Belu", "Rochi", "Vichi", "Abru", "Lulu", "Francia", "Martu"]
-  };
-}
-
-export default connect(mapStateToProps, { createMatch })(MatchCreate)
+export default connect(null, { createMatch })(MatchCreate)

@@ -1,5 +1,6 @@
 // App Imports
 import config from '../config'
+import CONSTANTS from '../helpers/Constants'
 
 export const SET_STATS = 'SET_STATS'
 export const FETCH_STATS_BEGIN = 'FETCH_STATS_BEGIN'
@@ -9,7 +10,7 @@ export const FETCH_STAT_BEGIN = 'FETCH_STAT_BEGIN'
 export function fetchStats (matchId) {
   return dispatch => {
     var uri;
-    if(matchId == "all") {
+    if(matchId === CONSTANTS.ALL_MATCHES) {
       uri = `${ config.url.api }stats`
     } else {
       uri = `${ config.url.api }stats?matchId=${ matchId }`

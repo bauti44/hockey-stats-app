@@ -14,7 +14,6 @@ import Menu from './components/Menu/Menu';
 import Layout from './layout/Layout';
 import UserLogin from './pages/user/UserLogin';
 import Home from './pages/Home';
-import Toolbar from './components/Toolbar/Toolbar';
 
 const Routes = () => (
     <IonApp>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
+import CONSTANTS from '../../../helpers/Constants'
 
 import {
   IonList,
@@ -9,17 +10,13 @@ import {
 
 class StatPlayer extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <IonList>
-        <IonItem key="no-player" button color="itemColorLightBlue" onClick={this.props.selectPlayer.bind(this, "")}>
-          <IonLabel>SALTEAR</IonLabel>
+        <IonItem key="no-player" button color="itemColorLightBlue" onClick={this.props.selectPlayer.bind(this, CONSTANTS.EMPTY_PLAYERS)}>
+          <IonLabel>OMITIR</IonLabel>
         </IonItem>
-        <IonItem key="rival-player" button color="salmon" onClick={this.props.selectPlayer.bind(this, "RIVAL")}>
+        <IonItem key="rival-player" button color="salmon" onClick={this.props.selectPlayer.bind(this, CONSTANTS.RIVAL)}>
           <IonLabel>RIVAL</IonLabel>
         </IonItem>
         {

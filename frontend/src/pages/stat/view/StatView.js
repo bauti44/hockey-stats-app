@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { fetchMatch, fetchMatchesPlayers } from '../../../actions/match'
 import { connect } from 'react-redux'
@@ -20,6 +20,8 @@ import StatPlayerView from './StatPlayerView';
 import AuthRedirect from '../../user/AuthRedirect';
 import StatTypeGraphView from './StatTypeGraphView';
 import ZoneView from './ZoneView';
+import CONSTANTS from '../../../helpers/Constants';
+import URL_REPO from '../../../helpers/UrlRepo';
 
 class StatView extends Component {
 
@@ -55,7 +57,7 @@ class StatView extends Component {
         this.resetToMainState()
       }
     }
-    if (this.state.matchId == "all") {
+    if (this.state.matchId === CONSTANTS.ALL_MATCHES) {
       this.fetchAllPlayers()
     } else {
       this.props.fetchMatch(this.state.matchId);
@@ -171,7 +173,7 @@ class StatView extends Component {
   }
 
   getPlayerList() {
-    if (this.state.matchId == "all") {
+    if (this.state.matchId === CONSTANTS.ALL_MATCHES) {
       return this.state.playerAgreggatedList
     } else {
       return this.props.matchDetails.playerList
@@ -179,26 +181,26 @@ class StatView extends Component {
   }
 
   onMatchRemove() {
-    this.props.history.push('/match/all/stat/view')
-    this.setState({ matchId: "all" })
+    this.props.history.push(URL_REPO.ALL_STAT_VIEW)
+    this.setState({ matchId: CONSTANTS.ALL_MATCHES })
     this.fetchAllPlayers()
     setTimeout(() => {
       this.refreshRender()
-    }, 100);
+    }, CONSTANTS.TIMEOUT);
   }
 
   onPlayerRemove() {
-    this.setState({player: ''})
+    this.setState({player: CONSTANTS.EMPTY_PLAYERS})
     setTimeout(() => {
       this.refreshRender()
-    }, 100);
+    }, CONSTANTS.TIMEOUT);
   }
 
   render() {
     return (
       <>
         <IonListHeader>
-          {this.state.matchId == "all" ? <></> :
+          {this.state.matchId === CONSTANTS.ALL_MATCHES ? <></> :
             <IonChip color="itemColorLightBlue" onClick={this.onMatchRemove.bind(this)}>
               <IonLabel><h2>{this.props.matchDetails.teamHome} - {this.props.matchDetails.teamAway}</h2></IonLabel>
               <IonIcon name="close-circle" />
@@ -212,19 +214,19 @@ class StatView extends Component {
             : <IonLabel></IonLabel>}
           <IonButtons >
             {this.state.renderStatTypeGraphView || this.state.renderStatZone ?
-              <IonButton onClick={this.onPlayersFilter.bind(this)} shape="round" slot="icon-only" style={{ paddingRight: '0.5rem' }}>
-                <IonIcon name="people" style={{ fontSize: '24px' }} />
+              <IonButton class="statOptionsButton" onClick={this.onPlayersFilter.bind(this)} shape="round" slot="icon-only">
+                <IonIcon class="statOptionsIcon" name="people" />
               </IonButton>
               : <></>}
             {this.state.renderStatZone ?
-              <IonButton onClick={this.onStatFilter.bind(this)} shape="round" slot="icon-only" style={{ paddingRight: '0.5rem' }}>
-                <IonIcon name="options" style={{ fontSize: '24px' }} />
+              <IonButton class="statOptionsButton" onClick={this.onStatFilter.bind(this)} shape="round" slot="icon-only">
+                <IonIcon class="statOptionsIcon" name="options" />
               </IonButton>
               : <></>
             }
           </IonButtons>
         </IonListHeader>
-        <IonItemDivider style={{ minHeight: '0.5rem' }} />
+        <IonItemDivider />
         {this.state.renderStatViewMain ?
           <IonGrid fixed={true} class="statViewGrid">
             <IonRow>

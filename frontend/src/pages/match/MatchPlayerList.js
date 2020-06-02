@@ -15,6 +15,7 @@ import {
 } from '@ionic/react';
 import { connect } from 'react-redux';
 import { fetchMatchesPlayers } from '../../actions/match'
+import CONSTANTS from '../../helpers/Constants';
 
 class MatchPlayerList extends Component {
 
@@ -28,14 +29,14 @@ class MatchPlayerList extends Component {
   }
 
   addPlayer() {
-    if (this.state.newPlayerName == '') {
+    if (this.state.newPlayerName === CONSTANTS.EMPTY_PLAYERS) {
       return;
     }
     setTimeout(() => {
       var playerListTemp = [...this.state.playerList];
       playerListTemp.push(this.state.newPlayerName.toUpperCase())
-      this.setState({ playerList: playerListTemp, newPlayerName: '' })
-    }, 300);
+      this.setState({ playerList: playerListTemp, newPlayerName: CONSTANTS.EMPTY_PLAYERS })
+    }, CONSTANTS.TIMEOUT);
   }
 
   removePlayer(player) {
@@ -46,10 +47,12 @@ class MatchPlayerList extends Component {
         playerListTemp.splice(index, 1);
         this.setState({ playerList: playerListTemp });
       }
-    }, 300);
+    }, CONSTANTS.TIMEOUT);
   }
 
   importPlayers() {
+    
+
     this.props.fetchMatchesPlayers().then(response => {
       if (response.success) {
         let playerAgreggatedList = []
@@ -57,7 +60,7 @@ class MatchPlayerList extends Component {
           response.data.forEach(matchPlayersItem => {
             playerAgreggatedList.push(...matchPlayersItem.playerList)
           });
-          this.setState({ playerList: Array.from(new Set(playerAgreggatedList)), newPlayerName: '' })
+          this.setState({ playerList: Array.from(new Set(playerAgreggatedList)), newPlayerName: CONSTANTS.EMPTY_PLAYERS })
         }
       }
     })

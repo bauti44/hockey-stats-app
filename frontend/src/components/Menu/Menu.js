@@ -11,12 +11,10 @@ import {
 } from '@ionic/react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
+import URL_REPO from '../../helpers/UrlRepo'
+
 
 class Menu extends Component {
-
-  constructor(props) {
-    super(props);
-  }
 
   goBack() {
     global.backFunction()
@@ -30,11 +28,11 @@ class Menu extends Component {
           {isAuthenticated ?
             <>
               <IonButtons slot="start">
-                <IonBackButton defaultHref="/" onClick={this.goBack.bind(this)} />
+                <IonBackButton defaultHref={URL_REPO.ROOT} onClick={this.goBack.bind(this)} />
               </IonButtons>
               <IonButtons slot="end">
                 <IonButton shape="round" slot="icon-only">
-                  <a href="/match/list">
+                  <a href={URL_REPO.MATCH_LIST}>
                     <IonIcon size="large" name="list" />
                   </a>
                 </IonButton>

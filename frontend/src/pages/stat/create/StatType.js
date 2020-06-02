@@ -1,14 +1,14 @@
-import React, { Fragment, Component } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 
 import {
   IonList,
   IonItem,
   IonLabel,
-  IonIcon,
   IonSegment,
   IonSegmentButton,
 } from '@ionic/react';
+import CONSTANTS from '../../../helpers/Constants';
 
 const statTypeList = [
   { name: 'Salida', value: 'st', zone: 'field' },
@@ -31,9 +31,6 @@ const quarterList = [
 ];
 
 class StatType extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <>
@@ -49,7 +46,7 @@ class StatType extends Component {
         <IonList>
           {
             statTypeList.map((statTypeItem) => (
-              <IonItem key={statTypeItem.name} color={statTypeItem.zone == 'area' ? "itemColorLightBlue" : "itemColorBlue"} button
+              <IonItem key={statTypeItem.name} color={statTypeItem.zone === CONSTANTS.AREA ? "itemColorLightBlue" : "itemColorBlue"} button
                 onClick={this.props.selectType.bind(this, statTypeItem)}>
                 <IonLabel>{statTypeItem.name.toUpperCase()}</IonLabel>
               </IonItem>

@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { fetchMatch } from '../../../actions/match'
 import { postStat } from '../../../actions/stat'
@@ -16,6 +16,7 @@ import FieldZone from './FieldZone';
 import StatPlayer from './StatPlayer';
 import AreaZone from './AreaZone';
 import AuthRedirect from '../../user/AuthRedirect';
+import CONSTANTS from '../../../helpers/Constants';
 
 class StatCreate extends Component {
 
@@ -51,9 +52,9 @@ class StatCreate extends Component {
         global.defaultBackFunction()
       } else if (this.state.renderStatZoneField || this.state.renderStatZoneArea) {
         this.setState({ renderStatType: true })
-      } else if (this.state.renderStatPlayer && this.state.statZoneType == "field") {
+      } else if (this.state.renderStatPlayer && this.state.statZoneType === CONSTANTS.FIELD) {
         this.setState({ renderStatZoneField: true })
-      } else if (this.state.renderStatPlayer && this.state.statZoneType == "area") {
+      } else if (this.state.renderStatPlayer && this.state.statZoneType === CONSTANTS.AREA) {
         this.setState({ renderStatZoneArea: true })
       }
     }
@@ -72,7 +73,7 @@ class StatCreate extends Component {
   selectType(statType) {
     this.resetRender()
     this.setState({ statType: statType.value, statZoneType: statType.zone });
-    if (statType.zone == 'field') {
+    if (statType.zone === CONSTANTS.FIELD) {
       this.setState({ renderStatZoneField: true });
     } else {
       this.setState({ renderStatZoneArea: true });
@@ -91,7 +92,7 @@ class StatCreate extends Component {
 
   selectPlayer(value) {
     this.setState({ player: value });
-    setTimeout(() => this.submit(), 500);
+    setTimeout(() => this.submit(), CONSTANTS.TIMEOUT);
   }
 
   submit() {
@@ -106,7 +107,7 @@ class StatCreate extends Component {
     }
     this.props.postStat(stat).then(response => {
       if (response.success) {
-        setTimeout(() => this.onSuccess(), 500);
+        setTimeout(() => this.onSuccess(), CONSTANTS.TIMEOUT);
       } else {
         this.setState({ isLoading: false, showToastError: true, error: response.errors[0].message })
       }
@@ -136,7 +137,7 @@ class StatCreate extends Component {
         <IonListHeader>
           <IonLabel><h1>{this.props.matchDetails.teamHome} - {this.props.matchDetails.teamAway}</h1></IonLabel>
         </IonListHeader>
-        <IonItemDivider style={{ minHeight: '0.5rem' }} />
+        <IonItemDivider />
         {this.state.renderStatType ? <StatType value={this.state.quarter} selectType={this.selectType} selectQuarter={this.selectQuarter} /> : <> </>}
         {this.state.renderStatZoneField ? <FieldZone selectZone={this.selectZone} /> : <> </>}
         {this.state.renderStatZoneArea ? <AreaZone selectZone={this.selectZone} /> : <> </>}

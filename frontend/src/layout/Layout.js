@@ -4,16 +4,9 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { IonContent } from '@ionic/react';
 
-// App Imports
-
 class Layout extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
-    const { isAuthenticated } = this.props.user
-
     return (
       <IonContent>
         {this.props.children}

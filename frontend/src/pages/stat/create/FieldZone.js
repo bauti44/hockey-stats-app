@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 
 import {
@@ -6,10 +6,6 @@ import {
 } from '@ionic/react';
 
 class FieldZone extends Component {
-
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     return (

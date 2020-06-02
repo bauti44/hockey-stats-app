@@ -7,6 +7,7 @@ import PropTypes from 'prop-types'
 // App Imports
 import { postLogin } from '../../actions/user'
 import { IonInput, IonButton, IonList, IonLabel, IonItem, IonListHeader, IonToast } from '@ionic/react'
+import CONSTANTS from '../../helpers/Constants'
 
 class UserLogin extends Component {
   constructor(props) {
@@ -47,7 +48,7 @@ class UserLogin extends Component {
           // Redirect
           setTimeout(() => {
             this.setState({ logged: true })
-          }, 1000)
+          }, CONSTANTS.LONG_TIMEOUT)
         } else {
           this.setState({
             isLoading: false,

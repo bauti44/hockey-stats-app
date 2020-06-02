@@ -1,7 +1,12 @@
-.areaItem {
-    --ion-color-base: var(--ion,  #a1c4c9)!important;
+ion-icon {
+    &.statOptionsIcon {
+        font-size: 24px !important;
+    }
 }
 
-.fieldItem {
-    background-color: #e06666;
+ion-button {
+    &.statOptionsButton{
+        padding-right: 0.5rem !important;
+
+    }
 }
