@@ -23,6 +23,9 @@ statRoutes.get('/stats', authMiddleware, (request, response) => {
 
   if (!isEmpty(request.user)) {
     var filters = request.query;
+    if (request.user.role != 'ADMIN') {
+      filters["userId"] = request.user._id;
+    }
     var count = request.query.count;
     var query = undefined;
     if (request.query.count) {
@@ -80,12 +83,10 @@ statRoutes.post('/stat/add', authMiddleware, (request, response) => {
       })
     } else {
       responseData.errors.push({ type: 'warning', message: 'Please enter a stat.' })
-
       response.json(responseData)
     }
   } else {
     responseData.errors.push({ type: 'critical', message: 'You are not signed in. Please sign in to create a stat.' })
-
     response.json(responseData)
   }
 })
