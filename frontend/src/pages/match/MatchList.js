@@ -108,10 +108,10 @@ class MatchList extends Component {
               </IonItemOptions>
               <IonItemOptions side="end">
                 <IonItemOption color="darkBlue" onClick={this.createStat.bind(this, _id)}>
-                  <IonIcon name="create" />
+                  <IonIcon class="sliderIcon" name="create" />
                 </IonItemOption>
                 <IonItemOption color="lightBlue" onClick={this.viewStat.bind(this, _id)}>
-                  <IonIcon name="eye" />
+                  <IonIcon class="sliderIcon" name="eye" />
                 </IonItemOption>
               </IonItemOptions>
             </IonItemSliding>
