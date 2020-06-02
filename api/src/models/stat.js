@@ -59,6 +59,8 @@ let StatSchema = mongoose.Schema({
       Any uppercase string
   */
   player: String,
+  userId: String,
+  createdAt: Date
 })
 
 let Stat = mongoose.model('stats', StatSchema)

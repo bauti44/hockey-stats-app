@@ -20,22 +20,28 @@ statRoutes.get('/stats', authMiddleware, (request, response) => {
     data: [],
     errors: []
   }
-  var filters = request.query;
-  var count = request.query.count;
-  var query = undefined;
-  if(request.query.count) {
-    delete filters['count'];
-    query = Stat.countDocuments(filters);
-  } else {
-    query = Stat.find(filters);
-  }
-  query.exec(function (error, documents) {
-    if (count || documents.length > 0) {
-      responseData.data = documents
-      responseData.success = true
+
+  if (!isEmpty(request.user)) {
+    var filters = request.query;
+    var count = request.query.count;
+    var query = undefined;
+    if (request.query.count) {
+      delete filters['count'];
+      query = Stat.countDocuments(filters);
+    } else {
+      query = Stat.find(filters);
     }
+    query.exec(function (error, documents) {
+      if (count || documents.length > 0) {
+        responseData.data = documents
+        responseData.success = true
+      }
+      response.json(responseData)
+    })
+  } else {
+    responseData.errors.push({ type: 'critical', message: 'You are not signed in. Please sign in to create a match.' })
     response.json(responseData)
-  })
+  }
 })
 
 // Stat Add (/stat/add)
@@ -53,11 +59,13 @@ statRoutes.post('/stat/add', authMiddleware, (request, response) => {
         statType: request.body.statType,
         statZoneType: request.body.statZoneType,
         statZoneValue: request.body.statZoneValue,
-        player: request.body.player,      
+        player: request.body.player,
+        userId: request.user._id,
+        createdAt: new Date()
       }
       Stat.create(stat, (error, document) => {
         if (error) {
-          responseData.errors.push({type: 'critical', message: error})
+          responseData.errors.push({ type: 'critical', message: error })
         } else {
           let statId = document._id
 
@@ -65,18 +73,18 @@ statRoutes.post('/stat/add', authMiddleware, (request, response) => {
             responseData.data.statId = statId
             responseData.success = true
           } else {
-            responseData.errors.push({type: 'default', message: 'Please try again.'})
+            responseData.errors.push({ type: 'default', message: 'Please try again.' })
           }
         }
         response.json(responseData)
       })
     } else {
-      responseData.errors.push({type: 'warning', message: 'Please enter a stat.'})
+      responseData.errors.push({ type: 'warning', message: 'Please enter a stat.' })
 
       response.json(responseData)
     }
   } else {
-    responseData.errors.push({type: 'critical', message: 'You are not signed in. Please sign in to create a stat.'})
+    responseData.errors.push({ type: 'critical', message: 'You are not signed in. Please sign in to create a stat.' })
 
     response.json(responseData)
   }
@@ -89,17 +97,20 @@ statRoutes.get('/stat/:statId', authMiddleware, (request, response) => {
     data: {},
     errors: []
   }
-
-  if (request.params.statId) {
-    Stat.find({_id: request.params.statId}).exec(function (error, documents) {
-      if (documents && documents.length > 0) {
-        responseData.data = documents[0]
-        responseData.success = true
-      }
-
+  if (!isEmpty(request.user)) {
+    if (request.params.statId) {
+      Stat.find({ _id: request.params.statId }).exec(function (error, documents) {
+        if (documents && documents.length > 0) {
+          responseData.data = documents[0]
+          responseData.success = true
+        }
+        response.json(responseData)
+      })
+    } else {
       response.json(responseData)
-    })
+    }
   } else {
+    responseData.errors.push({ type: 'critical', message: 'You are not signed in. Please sign in to create a match.' })
     response.json(responseData)
   }
 })
