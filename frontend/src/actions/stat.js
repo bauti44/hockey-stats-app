@@ -8,6 +8,7 @@ export const SET_STAT = 'SET_STAT'
 export const FETCH_STAT_BEGIN = 'FETCH_STAT_BEGIN'
 
 export function fetchStats (matchId) {
+  const token = localStorage.getItem('token')
   return dispatch => {
     var uri;
     if(matchId === CONSTANTS.ALL_MATCHES) {
@@ -15,17 +16,32 @@ export function fetchStats (matchId) {
     } else {
       uri = `${ config.url.api }stats?matchId=${ matchId }`
     }
-    return fetch(uri).then(response => response.json())
+    return fetch(uri, {
+      method: 'get',
+
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': token
+      }
+    }).then(response => response.json())
   }
 }
 
 export function fetchStat (statId) {
+  const token = localStorage.getItem('token')
   return dispatch => {
     dispatch({
       type: FETCH_STAT_BEGIN
     })
 
-    return fetch(`${ config.url.api }stat/${ statId }`).then(response => {
+    return fetch(`${ config.url.api }stat/${ statId }`, {
+      method: 'get',
+
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': token
+      }
+    }).then(response => {
       if (response.ok) {
         response.json().then(function (response) {
           if (response.success) {
@@ -46,7 +62,6 @@ export function fetchStat (statId) {
 
 export function postStat (stat) {
   const token = localStorage.getItem('token')
-
   return dispatch => {
     return fetch(`${ config.url.api }stat/add`, {
       method: 'post',
