@@ -24,6 +24,7 @@ class StatTypeGraphView extends Component {
 
   constructor(props) {
     super(props);
+    console.log(this.props.player)
     this.state = {
       allPlayers: this.props.player === CONSTANTS.EMPTY_PLAYERS,
       rivalPlayers: this.props.player === CONSTANTS.RIVAL
@@ -113,6 +114,10 @@ StatTypeGraphView.propTypes = {
   fetchStats: PropTypes.func.isRequired,
   player: PropTypes.string.isRequired,
   matchId: PropTypes.string.isRequired,
+}
+
+StatTypeGraphView.defaultProps = {
+  player: CONSTANTS.EMPTY_PLAYERS
 }
 
 const mapStateToProps = (state) => {
