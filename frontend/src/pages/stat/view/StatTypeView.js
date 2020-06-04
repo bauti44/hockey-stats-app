@@ -13,6 +13,7 @@ const statTypeList = [
   { name: 'Bloqueo', value: 'bl',zone: 'field' },
   { name: 'Perdida', value: 'lost',zone: 'field' },
   { name: 'Recupero', value: 'rec',zone: 'field' },
+  { name: 'Infracción', value: 'fault',zone: 'field' },
   { name: 'Ingreso 25', value: 'eyrd',zone: 'area' },
   { name: 'Ingreso area', value: 'earea',zone: 'area' },
   { name: 'Tiro al arco', value: 'sht',zone: 'area' },

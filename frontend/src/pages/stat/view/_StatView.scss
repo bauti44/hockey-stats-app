@@ -10,3 +10,21 @@ ion-button {
 
     }
 }
+
+
+ion-grid {
+    &.statsGrid {
+        height: auto !important;
+        ion-col {
+            border: solid 1px #fff;
+            background-color: #edf1f2;
+            font-size: 0.8rem;
+            &.statGridCol {
+                text-align: center;
+            }
+            &.headerCol {
+                background-color: #8ca7ad;
+            }
+        }
+    }
+}

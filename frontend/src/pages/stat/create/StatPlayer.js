@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types';
 import CONSTANTS from '../../../helpers/Constants'
 
@@ -6,27 +6,51 @@ import {
   IonList,
   IonItem,
   IonLabel,
+  IonGrid,
+  IonRow,
+  IonCol,
 } from '@ionic/react';
 
 class StatPlayer extends Component {
 
+  renderGrid() {
+    var tempColList = this.props.playerList.map((player) => (
+      <IonCol>
+        <IonItem key={player} button onClick={this.props.selectPlayer.bind(this, player)}>
+          <IonLabel class="playerSelectLaberl">{player.toUpperCase()}</IonLabel>
+        </IonItem>
+      </IonCol>
+    ))
+    var gridList = []
+    for (let index = 0; index < tempColList.length;) {
+      if (index < (tempColList.length - 1))
+        gridList.push(<IonRow>{tempColList[index]}{tempColList[index + 1]}</IonRow>)
+      else
+        gridList.push(<IonRow>{tempColList[index]}<IonCol /></IonRow>)
+      index += 2
+    }
+    return gridList;
+  }
+
   render() {
     return (
-      <IonList>
-        <IonItem key="no-player" button color="itemColorLightBlue" onClick={this.props.selectPlayer.bind(this, CONSTANTS.EMPTY_PLAYERS)}>
-          <IonLabel>OMITIR</IonLabel>
-        </IonItem>
-        <IonItem key="rival-player" button color="salmon" onClick={this.props.selectPlayer.bind(this, CONSTANTS.RIVAL)}>
-          <IonLabel>RIVAL</IonLabel>
-        </IonItem>
-        {
-          this.props.playerList.map((player) => (
-            <IonItem key={player} button onClick={this.props.selectPlayer.bind(this, player)}>
-              <IonLabel>{player.toUpperCase()}</IonLabel>
+      <IonGrid>
+        <IonRow>
+          <IonCol>
+            <IonItem key="no-player" button color="itemColorLightBlue" onClick={this.props.selectPlayer.bind(this, CONSTANTS.EMPTY_PLAYERS)}>
+              <IonLabel class="playerSelectLaberl">OMITIR</IonLabel>
             </IonItem>
-          ))
+          </IonCol>
+          <IonCol>
+            <IonItem key="rival-player" button color="salmon" onClick={this.props.selectPlayer.bind(this, CONSTANTS.RIVAL)}>
+              <IonLabel class="playerSelectLaberl">RIVAL</IonLabel>
+            </IonItem>
+          </IonCol>
+        </IonRow>
+        {
+          this.renderGrid()
         }
-      </IonList>
+      </IonGrid >
     );
   }
 }
