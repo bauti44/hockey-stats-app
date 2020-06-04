@@ -22,6 +22,7 @@ let StatSchema = mongoose.Schema({
       bl: Bloqueo
       lost: Perdida
       rec: Recuperacion
+      fault: Infraccion
       eyrd: Entrada 25 yardas
       earea: Entrada area
       sht: Tiro al arco

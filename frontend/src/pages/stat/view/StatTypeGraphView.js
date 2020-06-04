@@ -40,7 +40,7 @@ class StatTypeGraphView extends Component {
         }).length
 
         var teamQty = response.data.filter(item => {
-          return item.statType === key
+          return item.statType === key && item.player !== CONSTANTS.RIVAL
         }).length
 
         updatedMap[statTypeList[key]] = {

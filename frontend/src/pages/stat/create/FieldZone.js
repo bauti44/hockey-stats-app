@@ -10,7 +10,8 @@ class FieldZone extends Component {
   render() {
     return (
       <>
-        <IonGrid class="field" fixed={false} >
+        <IonGrid style={{ transform: (this.props.rotateField ? 'rotate(180deg)' : 'rotate(0)') }}
+         class="field" fixed={false} >
           <IonRow>
             <IonCol class="left" onClick={this.props.selectZone.bind(this, 10)} />
             <IonCol class="center" onClick={this.props.selectZone.bind(this, 11)} />
@@ -38,7 +39,12 @@ class FieldZone extends Component {
 }
 
 FieldZone.propTypes = {
-  selectZone: PropTypes.func.isRequired
+  selectZone: PropTypes.func.isRequired,
+  rotateField: PropTypes.bool.isRequired
+}
+
+FieldZone.defaultProps = {
+  rotateField: false
 }
 
 export default FieldZone;

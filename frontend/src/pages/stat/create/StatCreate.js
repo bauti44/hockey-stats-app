@@ -10,6 +10,9 @@ import {
   IonListHeader,
   IonLabel,
   IonItemDivider,
+  IonButtons,
+  IonButton,
+  IonIcon,
 } from '@ionic/react';
 import StatType from './StatType';
 import FieldZone from './FieldZone';
@@ -29,6 +32,7 @@ class StatCreate extends Component {
       statZoneType: '',
       statZoneValue: '',
       player: '',
+      rotateField: false,
       renderStatType: true,
       renderStatZoneField: false,
       renderStatZoneArea: false,
@@ -131,15 +135,28 @@ class StatCreate extends Component {
     });
   }
 
+  onRotateField() {
+    let previousValue = this.state.rotateField
+    this.setState({rotateField: !previousValue})
+  }
+
   render() {
     return (
       <>
         <IonListHeader>
           <IonLabel><h1>{this.props.matchDetails.teamHome} - {this.props.matchDetails.teamAway}</h1></IonLabel>
+          <IonButtons>
+          {this.state.renderStatZoneField ?
+              <IonButton class="statOptionsButton" onClick={this.onRotateField.bind(this)} shape="round" slot="icon-only">
+                <IonIcon class="statOptionsIcon" name="sync" />
+              </IonButton>
+              : <></>
+            }
+          </IonButtons>
         </IonListHeader>
         <IonItemDivider />
         {this.state.renderStatType ? <StatType value={this.state.quarter} selectType={this.selectType} selectQuarter={this.selectQuarter} /> : <> </>}
-        {this.state.renderStatZoneField ? <FieldZone selectZone={this.selectZone} /> : <> </>}
+        {this.state.renderStatZoneField ? <FieldZone rotateField={this.state.rotateField} selectZone={this.selectZone} /> : <> </>}
         {this.state.renderStatZoneArea ? <AreaZone selectZone={this.selectZone} /> : <> </>}
         {this.state.renderStatPlayer ? <StatPlayer selectPlayer={this.selectPlayer} playerList={this.props.playerList} /> : <> </>}
         <IonLoading isOpen={this.state.showLoading} message={'Por favor espere...'} />
