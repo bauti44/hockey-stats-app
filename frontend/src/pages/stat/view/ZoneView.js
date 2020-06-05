@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
-import { fetchStats } from '../../../actions/stat'
-import { connect } from 'react-redux'
 import FieldZoneView from './FieldZoneView';
 import AreaZoneView from './AreaZoneView';
 import CONSTANTS from '../../../helpers/Constants';
@@ -29,25 +27,23 @@ class ZoneView extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchStats(this.props.matchId).then(response => {
-      var updatedStatsZoneMap = this.state.statsZoneMap
-      Object.keys(this.state.statsZoneMap).forEach(key => {
-        updatedStatsZoneMap[key] = response.data.filter(item => {
-          var filterMatch = item.statZoneValue === key && item.statType === this.props.statType
-          if (this.props.player) {
-            filterMatch = filterMatch && item.player === this.props.player
-          }
-          return filterMatch;
-        }).length
-      })
-      this.setState({
-        statsZoneMap: updatedStatsZoneMap,
-        showFieldZone: this.props.statZoneType === CONSTANTS.FIELD,
-        showAreaZone: this.props.statZoneType === CONSTANTS.AREA
-      })
+    var updatedStatsZoneMap = this.state.statsZoneMap
+    Object.keys(this.state.statsZoneMap).forEach(key => {
+      updatedStatsZoneMap[key] = this.props.matchStatList.filter(item => {
+        var filterMatch = item.statZoneValue === key && item.statType === this.props.statType
+        if (this.props.player) {
+          filterMatch = filterMatch && item.player === this.props.player
+        }
+        return filterMatch;
+      }).length
+    })
+    this.setState({
+      statsZoneMap: updatedStatsZoneMap,
+      showFieldZone: this.props.statZoneType === CONSTANTS.FIELD,
+      showAreaZone: this.props.statZoneType === CONSTANTS.AREA
     })
   }
-  
+
   render() {
     return (
       <>
@@ -60,19 +56,11 @@ class ZoneView extends Component {
   }
 }
 
-
 ZoneView.propTypes = {
   statZoneType: PropTypes.string.isRequired,
   statType: PropTypes.string.isRequired,
-  fetchStats: PropTypes.func.isRequired,
-  matchId: PropTypes.string.isRequired,
+  matchStatList: PropTypes.array.isRequired,
   player: PropTypes.string,
 }
 
-const mapStateToProps = (state) => {
-  return {
-    statList: state.stats.list,
-  }
-}
-
-export default connect(mapStateToProps, { fetchStats })(ZoneView);
+export default ZoneView;
