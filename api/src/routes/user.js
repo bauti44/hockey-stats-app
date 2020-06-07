@@ -5,6 +5,7 @@
 const express = require('express')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const isEmpty = require('lodash/isEmpty')
 
 const config = require('./../config')
 let authMiddleware = require('./middlewares/auth')
@@ -22,15 +23,15 @@ userRoutes.post('/user/login', authMiddleware, (request, response) => {
   }
 
   if (request.body.username) {
-    User.findOne({username: request.body.username}, (error, document) => {
+    User.findOne({ username: request.body.username }, (error, document) => {
 
       if (error) {
-        responseData.errors.push({type: 'critical', message: error})
+        responseData.errors.push({ type: 'critical', message: error })
 
         response.json(responseData)
       } else {
         if (!document) {
-          responseData.errors.push({type: 'warning', message: 'No user exists with this username.'})
+          responseData.errors.push({ type: 'warning', message: 'No user exists with this username.' })
 
           response.json(responseData)
         } else {
@@ -40,12 +41,12 @@ userRoutes.post('/user/login', authMiddleware, (request, response) => {
                 responseData.data.token = jwt.sign(document._doc, config.secret)
                 responseData.success = true
               } else {
-                responseData.errors.push({type: 'critical', message: 'The password is incorrect.'})
+                responseData.errors.push({ type: 'critical', message: 'The password is incorrect.' })
               }
 
               response.json(responseData)
             } else {
-              responseData.errors.push({type: 'critical', message: 'Please try again.'})
+              responseData.errors.push({ type: 'critical', message: 'Please try again.' })
 
               response.json(responseData)
             }
@@ -54,8 +55,7 @@ userRoutes.post('/user/login', authMiddleware, (request, response) => {
       }
     })
   } else {
-    responseData.errors.push({type: 'critical', message: 'Username not provided.'})
-
+    responseData.errors.push({ type: 'critical', message: 'Username not provided.' })
     response.json(responseData)
   }
 })
@@ -68,12 +68,15 @@ userRoutes.post('/user/register', (request, response) => {
     errors: []
   }
 
-  if (request.body.username != '') {
+  if (isEmpty(request.body.registerToken) || request.body.registerToken !== config.registerToken) {
+    responseData.errors.push({ type: 'critical', message: 'Not authorized to create users.' })
+    response.json(responseData)
+
+  } else if (request.body.username != '') {
     // Check user exists
-    User.findOne({username: request.body.username}, (error, document) => {
+    User.findOne({ username: request.body.username }, (error, document) => {
       if (!document) {
         // User does not exists
-
         // Hash password
         bcrypt.hash(request.body.password, config.saltRounds, function (hashError, hashPassword) {
           if (!hashError) {
@@ -94,27 +97,24 @@ userRoutes.post('/user/register', (request, response) => {
                 responseData.success = true
                 responseData.data.userId = userId
               } else {
-                responseData.errors.push({type: 'default', message: 'Please try again.'})
+                responseData.errors.push({ type: 'default', message: 'Please try again.' })
               }
 
               response.json(responseData)
             })
           } else {
-            responseData.errors.push({type: 'default', message: 'Please try again.'})
+            responseData.errors.push({ type: 'default', message: 'Please try again.' })
           }
         })
 
       } else {
         // User already exists
-
-        responseData.errors.push({type: 'warning', message: 'The username is taken. Please choose something else.'})
-
+        responseData.errors.push({ type: 'warning', message: 'The username is taken. Please choose something else.' })
         response.json(responseData)
       }
     })
   } else {
-    responseData.errors.push({type: 'critical', message: 'Username not provided.'})
-
+    responseData.errors.push({ type: 'critical', message: 'Username not provided.' })
     response.json(responseData)
   }
 })

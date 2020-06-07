@@ -14,6 +14,7 @@ let userRoutes = require('./routes/user')
 let healthRoutes = require('./routes/health')
 let matchRoutes = require('./routes/match')
 let statRoutes = require('./routes/stat')
+let speechRoutes = require('./routes/speech')
 
 // Setup
 let apiServer = express()
@@ -40,6 +41,7 @@ apiServer.use(userRoutes)
 apiServer.use(healthRoutes)
 apiServer.use(matchRoutes)
 apiServer.use(statRoutes)
+apiServer.use(speechRoutes)
 
 // Export
 module.exports = apiServer

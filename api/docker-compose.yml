@@ -8,6 +8,8 @@ services:
       - MONGODB_HOSTNAME=mongodb
       - NODE_ENV=dev
       - ENCRYPTION_KEY=super-secret-key
+      - REGISTER_TOKEN=super-secret-token
+      - SPEECH_TO_TEXT_API_KEY=c_u7ScaA8-fmcWSiR7L0JFL4O6Aqi_tIti9mYvxzX_Ha
     ports:
       - 5001:5001
     networks:

@@ -2,6 +2,7 @@
 'use strict'
 
 const mongoose = require('mongoose')
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 // Stat Collection
 let StatSchema = mongoose.Schema({
@@ -61,9 +62,11 @@ let StatSchema = mongoose.Schema({
   */
   player: String,
   userId: String,
-  createdAt: Date
+  createdAt: Date,
+  externalId: Number
 })
 
+StatSchema.plugin(AutoIncrement, {id:'stat_external_id_seq',inc_field: 'externalId'});
 let Stat = mongoose.model('stats', StatSchema)
 
 module.exports = Stat

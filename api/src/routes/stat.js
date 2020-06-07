@@ -91,6 +91,47 @@ statRoutes.post('/stat/add', authMiddleware, (request, response) => {
   }
 })
 
+// Stat Add Batch (/stat/add/batch)
+statRoutes.post('/stat/add/batch', authMiddleware, (request, response) => {
+  let responseData = {
+    success: false,
+    data: {},
+    errors: []
+  }
+  if (!isEmpty(request.user) && request.user.role === 'ADMIN') {
+    var statList = []
+    request.body.stats.forEach(statBody => {
+      let stat = {
+        matchId: statBody.matchId,
+        quarter: statBody.quarter,
+        statType: statBody.statType,
+        statZoneType: statBody.statZoneType,
+        statZoneValue: statBody.statZoneValue,
+        player: statBody.player,
+        userId: statBody.userId,
+        createdAt: statBody.createdAt
+      }
+      statList.push(stat)
+    })
+
+    Stat.insertMany(statList, (error, document) => {
+      if (error) {
+        responseData.errors.push({ type: 'critical', message: error })
+      } else {
+        if (document.length > 0) {
+          responseData.success = true
+        } else {
+          responseData.errors.push({ type: 'default', message: 'Please try again.' })
+        }
+      }
+      response.json(responseData)
+    })
+  } else {
+    responseData.errors.push({ type: 'critical', message: 'You are not signed in. Please sign in as admin to create a batch.' })
+    response.json(responseData)
+  }
+})
+
 // Single Stats (/stat/statId)
 statRoutes.get('/stat/:statId', authMiddleware, (request, response) => {
   let responseData = {
@@ -124,7 +165,7 @@ statRoutes.delete('/stat/:statId', authMiddleware, (request, response) => {
     errors: []
   }
   if (!isEmpty(request.user)) {
-    var filters = {_id: request.params.statId}
+    var filters = { _id: request.params.statId }
     if (request.user.role != 'ADMIN') {
       filters["userId"] = request.user._id;
     }
@@ -139,6 +180,28 @@ statRoutes.delete('/stat/:statId', authMiddleware, (request, response) => {
     response.json(responseData)
   }
 })
+
+// All Stat delete (/stat/) (DEV PURPOSES)
+statRoutes.delete('/stat/', authMiddleware, (request, response) => {
+  let responseData = {
+    success: false,
+    data: {},
+    errors: []
+  }
+
+  if (!isEmpty(request.user) && request.user.role === 'ADMIN') {
+    Stat.deleteMany({}).exec(function (error, document) {
+      if (document) {
+        responseData.success = true
+      }
+      response.json(responseData)
+    })
+  } else {
+    responseData.errors.push({ type: 'critical', message: 'You are not signed in. Please sign in to delete a stat.' })
+    response.json(responseData)
+  }
+})
+
 
 // Export
 module.exports = statRoutes

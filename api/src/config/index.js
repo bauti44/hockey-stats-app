@@ -4,14 +4,19 @@
 const {
   MONGODB_HOSTNAME,
   ENCRYPTION_KEY,
-  NODE_ENV
+  NODE_ENV,
+  REGISTER_TOKEN,
+  SPEECH_TO_TEXT_API_KEY
 } = process.env;
 
 const config = {
   port: 5001,
   secret: `${ENCRYPTION_KEY}`,
   databaseUrl:  `mongodb://${MONGODB_HOSTNAME}/hockeystats`,
-  saltRounds: 10
+  saltRounds: 10,
+  nodeEnv: `${NODE_ENV}`,
+  registerToken: `${REGISTER_TOKEN}`,
+  speechToTextApiKey: `${SPEECH_TO_TEXT_API_KEY}`
 }
 
 module.exports = config

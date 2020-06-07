@@ -69,6 +69,49 @@ matchRoutes.get('/matches/players', authMiddleware, (request, response) => {
   }
 })
 
+// Match Add Batch (/match/add/batch)
+matchRoutes.post('/match/add/batch', authMiddleware, (request, response) => {
+  let responseData = {
+    success: false,
+    data: {},
+    errors: []
+  }
+
+  if (!isEmpty(request.user) && request.user.role === 'ADMIN') {
+    var matchList = []
+    request.body.matches.forEach((matchBody) => {
+      let match = {
+        teamHome: matchBody.teamHome,
+        teamAway: matchBody.teamAway,
+        category: matchBody.category,
+        gender: matchBody.gender,
+        notes: matchBody.notes,
+        playerList: matchBody.playerList,
+        userId: matchBody.userId,
+        createdAt: matchBody.createdAt,
+      }
+      matchList.push(match)
+    })
+
+    Match.insertMany(matchList, (error, document) => {
+      if (error) {
+        responseData.errors.push({ type: 'critical', message: error })
+      } else {
+        if (document.length > 0) {
+          responseData.success = true
+        } else {
+          responseData.errors.push({ type: 'default', message: 'Please try again.' })
+        }
+      }
+      response.json(responseData)
+    });
+
+  } else {
+    responseData.errors.push({ type: 'critical', message: 'You are not signed in. Please sign in as admin to create a batch.' })
+    response.json(responseData)
+  }
+})
+
 // Match Add (/match/add)
 matchRoutes.post('/match/add', authMiddleware, (request, response) => {
   let responseData = {
@@ -126,7 +169,7 @@ matchRoutes.delete('/match/:matchId', authMiddleware, (request, response) => {
     errors: []
   }
   if (!isEmpty(request.user)) {
-    var filters = {_id: request.params.matchId}
+    var filters = { _id: request.params.matchId }
     if (request.user.role != 'ADMIN') {
       filters["userId"] = request.user._id;
     }
@@ -142,27 +185,27 @@ matchRoutes.delete('/match/:matchId', authMiddleware, (request, response) => {
   }
 }),
 
-// Single Matches (/match/matchId)
-matchRoutes.get('/match/:matchId', authMiddleware, (request, response) => {
-  let responseData = {
-    success: false,
-    data: {},
-    errors: []
-  }
+  // Single Matches (/match/matchId)
+  matchRoutes.get('/match/:matchId', authMiddleware, (request, response) => {
+    let responseData = {
+      success: false,
+      data: {},
+      errors: []
+    }
 
-  if (request.params.matchId) {
-    Match.find({ _id: request.params.matchId }).exec(function (error, documents) {
-      if (documents && documents.length > 0) {
-        responseData.data = documents[0]
-        responseData.success = true
-      }
+    if (request.params.matchId) {
+      Match.find({ _id: request.params.matchId }).exec(function (error, documents) {
+        if (documents && documents.length > 0) {
+          responseData.data = documents[0]
+          responseData.success = true
+        }
 
+        response.json(responseData)
+      })
+    } else {
       response.json(responseData)
-    })
-  } else {
-    response.json(responseData)
-  }
-})
+    }
+  })
 
 // Export
 module.exports = matchRoutes

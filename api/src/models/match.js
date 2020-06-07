@@ -2,6 +2,8 @@
 'use strict'
 
 const mongoose = require('mongoose')
+const AutoIncrement = require('mongoose-sequence')(mongoose);
+
 
 // Match Collection
 let MatchSchema = mongoose.Schema({
@@ -12,8 +14,11 @@ let MatchSchema = mongoose.Schema({
   notes: String,
   playerList: Array,
   userId: String,
-  createdAt: Date
+  createdAt: Date,
+  externalId: Number
 })
+
+MatchSchema.plugin(AutoIncrement, {id:'match_external_id_seq',inc_field: 'externalId'});
 
 let Match = mongoose.model('matches', MatchSchema)
 
