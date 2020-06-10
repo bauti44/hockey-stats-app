@@ -6,9 +6,9 @@ let config = {
 }
 
 if (NODE_ENV === 'production') {
-  config.url.api = 'http://ec2-54-82-119-201.compute-1.amazonaws.com:8080/' // Change this URL according to your live server
+  config.url.api = 'https://hocketstats.com.ar:8443/api/v1/' // Change this URL according to your live server
 } else {
-  config.url.api = '/'
+  config.url.api = '/api/v1/'
 }
 
 export default config

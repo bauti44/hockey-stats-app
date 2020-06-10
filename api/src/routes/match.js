@@ -14,7 +14,7 @@ let Match = require('../models/match')
 let matchRoutes = express.Router()
 
 // Matches (/matches)
-matchRoutes.get('/matches', authMiddleware, (request, response) => {
+matchRoutes.get('/api/v1/matches', authMiddleware, (request, response) => {
   let responseData = {
     success: false,
     data: [],
@@ -42,7 +42,7 @@ matchRoutes.get('/matches', authMiddleware, (request, response) => {
 })
 
 // Matches Players (/matches/players)
-matchRoutes.get('/matches/players', authMiddleware, (request, response) => {
+matchRoutes.get('/api/v1/matches/players', authMiddleware, (request, response) => {
   let responseData = {
     success: false,
     data: [],
@@ -70,7 +70,7 @@ matchRoutes.get('/matches/players', authMiddleware, (request, response) => {
 })
 
 // Match Add Batch (/match/add/batch)
-matchRoutes.post('/match/add/batch', authMiddleware, (request, response) => {
+matchRoutes.post('/api/v1/match/add/batch', authMiddleware, (request, response) => {
   let responseData = {
     success: false,
     data: {},
@@ -113,7 +113,7 @@ matchRoutes.post('/match/add/batch', authMiddleware, (request, response) => {
 })
 
 // Match Add (/match/add)
-matchRoutes.post('/match/add', authMiddleware, (request, response) => {
+matchRoutes.post('/api/v1/match/add', authMiddleware, (request, response) => {
   let responseData = {
     success: false,
     data: {},
@@ -162,7 +162,7 @@ matchRoutes.post('/match/add', authMiddleware, (request, response) => {
 })
 
 // Single Match delete (/match/matchId)
-matchRoutes.delete('/match/:matchId', authMiddleware, (request, response) => {
+matchRoutes.delete('/api/v1/match/:matchId', authMiddleware, (request, response) => {
   let responseData = {
     success: false,
     data: {},
@@ -186,7 +186,7 @@ matchRoutes.delete('/match/:matchId', authMiddleware, (request, response) => {
 }),
 
   // Single Matches (/match/matchId)
-  matchRoutes.get('/match/:matchId', authMiddleware, (request, response) => {
+  matchRoutes.get('/api/v1/match/:matchId', authMiddleware, (request, response) => {
     let responseData = {
       success: false,
       data: {},

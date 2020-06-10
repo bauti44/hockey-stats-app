@@ -11,7 +11,8 @@ services:
       - REGISTER_TOKEN=super-secret-token
       - SPEECH_TO_TEXT_API_KEY=c_u7ScaA8-fmcWSiR7L0JFL4O6Aqi_tIti9mYvxzX_Ha
     ports:
-      - 5001:5001
+      - 8080:8080
+      - 8443:8443
     networks:
       - app-network
 

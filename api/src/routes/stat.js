@@ -14,7 +14,7 @@ let Stat = require('../models/stat')
 let statRoutes = express.Router()
 
 // Stats (/stats)
-statRoutes.get('/stats', authMiddleware, (request, response) => {
+statRoutes.get('/api/v1/stats', authMiddleware, (request, response) => {
   let responseData = {
     success: false,
     data: [],
@@ -48,7 +48,7 @@ statRoutes.get('/stats', authMiddleware, (request, response) => {
 })
 
 // Stat Add (/stat/add)
-statRoutes.post('/stat/add', authMiddleware, (request, response) => {
+statRoutes.post('/api/v1/stat/add', authMiddleware, (request, response) => {
   let responseData = {
     success: false,
     data: {},
@@ -92,7 +92,7 @@ statRoutes.post('/stat/add', authMiddleware, (request, response) => {
 })
 
 // Stat Add Batch (/stat/add/batch)
-statRoutes.post('/stat/add/batch', authMiddleware, (request, response) => {
+statRoutes.post('/api/v1/stat/add/batch', authMiddleware, (request, response) => {
   let responseData = {
     success: false,
     data: {},
@@ -133,7 +133,7 @@ statRoutes.post('/stat/add/batch', authMiddleware, (request, response) => {
 })
 
 // Single Stats (/stat/statId)
-statRoutes.get('/stat/:statId', authMiddleware, (request, response) => {
+statRoutes.get('/api/v1/stat/:statId', authMiddleware, (request, response) => {
   let responseData = {
     success: false,
     data: {},
@@ -158,7 +158,7 @@ statRoutes.get('/stat/:statId', authMiddleware, (request, response) => {
 })
 
 // Single Stat delete (/stat/statId)
-statRoutes.delete('/stat/:statId', authMiddleware, (request, response) => {
+statRoutes.delete('/api/v1/stat/:statId', authMiddleware, (request, response) => {
   let responseData = {
     success: false,
     data: {},
@@ -182,7 +182,7 @@ statRoutes.delete('/stat/:statId', authMiddleware, (request, response) => {
 })
 
 // All Stat delete (/stat/) (DEV PURPOSES)
-statRoutes.delete('/stat/', authMiddleware, (request, response) => {
+statRoutes.delete('/api/v1/stat/', authMiddleware, (request, response) => {
   let responseData = {
     success: false,
     data: {},

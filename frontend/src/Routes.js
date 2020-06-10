@@ -14,6 +14,7 @@ import Menu from './components/Menu/Menu';
 import Layout from './layout/Layout';
 import UserLogin from './pages/user/UserLogin';
 import Home from './pages/Home';
+import SpeechView from './pages/speech/SpeechView';
 
 const Routes = () => (
     <IonApp>
@@ -27,6 +28,7 @@ const Routes = () => (
                     <Route path={URL_REPO.MATCH_LIST} component={MatchList} />
                     <Route path={URL_REPO.STAT_ADD} component={StatCreate} />
                     <Route path={URL_REPO.STAT_VIEW} component={StatView} />
+                    <Route path={URL_REPO.SPEECH_VIEW} component={SpeechView} />
                     <Route path={URL_REPO.NOTFOUND} component={NotFound} />
                 </Switch>
             </Layout>

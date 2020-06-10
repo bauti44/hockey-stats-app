@@ -7,6 +7,7 @@ const URL_REPO = {
   MATCH_LIST: '/match/list',
   STAT_ADD: '/match/:id/stat/add',
   STAT_VIEW: '/match/:id/stat/view',
+  SPEECH_VIEW: '/speech',
   ALL_STAT_VIEW: '/match/all/stat/view',
   USER_LOGIN: '/user/login'
 }

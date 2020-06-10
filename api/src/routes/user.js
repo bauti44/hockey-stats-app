@@ -15,7 +15,7 @@ let User = require('../models/user')
 let userRoutes = express.Router()
 
 // Login
-userRoutes.post('/user/login', authMiddleware, (request, response) => {
+userRoutes.post('/api/v1/user/login', authMiddleware, (request, response) => {
   let responseData = {
     success: false,
     data: {},
@@ -61,7 +61,7 @@ userRoutes.post('/user/login', authMiddleware, (request, response) => {
 })
 
 // Register
-userRoutes.post('/user/register', (request, response) => {
+userRoutes.post('/api/v1/user/register', (request, response) => {
   let responseData = {
     success: false,
     data: {},

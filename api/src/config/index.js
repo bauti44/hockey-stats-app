@@ -10,7 +10,8 @@ const {
 } = process.env;
 
 const config = {
-  port: 5001,
+  portHttp: 8080,
+  portHttps: 8443,
   secret: `${ENCRYPTION_KEY}`,
   databaseUrl:  `mongodb://${MONGODB_HOSTNAME}/hockeystats`,
   saltRounds: 10,
