@@ -19,8 +19,8 @@ RUN rm /etc/nginx/conf.d/default.conf
 # replace with custom one
 COPY nginx/nginx.conf /etc/nginx/conf.d
 # --------- /only for those using react router ----------
-COPY nginx/sslcert/nginx.cert /etc/ssl/
-COPY nginx/sslcert/nginx.key /etc/ssl
+COPY nginx/sslcert/server.cert /etc/ssl/
+COPY nginx/sslcert/server.key /etc/ssl
 
 # expose port 80 to the outer world
 EXPOSE 80 443

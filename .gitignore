@@ -4,4 +4,4 @@ node_modules/
 links.txt
 TODO.md
 package-lock.json
-.release.txt
+release.sh
