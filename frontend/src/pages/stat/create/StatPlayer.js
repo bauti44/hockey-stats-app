@@ -16,7 +16,7 @@ class StatPlayer extends Component {
   renderGrid() {
     var tempColList = this.props.playerList.map((player) => (
       <IonCol>
-        <IonItem key={player} button onClick={this.props.selectPlayer.bind(this, player)}>
+        <IonItem key={player} button detail={false} onClick={this.props.selectPlayer.bind(this, player)}>
           <IonLabel class="playerSelectLaberl">{player.toUpperCase()}</IonLabel>
         </IonItem>
       </IonCol>

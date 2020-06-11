@@ -9,7 +9,7 @@
     "@capacitor/android": "^1.1.0",
     "@capacitor/cli": "^1.1.0",
     "@capacitor/core": "^1.1.0",
-    "@ionic/react": "0.0.6-3",
+    "@ionic/react": "5.2.1",
     "@types/react-router": "^5.0.2",
     "@types/react-router-dom": "^4.3.4",
     "babel-core": "^7.0.0-bridge.0",

@@ -16,6 +16,7 @@ import {
 import { connect } from 'react-redux';
 import { fetchMatchesPlayers } from '../../actions/match'
 import CONSTANTS from '../../helpers/Constants';
+import { trash, personAdd, add, save } from 'ionicons/icons';
 
 class MatchPlayerList extends Component {
 
@@ -51,7 +52,7 @@ class MatchPlayerList extends Component {
   }
 
   importPlayers() {
-    
+
 
     this.props.fetchMatchesPlayers().then(response => {
       if (response.success) {
@@ -76,7 +77,7 @@ class MatchPlayerList extends Component {
                 <IonLabel>{player.toUpperCase()}</IonLabel>
                 <IonButtons>
                   <IonButton shape="round" slot="icon-only" value={player} onClick={(e) => this.removePlayer(e.target.value)}>
-                    <IonIcon name="trash" />
+                    <IonIcon icon={trash} />
                   </IonButton>
                 </IonButtons>
               </IonItem>
@@ -86,7 +87,7 @@ class MatchPlayerList extends Component {
             <IonInput value={this.state.newPlayerName} onIonChange={(e) => this.setState({ newPlayerName: e.target.value })} placeholder="NUEVA JUGADORA"></IonInput>
             <IonButtons>
               <IonButton shape="round" slot="icon-only" onClick={this.addPlayer.bind(this)}>
-                <IonIcon name="person-add" spot="end" />
+                <IonIcon icon={personAdd} spot="end" />
               </IonButton>
             </IonButtons>
           </IonItem>
@@ -94,10 +95,10 @@ class MatchPlayerList extends Component {
         <IonButton color="lightBlue" size="medium" onClick={this.props.onSave.bind(this, this.state.playerList)} expand="block" >Guardar</IonButton>
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton id="fabButtonAdd" name="ion-fab-button">
-            <IonIcon name="add" onClick={() => this.setState({ showNewPlayer: true })} />
+            <IonIcon icon={add} onClick={() => this.setState({ showNewPlayer: true })} />
           </IonFabButton>
           <IonFabList side="top">
-            <IonFabButton onClick={this.importPlayers.bind(this)}><IonIcon name="save" /></IonFabButton>
+            <IonFabButton onClick={this.importPlayers.bind(this)}><IonIcon class="white" icon={save} /></IonFabButton>
           </IonFabList>
         </IonFab>
       </>

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { IonIcon, IonList, IonItem, IonLabel } from '@ionic/react';
+import { checkmark, close } from 'ionicons/icons';
 
 // reducer to convert a list of messages into a (flat) list of results
 function allResultsReducer(list, message) {
@@ -17,7 +18,7 @@ function keywordReducer(keywords, result) {
 }
 
 function getSpotted(messages) {
-  console.log("MENSAJES",messages)
+  console.log("MENSAJES", messages)
   return messages.reduce(allResultsReducer, []).reduce(keywordReducer, {});
 }
 
@@ -31,7 +32,7 @@ export function Keywords(props) {
     const spottings = spotted[k];
     return (
       <IonItem key={k}>
-        {spottings ? <IonIcon name="checkmark" /> : <IonIcon name="close" />}
+        {spottings ? <IonIcon icon={checkmark} /> : <IonIcon icon={close} />}
         <IonLabel>
           <b>{k}</b>: {spottings
             ? 'Spotted - '

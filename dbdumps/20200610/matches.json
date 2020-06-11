@@ -1,0 +1,64 @@
+{
+    "success": true,
+    "data": [
+        {
+            "playerList": [
+                "MAY",
+                "LUCHI",
+                "DELPI",
+                "COQUI",
+                "BELU",
+                "CLARI",
+                "LULI",
+                "ROCHY",
+                "VICHI",
+                "NEI",
+                "VENE",
+                "FIORE",
+                "ABRU",
+                "LULU",
+                "MARTU",
+                "FRANCIA"
+            ],
+            "_id": "5edd6f3448da8a002a638983",
+            "teamHome": "LICEO",
+            "teamAway": "SAN LORENZO",
+            "category": "PS",
+            "gender": "F",
+            "notes": "FINAL METRO B 2019",
+            "userId": "5ed2617e405d6f002a86fae2",
+            "createdAt": "2020-06-07T22:50:28.172Z",
+            "__v": 0
+        },
+        {
+            "playerList": [
+                "MAY",
+                "LUCHI",
+                "DELPI",
+                "COQUI",
+                "BELU",
+                "CLARI",
+                "LULI",
+                "ROCHY",
+                "VICHI",
+                "NEI",
+                "VENE",
+                "FIORE",
+                "ABRU",
+                "LULU",
+                "MARTU",
+                "FRANCIA"
+            ],
+            "_id": "5ed7081f00776f002a723603",
+            "teamHome": "LICEO",
+            "teamAway": "QUILMES",
+            "category": "PS",
+            "gender": "F",
+            "notes": "PARTIDO POR ASCENSO A METRO A 2019",
+            "userId": "5ed2617e405d6f002a86fae2",
+            "createdAt": "2020-06-03T02:17:03.273Z",
+            "__v": 0
+        }
+    ],
+    "errors": []
+}

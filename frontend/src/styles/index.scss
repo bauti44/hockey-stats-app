@@ -36,14 +36,8 @@ ion-segment-button {
 }
 ion-icon {
     fill: rgba( 0,0,0 ,0.6);
-    &.sc-ion-back-button-md {
-        fill: #fff;
-    }
-    &.sc-ion-back-button-ios {
-        fill: #fff;
-    }
-    &[name='add'], &[name='save'],&[name='create'],&[name='list'],&[name='square'],&[name='mic'],&[name='menu'] {
-        fill: #fff;    
+    &.white {
+        fill: #fff !important;
     }
 }
 

@@ -23,6 +23,7 @@ import StatTypeGraphView from './StatTypeGraphView';
 import ZoneView from './ZoneView';
 import CONSTANTS from '../../../helpers/Constants';
 import URL_REPO from '../../../helpers/UrlRepo';
+import { closeCircle, options, people } from 'ionicons/icons';
 
 const defaultRenderState = {
   renderStatViewMain: true,
@@ -190,24 +191,24 @@ class StatView extends Component {
           {this.state.matchId === CONSTANTS.ALL_MATCHES ? <></> :
             <IonChip color="itemColorLightBlue" onClick={this.onMatchRemove.bind(this)}>
               <IonLabel><h2>{this.props.matchDetails.teamHome} - {this.props.matchDetails.teamAway}</h2></IonLabel>
-              <IonIcon name="close-circle" />
+              <IonIcon icon={closeCircle} />
             </IonChip>
           }
           {this.state.renderState.renderStatZone && this.state.player ?
             <IonChip color="itemColorLightBlue" onClick={this.onPlayerRemove.bind(this)}>
               <IonLabel><h2>{this.state.player}</h2></IonLabel>
-              <IonIcon name="close-circle" />
+              <IonIcon icon={closeCircle} />
             </IonChip>
             : <IonLabel></IonLabel>}
           <IonButtons >
             {this.state.renderState.renderStatTypeGraphView || this.state.renderState.renderStatZone ?
               <IonButton class="statOptionsButton" onClick={this.onPlayersFilter.bind(this)} shape="round" slot="icon-only">
-                <IonIcon class="statOptionsIcon" name="people" />
+                <IonIcon class="statOptionsIcon" icon={people} />
               </IonButton>
               : <></>}
             {this.state.renderState.renderStatZone ?
               <IonButton class="statOptionsButton" onClick={this.onStatFilter.bind(this)} shape="round" slot="icon-only">
-                <IonIcon class="statOptionsIcon" name="options" />
+                <IonIcon class="statOptionsIcon" icon={options} />
               </IonButton>
               : <></>
             }

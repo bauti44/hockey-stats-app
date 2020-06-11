@@ -20,6 +20,8 @@ import StatPlayer from './StatPlayer';
 import AreaZone from './AreaZone';
 import AuthRedirect from '../../user/AuthRedirect';
 import CONSTANTS from '../../../helpers/Constants';
+import { sync, mic } from 'ionicons/icons';
+
 
 class StatCreate extends Component {
 
@@ -89,7 +91,6 @@ class StatCreate extends Component {
   }
 
   selectZone(value) {
-    console.log(value)
     this.resetRender()
     this.setState({ renderStatPlayer: true, statZoneValue: value });
   }
@@ -153,13 +154,13 @@ class StatCreate extends Component {
           <IonButtons>
             {this.state.renderStatZoneField ?
               <IonButton class="statOptionsButton" onClick={this.onRotateField.bind(this)} shape="round" slot="icon-only">
-                <IonIcon class="statOptionsIcon" name="sync" />
+                <IonIcon class="statOptionsIcon" icon={sync} />
               </IonButton>
               : <></>
             }
             {this.state.renderStatType ?
               <IonButton class="statOptionsButton" onClick={this.onSpeech.bind(this)} shape="round" slot="icon-only">
-                <IonIcon class="statOptionsIcon" name="mic" />
+                <IonIcon class="statOptionsIcon" icon={mic} />
               </IonButton>
               : <></>
             }
@@ -191,6 +192,10 @@ StatCreate.propTypes = {
   postStat: PropTypes.func.isRequired,
   playerList: PropTypes.array.isRequired,
   matchDetails: PropTypes.object.isRequired,
+}
+
+StatCreate.defaultProps = {
+  playerList: []
 }
 
 export default connect(mapStateToProps, { fetchMatch, postStat })(StatCreate)

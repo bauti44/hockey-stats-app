@@ -99,8 +99,8 @@ UserLogin.propTypes = {
   postLogin: PropTypes.func.isRequired
 }
 
-UserLogin.contextTypes = {
-  router: PropTypes.object.isRequired
-}
+// UserLogin.contextTypes = {
+//   router: PropTypes.object.isRequired
+// }
 
 export default connect(null, { postLogin })(UserLogin)

@@ -10,6 +10,7 @@ import cachedModels from '../data/models.json';
 import { IonIcon, IonToast, IonFab, IonFabButton, IonLabel } from '@ionic/react';
 import { fetchSpeechToken } from '../actions/speech.js';
 import { connect } from 'react-redux';
+import { square, mic } from 'ionicons/icons';
 
 export class Demo extends Component {
   constructor(props) {
@@ -324,7 +325,7 @@ export class Demo extends Component {
           : <></>}
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton id="fabButtonAdd" name="ion-fab-button" onClick={this.handleMicClick.bind(this)}>
-            {(this.state.audioSource === 'mic') ? <IonIcon name="square" /> : <IonIcon name="mic" />}
+            {(this.state.audioSource === 'mic') ? <IonIcon class="white" icon={square} /> : <IonIcon class="white" icon={mic} />}
           </IonFabButton>
         </IonFab>
 
