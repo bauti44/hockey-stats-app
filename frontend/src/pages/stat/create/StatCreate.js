@@ -20,7 +20,6 @@ import StatPlayer from './StatPlayer';
 import AreaZone from './AreaZone';
 import AuthRedirect from '../../user/AuthRedirect';
 import CONSTANTS from '../../../helpers/Constants';
-import URL_REPO from '../../../helpers/UrlRepo';
 
 class StatCreate extends Component {
 

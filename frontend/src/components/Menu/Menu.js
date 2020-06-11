@@ -8,6 +8,7 @@ import {
   IonHeader,
   IonIcon,
   IonButton,
+  IonAlert,
 } from '@ionic/react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
@@ -15,8 +16,19 @@ import URL_REPO from '../../helpers/UrlRepo'
 
 class Menu extends Component {
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      showAlert: false
+    }
+  }
+
   goBack() {
     global.backFunction()
+  }
+
+  onTitleClick() {
+    this.setState({ showAlert: true })
   }
 
   render() {
@@ -37,8 +49,15 @@ class Menu extends Component {
                 </IonButton>
               </IonButtons>
             </> : <></>}
-          <IonTitle>Estadisticas Hockey</IonTitle>
+          <IonTitle onClick={this.onTitleClick.bind(this)}>Hockey Stats App</IonTitle>
         </IonToolbar>
+        <IonAlert
+          isOpen={this.state.showAlert}
+          onDidDismiss={() => this.setState({ showAlert: false })}
+          header={"Hockey Stats App"}
+          message={"Author: <a href='mailto:bauti44@gmail.com'>@bauti44</a><br>Version: 1.0<br>"}
+          buttons={['OK']}
+          />
       </IonHeader>
     );
   }
