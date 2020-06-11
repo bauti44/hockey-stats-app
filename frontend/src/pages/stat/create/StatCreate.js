@@ -20,6 +20,7 @@ import StatPlayer from './StatPlayer';
 import AreaZone from './AreaZone';
 import AuthRedirect from '../../user/AuthRedirect';
 import CONSTANTS from '../../../helpers/Constants';
+import URL_REPO from '../../../helpers/UrlRepo';
 
 class StatCreate extends Component {
 
@@ -137,7 +138,12 @@ class StatCreate extends Component {
 
   onRotateField() {
     let previousValue = this.state.rotateField
-    this.setState({rotateField: !previousValue})
+    this.setState({ rotateField: !previousValue })
+  }
+
+  onSpeech() {
+    let url = '/match/' + this.state.matchId + '/stat/speech';
+    this.props.history.push(url);
   }
 
   render() {
@@ -146,9 +152,15 @@ class StatCreate extends Component {
         <IonListHeader>
           <IonLabel><h1>{this.props.matchDetails.teamHome} - {this.props.matchDetails.teamAway}</h1></IonLabel>
           <IonButtons>
-          {this.state.renderStatZoneField ?
+            {this.state.renderStatZoneField ?
               <IonButton class="statOptionsButton" onClick={this.onRotateField.bind(this)} shape="round" slot="icon-only">
                 <IonIcon class="statOptionsIcon" name="sync" />
+              </IonButton>
+              : <></>
+            }
+            {this.state.renderStatType ?
+              <IonButton class="statOptionsButton" onClick={this.onSpeech.bind(this)} shape="round" slot="icon-only">
+                <IonIcon class="statOptionsIcon" name="mic" />
               </IonButton>
               : <></>
             }

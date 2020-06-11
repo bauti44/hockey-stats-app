@@ -6,7 +6,7 @@ let config = {
 }
 
 if (NODE_ENV === 'production') {
-  config.url.api = 'https://hocketstats.com.ar:8443/api/v1/' // Change this URL according to your live server
+  config.url.api = 'https://hockeystats.com.ar:8443/api/v1/' // Change this URL according to your live server
 } else {
   config.url.api = '/api/v1/'
 }

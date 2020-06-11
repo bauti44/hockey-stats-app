@@ -18,7 +18,7 @@ const tokenManager = new IamTokenManager({
     apikey: config.speechToTextApiKey,
 });
 
-// Matches (/matches)
+// Speech Token (/speech/token)
 speechRoutes.get('/speech/token', authMiddleware, async (request, response) => {
     let responseData = {
         success: false,
