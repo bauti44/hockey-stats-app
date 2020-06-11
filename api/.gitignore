@@ -18,4 +18,4 @@ npm-debug.log
 mongodb
 mongodb_config
 
-sslcert
+sslcert/
