@@ -20,7 +20,7 @@ export class Demo extends Component {
       formattedMessages: [],
       audioSource: null,
       speakerLabels: false,
-      keywords: 'Perdida,Bloqueo,Recuperación,Salida,Infracción',
+      keywords: 'Perdida,Bloqueo,Recupero,Salida,Infracción,Ingreso,Veinticinco,Ingreso,Area,Tiro,Arco,Corner,Corto,Gol, Penal',
       settingsAtStreamStart: {
         model: '',
         keywords: [],
