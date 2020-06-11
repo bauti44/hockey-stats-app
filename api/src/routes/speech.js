@@ -19,7 +19,7 @@ const tokenManager = new IamTokenManager({
 });
 
 // Speech Token (/speech/token)
-speechRoutes.get('/speech/token', authMiddleware, async (request, response) => {
+speechRoutes.get('/api/v1/speech/token', authMiddleware, async (request, response) => {
     let responseData = {
         success: false,
         data: {},
