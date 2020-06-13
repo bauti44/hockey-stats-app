@@ -45,6 +45,7 @@ errorRoutes.post('/api/v1/errors', authMiddleware, (request, response) => {
   if (!isEmpty(request.user)) {
     let error = {
       stack: request.body.stack,
+      type: request.body.type,
       userId: request.user._id,
       createdAt: new Date()
     }
@@ -59,6 +60,27 @@ errorRoutes.post('/api/v1/errors', authMiddleware, (request, response) => {
     })
   } else {
     responseData.errors.push({ type: 'critical', message: 'You are not signed in. Please sign in to create an error.' })
+    response.json(responseData)
+  }
+})
+
+// Error Delete (/errors)
+errorRoutes.delete('/api/v1/errors', authMiddleware, (request, response) => {
+  let responseData = {
+    success: false,
+    data: {},
+    errors: []
+  }
+
+  if (!isEmpty(request.user)) {
+    Error.deleteMany({}).exec(function (error, document) {
+      if (document) {
+        responseData.success = true
+      }
+      response.json(responseData)
+    })
+  } else {
+    responseData.errors.push({ type: 'critical', message: 'You are not signed in. Please sign in to delete errors.' })
     response.json(responseData)
   }
 })

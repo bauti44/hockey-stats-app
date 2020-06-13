@@ -42,7 +42,7 @@ serviceWorker.unregister();
 window.onerror = function myErrorHandler(errorMsg, url, lineNumber) {
     setTimeout(() => {
         actionStack.pushError(errorMsg)
-        postError(actionStack.buildStack())
+        postError(actionStack.buildErrorHandler())
     }, CONSTANTS.TIMEOUT);
     return false;
 }

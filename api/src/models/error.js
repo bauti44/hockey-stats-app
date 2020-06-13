@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 // User Collection
 let ErrorSchema = mongoose.Schema({
   stack: String,
+  type: String,
   userId: String,
   createdAt: Date
 })

@@ -58,7 +58,7 @@ class Menu extends Component {
   }
 
   onReportClick() {
-    postError(actionStack.buildStack())
+    postError(actionStack.buildErrorReport())
     this.setState({ showReportMessage: true })
   }
 

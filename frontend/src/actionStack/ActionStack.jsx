@@ -1,7 +1,14 @@
+import { postError } from "../actions/errors"
+
 const ACTION_NAME_KEY = "actionStack"
 class ActionStack {
     constructor() {
         this._storeValue("init")
+        this.counter = 0
+    }
+
+    _clear() {
+        sessionStorage.removeItem(ACTION_NAME_KEY)
     }
 
     _storeValue(value) {
@@ -13,20 +20,40 @@ class ActionStack {
     }
 
     push(action) {
+        if(this.counter >= 10) {
+            this.sendInfoReport()
+            this._clear()
+            this._storeValue("init")
+            this.counter = 0
+        }
+        this.counter++
         var stackAction = new StackAction(action);
         var stackTrace = this._getValue()
-        stackTrace = `${stackAction.toString()} | ${stackTrace}`
+        stackTrace = `${stackTrace} | ${stackAction.toString()}`
         this._storeValue(stackTrace)
+        
     }
 
     pushError(error) {
         var stackTrace = this._getValue()
-        stackTrace = `error=${error} | ${stackTrace}`
+        stackTrace = `${stackTrace} | error=${error}`
         this._storeValue(stackTrace)
     }
 
-    buildStack() {
-        return { stack: this._getValue() }
+    sendInfoReport() {
+        postError(this.buildPartial())
+    }
+
+    buildPartial() {
+        return { stack: this._getValue(), type: 'partial' }
+    }
+
+    buildErrorReport() {
+        return { stack: this._getValue(), type: 'report' }
+    }
+
+    buildErrorHandler() {
+        return { stack: this._getValue(), type: 'error' }
     }
 }
 
