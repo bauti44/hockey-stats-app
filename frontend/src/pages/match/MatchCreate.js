@@ -10,6 +10,7 @@ import {
 import AuthRedirect from '../user/AuthRedirect';
 import URL_REPO from '../../helpers/UrlRepo';
 import CONSTANTS from '../../helpers/Constants';
+import { actionStack, ACTION_NAME } from '../../actionStack/ActionStack';
 
 class MatchCreate extends Component {
 
@@ -36,6 +37,7 @@ class MatchCreate extends Component {
   onSavePlayers(savedPlayerList) {
     this.resetRender()
     this.setState({ renderMatchDetails: true, playerList: savedPlayerList })
+    actionStack.push(ACTION_NAME.SAVE_PLAYERS_CLICK)
   }
 
   resetRender() {
@@ -62,9 +64,11 @@ class MatchCreate extends Component {
   showPlayerList() {
     this.resetRender()
     this.setState({ renderPlayerList: true })
+    actionStack.push(ACTION_NAME.SHOW_PLAYERS_LIST_CLICK)
   }
 
   onSave() {
+    actionStack.push(ACTION_NAME.CREATE_MATCH_SAVE)
     this.setState({ isLoading: true })
 
     let match = {

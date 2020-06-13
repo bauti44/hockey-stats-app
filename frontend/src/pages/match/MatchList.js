@@ -8,6 +8,7 @@ import CONSTANTS from '../../helpers/Constants';
 import URL_REPO from '../../helpers/UrlRepo';
 import { trash } from 'ionicons/icons';
 import { options, create, eye, add } from 'ionicons/icons';
+import { actionStack, ACTION_NAME } from '../../actionStack/ActionStack';
 
 class MatchList extends Component {
 
@@ -33,23 +34,27 @@ class MatchList extends Component {
   }
 
   createStat(id) {
+    actionStack.push(ACTION_NAME.CREATE_STAT_CLICK)
     let url = '/match/' + id + '/stat/add';
     this.props.history.push(url);
   }
 
   viewStat(id) {
+    actionStack.push(ACTION_NAME.VIEW_STAT_CLICK)
     let url = '/match/' + id + '/stat/view';
     this.props.history.push(url);
   }
 
   onCreateMatchClick() {
     this.props.history.push(URL_REPO.MATCH_CREATE);
+    actionStack.push(ACTION_NAME.CREATE_MATCH_CLICK)
   }
 
   doRefresh(event) {
     this.props.fetchMatches().then(() => {
       event.detail.complete()
     })
+    actionStack.push(ACTION_NAME.REFRESH_MATCHES)
   }
 
   toggleSearch() {
@@ -58,6 +63,7 @@ class MatchList extends Component {
   }
 
   removeMatch(matchId) {
+    actionStack.push(ACTION_NAME.REMOVE_MATCH_CLICK)
     this.props.removeMatch(matchId).then((response) => {
       if (response.success) {
         this.setState({ showToast: true, message: 'El partido se eliminó exitosamente' })
@@ -67,6 +73,7 @@ class MatchList extends Component {
   }
 
   onSearch(value) {
+    actionStack.push(ACTION_NAME.SEARCH_MATCH)
     this.setState({ searchText: value })
   }
 

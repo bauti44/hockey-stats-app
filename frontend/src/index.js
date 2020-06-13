@@ -14,6 +14,9 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { setCurrentUser } from './actions/user';
 import global from './global'
+import { actionStack } from './actionStack/ActionStack';
+import { postError } from './actions/errors';
+import CONSTANTS from './helpers/Constants';
 
 const store = createStore(
     rootReducer,
@@ -35,3 +38,11 @@ ReactDOM.render(<App store={store} />, document.getElementById('root'));
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
+
+window.onerror = function myErrorHandler(errorMsg, url, lineNumber) {
+    setTimeout(() => {
+        actionStack.pushError(errorMsg)
+        postError(actionStack.buildStack())
+    }, CONSTANTS.TIMEOUT);
+    return false;
+}

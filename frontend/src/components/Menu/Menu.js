@@ -14,30 +14,32 @@ import {
   IonContent,
   IonList,
   IonMenuButton,
-  IonMenuToggle,
   IonLabel,
   IonAvatar,
-  IonListHeader,
 } from '@ionic/react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import URL_REPO from '../../helpers/UrlRepo'
 import { withRouter } from 'react-router';
 import { compose } from 'redux';
-import { list, menu } from 'ionicons/icons';
+import { menu } from 'ionicons/icons';
 import { userLogout } from '../../actions/user'
 import { menuController } from "@ionic/core";
+import { actionStack, ACTION_NAME } from '../../actionStack/ActionStack'
+import { postError } from '../../actions/errors';
 
 class Menu extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      showAlert: false
+      showAlert: false,
+      showReportMessage: false,
     }
   }
 
   goBack() {
+    actionStack.push(ACTION_NAME.BACK_CLICK)
     global.backFunction()
   }
 
@@ -55,6 +57,11 @@ class Menu extends Component {
     this.props.userLogout()
   }
 
+  onReportClick() {
+    postError(actionStack.buildStack())
+    this.setState({ showReportMessage: true })
+  }
+
   render() {
     const { isAuthenticated } = this.props.user
     return (
@@ -67,20 +74,25 @@ class Menu extends Component {
           </IonHeader>
           <IonItem color="itemColorLightBlue">
             <IonAvatar>
-              <img src="/assets/avatar.svg" />
+              <img src="/assets/avatar.svg" alt="avatar" />
             </IonAvatar>
-            <IonLabel style={{marginLeft: '0.5rem'}}>{this.props.user.user.username}</IonLabel>
+            <IonLabel class="username">{this.props.user.user.username}</IonLabel>
           </IonItem>
           <IonContent>
             <IonList>
               <IonItem button onClick={() => this.onMatchesClick()}>
                 <IonButton fill="transparent" size="medium">
-                  <IonLabel>Partidos</IonLabel>
+                  <IonLabel>Ir a Partidos</IonLabel>
                 </IonButton>
               </IonItem>
               <IonItem button onClick={() => this.onInfoClick()}>
                 <IonButton fill="transparent" size="medium">
-                  <IonLabel>Informacion</IonLabel>
+                  <IonLabel>Ver Informacion</IonLabel>
+                </IonButton>
+              </IonItem>
+              <IonItem button onClick={() => this.onReportClick()}>
+                <IonButton fill="transparent" size="medium">
+                  <IonLabel>Reportar problema</IonLabel>
                 </IonButton>
               </IonItem>
               <IonItem button onClick={() => this.onLogoutClick()}>
@@ -113,6 +125,13 @@ class Menu extends Component {
             onDidDismiss={() => this.setState({ showAlert: false })}
             header={"Hockey Stats App"}
             message={"Author: <a href='mailto:bauti44@gmail.com'>@bauti44</a><br>Version: 1.0<br>"}
+            buttons={['OK']}
+          />
+          <IonAlert
+            isOpen={this.state.showReportMessage}
+            onDidDismiss={() => this.setState({ showReportMessage: false })}
+            header={"Reportar problema"}
+            message={"Se envio informacion del problema satisfactioriamente"}
             buttons={['OK']}
           />
         </IonHeader>

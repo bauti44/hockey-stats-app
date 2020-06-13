@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import recognizeMicrophone from 'watson-speech/speech-to-text/recognize-microphone';
 import Transcript from './transcript.jsx';
-import { Keywords, getKeywordsSummary } from './keywords.jsx';
+import { Keywords } from './keywords.jsx';
 import TimingView from './timing.jsx';
 import JSONView from './json-view.jsx';
 import cachedModels from '../data/models.json';
@@ -11,6 +11,7 @@ import { IonIcon, IonToast, IonFab, IonFabButton, IonLabel } from '@ionic/react'
 import { fetchSpeechToken } from '../actions/speech.js';
 import { connect } from 'react-redux';
 import { square, mic } from 'ionicons/icons';
+import { actionStack, ACTION_NAME } from '../actionStack/ActionStack.jsx';
 
 export class Demo extends Component {
   constructor(props) {
@@ -142,8 +143,10 @@ export class Demo extends Component {
     if (this.state.audioSource === 'mic') {
       this.stopRecordingTime()
       this.stopTranscription();
+      actionStack.push(ACTION_NAME.STOP_RECORDING)
       return;
     }
+    actionStack.push(ACTION_NAME.START_RECORDING)
     this.startRecordingTime()
     this.reset();
     this.setState({ audioSource: 'mic' });
@@ -306,8 +309,7 @@ export class Demo extends Component {
 
   render() {
     const {
-      token, accessToken, audioSource, error, model, settingsAtStreamStart,
-      formattedMessages, rawMessages
+      audioSource, error, settingsAtStreamStart, formattedMessages, rawMessages
     } = this.state;
 
     const err = error

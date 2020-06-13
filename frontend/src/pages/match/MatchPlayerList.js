@@ -17,6 +17,7 @@ import { connect } from 'react-redux';
 import { fetchMatchesPlayers } from '../../actions/match'
 import CONSTANTS from '../../helpers/Constants';
 import { trash, personAdd, add, save } from 'ionicons/icons';
+import { actionStack, ACTION_NAME } from '../../actionStack/ActionStack';
 
 class MatchPlayerList extends Component {
 
@@ -38,6 +39,7 @@ class MatchPlayerList extends Component {
       playerListTemp.push(this.state.newPlayerName.toUpperCase())
       this.setState({ playerList: playerListTemp, newPlayerName: CONSTANTS.EMPTY_PLAYERS })
     }, CONSTANTS.TIMEOUT);
+    actionStack.push(ACTION_NAME.ADD_PLAYER_CLICK)
   }
 
   removePlayer(player) {
@@ -49,11 +51,10 @@ class MatchPlayerList extends Component {
         this.setState({ playerList: playerListTemp });
       }
     }, CONSTANTS.TIMEOUT);
+    actionStack.push(ACTION_NAME.REMOVE_PLAYER_CLICK)
   }
 
   importPlayers() {
-
-
     this.props.fetchMatchesPlayers().then(response => {
       if (response.success) {
         let playerAgreggatedList = []
@@ -65,6 +66,7 @@ class MatchPlayerList extends Component {
         }
       }
     })
+    actionStack.push(ACTION_NAME.IMPORT_PLAYERS)
   }
 
   render() {

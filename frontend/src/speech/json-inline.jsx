@@ -27,7 +27,7 @@ export class JsonInline extends Component {
 
   render() {
     const { json } = this.props;
-    const { description, showJson } = this.state;
+    const { description } = this.state;
 
     return (
       <>

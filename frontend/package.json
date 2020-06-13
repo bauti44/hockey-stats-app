@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "@jest/core": "^24.8.0",
     "react-scripts": "^3.4.1"
   },
   "dependencies": {
@@ -38,7 +39,7 @@
     "android": "npx cap add android",
     "ios": "npx cap add ios"
   },
-  "proxy": "https://localhost:8443",
+  "proxy": "http://localhost:8080",
   "eslintConfig": {
     "extends": "react-app"
   },

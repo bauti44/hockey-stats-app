@@ -21,6 +21,7 @@ import AreaZone from './AreaZone';
 import AuthRedirect from '../../user/AuthRedirect';
 import CONSTANTS from '../../../helpers/Constants';
 import { sync, mic } from 'ionicons/icons';
+import { actionStack, ACTION_NAME } from '../../../actionStack/ActionStack';
 
 
 class StatCreate extends Component {
@@ -84,20 +85,24 @@ class StatCreate extends Component {
     } else {
       this.setState({ renderStatZoneArea: true });
     }
+    actionStack.push(ACTION_NAME.SELECT_TYPE)
   }
 
   selectQuarter(value) {
     this.setState({ quarter: value });
+    actionStack.push(ACTION_NAME.SELECT_QUARTER)
   }
 
   selectZone(value) {
     this.resetRender()
     this.setState({ renderStatPlayer: true, statZoneValue: value });
+    actionStack.push(ACTION_NAME.SELECT_ZONE)
   }
 
   selectPlayer(value) {
     this.setState({ player: value });
     setTimeout(() => this.submit(), CONSTANTS.TIMEOUT);
+    actionStack.push(ACTION_NAME.SELECT_PLAYER)
   }
 
   submit() {
@@ -117,6 +122,7 @@ class StatCreate extends Component {
         this.setState({ isLoading: false, showToastError: true, error: response.errors[0].message })
       }
     })
+    actionStack.push(ACTION_NAME.SUBMIT_STAT)
   }
 
   onSuccess() {
@@ -139,11 +145,13 @@ class StatCreate extends Component {
   onRotateField() {
     let previousValue = this.state.rotateField
     this.setState({ rotateField: !previousValue })
+    actionStack.push(ACTION_NAME.ROTATE_FIELD)
   }
 
   onSpeech() {
     let url = '/match/' + this.state.matchId + '/stat/speech';
     this.props.history.push(url);
+    actionStack.push(ACTION_NAME.SPEECH_CLICK)
   }
 
   render() {

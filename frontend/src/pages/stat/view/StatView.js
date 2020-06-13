@@ -24,6 +24,7 @@ import ZoneView from './ZoneView';
 import CONSTANTS from '../../../helpers/Constants';
 import URL_REPO from '../../../helpers/UrlRepo';
 import { closeCircle, options, people } from 'ionicons/icons';
+import { actionStack, ACTION_NAME } from '../../../actionStack/ActionStack';
 
 const defaultRenderState = {
   renderStatViewMain: true,
@@ -119,10 +120,12 @@ class StatView extends Component {
 
   onStatType() {
     this.setState({ renderState: { renderStatType: true }, fromStatZone: true });
+    actionStack.push(ACTION_NAME.VIEW_STATS_PER_TYPE)
   }
 
   onPlayer() {
     this.setState({ renderState: { renderStatPlayer: true }, fromStatTypeGraph: true })
+    actionStack.push(ACTION_NAME.VIEW_STATS_PER_PLAYER)
   }
 
   selectType(statType) {
@@ -132,10 +135,12 @@ class StatView extends Component {
     } else if (this.state.fromStatZone) {
       this.setState({ renderState: { renderStatZone: true } })
     }
+    actionStack.push(ACTION_NAME.SELECT_TYPE)
   }
 
   selectZone(value) {
     this.setState({ renderState: { renderStatPlayer: true }, statZoneValue: value });
+    actionStack.push(ACTION_NAME.SELECT_ZONE)
   }
 
   selectPlayer(value) {
@@ -145,10 +150,12 @@ class StatView extends Component {
     } else {
       this.setState({ renderState: { renderStatZone: true } })
     }
+    actionStack.push(ACTION_NAME.SELECT_PLAYER)
   }
 
   onPlayersFilter() {
     this.setState({ renderState: { renderStatPlayer: true } })
+    actionStack.push(ACTION_NAME.PLAYER_FILTER)
   }
 
   onStatFilter() {
@@ -157,6 +164,7 @@ class StatView extends Component {
       fromStatZone: this.state.renderState.renderStatZone
     })
     this.setState({ renderState: { renderStatType: true } })
+    actionStack.push(ACTION_NAME.STAT_FILTER)
   }
 
   getPlayerList() {
@@ -175,6 +183,7 @@ class StatView extends Component {
         this.refreshRender()
       })
     })
+    actionStack.push(ACTION_NAME.MATCH_REMOVE_FROM_FILTER)
   }
 
   onPlayerRemove() {
@@ -182,6 +191,7 @@ class StatView extends Component {
     setTimeout(() => {
       this.refreshRender()
     }, CONSTANTS.TIMEOUT);
+    actionStack.push(ACTION_NAME.PLAYER_REMOVE_FROM_FILTER)
   }
 
   render() {
