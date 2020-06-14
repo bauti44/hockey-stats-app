@@ -24,9 +24,7 @@ class MatchList extends Component {
   }
 
   componentDidMount() {
-    global.backFunction = global.defaultBackFunction;
     this.props.fetchMatches()
-
     setTimeout(() => {
       let showSuccess = window.location.search?.indexOf(CONSTANTS.SHOW_SUCCESS_FLAG) !== -1;
       this.setState({ showToast: showSuccess })

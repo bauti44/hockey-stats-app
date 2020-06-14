@@ -60,16 +60,28 @@ class StatView extends Component {
     this.selectType = this.selectType.bind(this);
     this.selectZone = this.selectZone.bind(this);
     this.selectPlayer = this.selectPlayer.bind(this);
+
+    this.props.history.listen((location) => {
+      switch (location.hash) {
+        case '#statTypeGraph':
+          this.setState({ renderState: { renderStatTypeGraphView: true } })
+          break;
+        case '#statType':
+          this.setState({ renderState: { renderStatType: true } })
+          break;
+        case '#statPlayer':
+          this.setState({ renderState: { renderStatPlayer: true } })
+          break;
+        case '#statZone':
+          this.setState({ renderState: { renderStatZone: true } })
+          break;
+        default:
+          this.resetToMainState()
+      }
+    })
   }
 
   componentDidMount() {
-    global.backFunction = () => {
-      if (this.state.renderState.renderStatViewMain) {
-        global.defaultBackFunction()
-      } else {
-        this.resetToMainState()
-      }
-    }
     if (this.state.matchId === CONSTANTS.ALL_MATCHES) {
       this.fetchAllPlayers()
     } else {
@@ -119,42 +131,45 @@ class StatView extends Component {
   }
 
   onStatType() {
-    this.setState({ renderState: { renderStatType: true }, fromStatZone: true });
+    this.setState({ fromStatZone: true });
+    this.props.history.push('#statType')
     actionStack.push(ACTION_NAME.VIEW_STATS_PER_TYPE)
   }
 
   onPlayer() {
-    this.setState({ renderState: { renderStatPlayer: true }, fromStatTypeGraph: true })
+    this.setState({ fromStatTypeGraph: true })
+    this.props.history.push('#statPlayer')
     actionStack.push(ACTION_NAME.VIEW_STATS_PER_PLAYER)
   }
 
   selectType(statType) {
     this.setState({ statType: statType.value, statZoneType: statType.zone })
     if (this.state.fromStatTypeGraph) {
-      this.setState({ renderState: { renderStatTypeGraphView: true } })
+      this.props.history.push('#statTypeGraph')
     } else if (this.state.fromStatZone) {
-      this.setState({ renderState: { renderStatZone: true } })
+      this.props.history.push('#statZone')
     }
     actionStack.push(ACTION_NAME.SELECT_TYPE)
   }
 
   selectZone(value) {
-    this.setState({ renderState: { renderStatPlayer: true }, statZoneValue: value });
+    this.setState({ statZoneValue: value });
+    this.props.history.push('#statPlayer')
     actionStack.push(ACTION_NAME.SELECT_ZONE)
   }
 
   selectPlayer(value) {
     this.setState({ player: value })
     if (this.state.fromStatTypeGraph) {
-      this.setState({ renderState: { renderStatTypeGraphView: true } })
+      this.props.history.push('#statTypeGraph')
     } else {
-      this.setState({ renderState: { renderStatZone: true } })
+      this.props.history.push('#statZone')
     }
     actionStack.push(ACTION_NAME.SELECT_PLAYER)
   }
 
   onPlayersFilter() {
-    this.setState({ renderState: { renderStatPlayer: true } })
+    this.props.history.push('#statPlayer')
     actionStack.push(ACTION_NAME.PLAYER_FILTER)
   }
 
@@ -163,7 +178,7 @@ class StatView extends Component {
       fromStatTypeGraph: this.state.renderState.renderStatTypeGraphView,
       fromStatZone: this.state.renderState.renderStatZone
     })
-    this.setState({ renderState: { renderStatType: true } })
+    this.props.history.push('#statType')
     actionStack.push(ACTION_NAME.STAT_FILTER)
   }
 
@@ -176,7 +191,7 @@ class StatView extends Component {
   }
 
   onMatchRemove() {
-    this.props.history.push(URL_REPO.ALL_STAT_VIEW)
+    this.props.history.push(`${URL_REPO.ALL_STAT_VIEW}${window.location.hash}`)
     this.setState({ matchId: CONSTANTS.ALL_MATCHES })
     this.fetchAllPlayers().then(() => {
       this.fetchMatchStats().then(() => {

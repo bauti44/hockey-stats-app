@@ -3,10 +3,3 @@ global.defaultBackFunction = function () {
 }
 
 global.backFunction = global.defaultBackFunction;
-
-
-global.defaultHomeFunction = function () {
-
-}
-
-global.homeFunction = global.defaultHomeFunction;

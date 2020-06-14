@@ -25,18 +25,29 @@ class MatchCreate extends Component {
       playerList: [],
       renderMatchDetails: true,
       renderPlayerList: false,
-      renderPlayerFromAllMatchesList: false,
       showLoading: false,
       showToast: false,
       error: ''
     }
     this.onSavePlayers = this.onSavePlayers.bind(this)
     this.onSave = this.onSave.bind(this)
+
+    this.props.history.listen((location) => {
+      this.resetRender()
+      switch (location.hash) {
+        case '#matchPlayers':
+          this.setState({ renderPlayerList: true })
+          break;
+        case '#matchDetails':
+        default:
+          this.setState({ renderMatchDetails: true })
+      }
+    })
   }
 
   onSavePlayers(savedPlayerList) {
-    this.resetRender()
-    this.setState({ renderMatchDetails: true, playerList: savedPlayerList })
+    this.setState({playerList: savedPlayerList })
+    this.props.history.push('#matchDetails')
     actionStack.push(ACTION_NAME.SAVE_PLAYERS_CLICK)
   }
 
@@ -44,26 +55,13 @@ class MatchCreate extends Component {
     this.setState({
       renderMatchDetails: false,
       renderPlayerList: false,
-      renderPlayerFromAllMatchesList: false,
       showLoading: false,
       showToast: false,
     })
   }
 
-  componentDidMount() {
-    global.backFunction = () => {
-      if (this.state.renderMatchDetails) {
-        global.defaultBackFunction()
-      } else {
-        this.resetRender()
-        this.setState({ renderMatchDetails: true })
-      }
-    }
-  }
-
   showPlayerList() {
-    this.resetRender()
-    this.setState({ renderPlayerList: true })
+    this.props.history.push('#matchPlayers')
     actionStack.push(ACTION_NAME.SHOW_PLAYERS_LIST_CLICK)
   }
 
@@ -83,7 +81,7 @@ class MatchCreate extends Component {
     this.props.createMatch(match).then((response) => {
       if (response.success) {
         this.setState({ isLoading: false })
-        this.props.history.push(URL_REPO.MATCH_LIST + '?' + CONSTANTS.SHOW_SUCCESS_FLAG)
+        this.props.history.push(`${URL_REPO.MATCH_LIST}?${CONSTANTS.SHOW_SUCCESS_FLAG}`)
       } else {
         this.setState({ isLoading: false, showToast: true, error: response.errors[0].message })
       }
@@ -131,7 +129,6 @@ class MatchCreate extends Component {
           : <></>
         }
         {this.state.renderPlayerList ? <MatchPlayerList onSave={this.onSavePlayers} playerList={this.state.playerList} /> : <> </>}
-        {this.state.renderPlayerFromAllMatchesList ? <MatchPlayerList selectPlayer={this.selectPlayer} playerList={this.state.playerList} /> : <> </>}
         <AuthRedirect />
       </>
     );

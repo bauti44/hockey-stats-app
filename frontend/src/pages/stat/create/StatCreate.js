@@ -23,7 +23,6 @@ import CONSTANTS from '../../../helpers/Constants';
 import { sync, mic } from 'ionicons/icons';
 import { actionStack, ACTION_NAME } from '../../../actionStack/ActionStack';
 
-
 class StatCreate extends Component {
 
   constructor(props) {
@@ -50,21 +49,27 @@ class StatCreate extends Component {
     this.selectQuarter = this.selectQuarter.bind(this);
     this.selectZone = this.selectZone.bind(this);
     this.selectPlayer = this.selectPlayer.bind(this);
+
+    this.props.history.listen((location) => {
+      this.resetRender()
+      switch (location.hash) {
+        case '#statZoneField':
+          this.setState({ renderStatZoneField: true })
+          break;
+        case '#statZoneArea':
+          this.setState({ renderStatZoneArea: true })
+          break;
+        case '#statPlayer':
+          this.setState({ renderStatPlayer: true })
+          break;
+        case '#statType':
+        default:
+          this.setState({ renderStatType: true })
+      }
+    });
   }
 
   componentDidMount() {
-    global.backFunction = () => {
-      this.resetRender()
-      if (this.state.renderStatType) {
-        global.defaultBackFunction()
-      } else if (this.state.renderStatZoneField || this.state.renderStatZoneArea) {
-        this.setState({ renderStatType: true })
-      } else if (this.state.renderStatPlayer && this.state.statZoneType === CONSTANTS.FIELD) {
-        this.setState({ renderStatZoneField: true })
-      } else if (this.state.renderStatPlayer && this.state.statZoneType === CONSTANTS.AREA) {
-        this.setState({ renderStatZoneArea: true })
-      }
-    }
     this.props.fetchMatch(this.state.matchId);
   }
 
@@ -78,12 +83,11 @@ class StatCreate extends Component {
   }
 
   selectType(statType) {
-    this.resetRender()
     this.setState({ statType: statType.value, statZoneType: statType.zone });
     if (statType.zone === CONSTANTS.FIELD) {
-      this.setState({ renderStatZoneField: true });
+      this.props.history.push('#statZoneField')
     } else {
-      this.setState({ renderStatZoneArea: true });
+      this.props.history.push('#statZoneArea')
     }
     actionStack.push(ACTION_NAME.SELECT_TYPE)
   }
@@ -94,8 +98,8 @@ class StatCreate extends Component {
   }
 
   selectZone(value) {
-    this.resetRender()
-    this.setState({ renderStatPlayer: true, statZoneValue: value });
+    this.setState({ statZoneValue: value });
+    this.props.history.push('#statPlayer');
     actionStack.push(ACTION_NAME.SELECT_ZONE)
   }
 
@@ -131,15 +135,12 @@ class StatCreate extends Component {
       statZoneType: '',
       statZoneValue: '',
       player: '',
-      renderStatType: true,
-      renderStatZoneField: false,
-      renderStatZoneArea: false,
-      renderStatPlayer: false,
       showLoading: false,
       showToast: true,
       showToastError: false,
       error: ''
     });
+    this.props.history.push('#statType')
   }
 
   onRotateField() {
@@ -149,7 +150,7 @@ class StatCreate extends Component {
   }
 
   onSpeech() {
-    let url = '/match/' + this.state.matchId + '/stat/speech';
+    let url = `/match/${this.state.matchId}/stat/speech`;
     this.props.history.push(url);
     actionStack.push(ACTION_NAME.SPEECH_CLICK)
   }
