@@ -6,7 +6,8 @@ const CONSTANTS = {
   LONG_TIMEOUT: 1000,
   SHOW_SUCCESS_FLAG: 'showSuccess',
   FIELD: 'field',
-  AREA: 'area'
+  AREA: 'area',
+  GOAL: 'g'
 }
 
 export default CONSTANTS;

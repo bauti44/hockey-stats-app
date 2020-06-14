@@ -20,7 +20,7 @@ class ActionStack {
     }
 
     push(action) {
-        if(this.counter >= 10) {
+        if(this.counter >= 20) {
             this.sendInfoReport()
             this._clear()
             this._storeValue("init")
@@ -74,6 +74,7 @@ const ACTION_NAME = {
     SELECT_TYPE: 'select_type',
     SELECT_QUARTER: 'select_quarter',
     SELECT_ZONE: 'select_zone',
+    SELECT_SUB_ZONE: 'select_sub_zone',
     SELECT_PLAYER: 'select_player',
     SUBMIT_STAT: 'submit_stat',
     ROTATE_FIELD: 'rotate_field',

@@ -16,6 +16,7 @@ import {
 } from '@ionic/react';
 import StatType from './StatType';
 import FieldZone from './FieldZone';
+import GoalZone from './GoalZone';
 import StatPlayer from './StatPlayer';
 import AreaZone from './AreaZone';
 import AuthRedirect from '../../user/AuthRedirect';
@@ -33,10 +34,12 @@ class StatCreate extends Component {
       statType: '',
       statZoneType: '',
       statZoneValue: '',
+      statSubZoneValue: '',
       player: '',
       rotateField: false,
       renderStatType: true,
       renderStatZoneField: false,
+      renderStatZoneGoal: false,
       renderStatZoneArea: false,
       renderStatPlayer: false,
       showLoading: false,
@@ -48,6 +51,7 @@ class StatCreate extends Component {
     this.selectType = this.selectType.bind(this);
     this.selectQuarter = this.selectQuarter.bind(this);
     this.selectZone = this.selectZone.bind(this);
+    this.selectSubZone = this.selectSubZone.bind(this);
     this.selectPlayer = this.selectPlayer.bind(this);
 
     this.props.history.listen((location) => {
@@ -61,6 +65,9 @@ class StatCreate extends Component {
           break;
         case '#statPlayer':
           this.setState({ renderStatPlayer: true })
+          break;
+        case '#statZoneGoal':
+          this.setState({ renderStatZoneGoal: true })
           break;
         case '#statType':
         default:
@@ -78,6 +85,7 @@ class StatCreate extends Component {
       renderStatType: false,
       renderStatZoneField: false,
       renderStatZoneArea: false,
+      renderStatZoneGoal: false,
       renderStatPlayer: false,
     })
   }
@@ -99,8 +107,18 @@ class StatCreate extends Component {
 
   selectZone(value) {
     this.setState({ statZoneValue: value });
-    this.props.history.push('#statPlayer');
+    if (this.state.statType == CONSTANTS.GOAL) {
+      this.props.history.push('#statZoneGoal');
+    } else {
+      this.props.history.push('#statPlayer');
+    }
     actionStack.push(ACTION_NAME.SELECT_ZONE)
+  }
+
+  selectSubZone(value) {
+    this.setState({ statSubZoneValue: value });
+    this.props.history.push('#statPlayer');
+    actionStack.push(ACTION_NAME.SELECT_SUB_ZONE)
   }
 
   selectPlayer(value) {
@@ -116,6 +134,7 @@ class StatCreate extends Component {
       statType: this.state.statType,
       statZoneType: this.state.statZoneType,
       statZoneValue: this.state.statZoneValue,
+      statSubZoneValue: this.state.statSubZoneValue,
       player: this.state.player,
       matchId: this.state.matchId,
     }
@@ -134,6 +153,7 @@ class StatCreate extends Component {
       statType: '',
       statZoneType: '',
       statZoneValue: '',
+      statSubZoneValue: '',
       player: '',
       showLoading: false,
       showToast: true,
@@ -178,6 +198,7 @@ class StatCreate extends Component {
         <IonItemDivider />
         {this.state.renderStatType ? <StatType value={this.state.quarter} selectType={this.selectType} selectQuarter={this.selectQuarter} /> : <> </>}
         {this.state.renderStatZoneField ? <FieldZone rotateField={this.state.rotateField} selectZone={this.selectZone} /> : <> </>}
+        {this.state.renderStatZoneGoal ? <GoalZone selectSubZone={this.selectSubZone} /> : <> </>}
         {this.state.renderStatZoneArea ? <AreaZone selectZone={this.selectZone} /> : <> </>}
         {this.state.renderStatPlayer ? <StatPlayer selectPlayer={this.selectPlayer} playerList={this.props.playerList} /> : <> </>}
         <IonLoading isOpen={this.state.showLoading} message={'Por favor espere...'} />

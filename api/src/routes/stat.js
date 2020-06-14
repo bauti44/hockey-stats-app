@@ -107,6 +107,7 @@ statRoutes.post('/api/v1/stat/add/batch', authMiddleware, (request, response) =>
         statType: statBody.statType,
         statZoneType: statBody.statZoneType,
         statZoneValue: statBody.statZoneValue,
+        statSubZoneValue: statBody.statSubZoneValue,
         player: statBody.player,
         userId: statBody.userId,
         createdAt: statBody.createdAt

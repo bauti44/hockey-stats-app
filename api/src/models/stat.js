@@ -56,17 +56,25 @@ let StatSchema = mongoose.Schema({
   */
   statZoneValue: String,
   /*
-    Non-mandatory
-    Values: 
-      Any uppercase string
+  Non-mandatory
+  Values: 
+    field: 
+      lt  ct  rt
+      lb  cb  rb
   */
+  statSubZoneValue: String,
+  /*
+  Non-mandatory
+  Values: 
+    Any uppercase string
+*/
   player: String,
   userId: String,
   createdAt: Date,
   externalId: Number
 })
 
-StatSchema.plugin(AutoIncrement, {id:'stat_external_id_seq',inc_field: 'externalId'});
+StatSchema.plugin(AutoIncrement, { id: 'stat_external_id_seq', inc_field: 'externalId' });
 let Stat = mongoose.model('stats', StatSchema)
 
 module.exports = Stat
