@@ -130,4 +130,17 @@
             }
         }
     }
+    #fieldZoneViewSlider {
+        .field {
+            background-size: contain !important;
+            height: 540px;
+            margin: 0 4rem 2rem 4rem;            
+            ion-col {
+                ion-label {
+                    line-height: 2.5;
+                }
+            }
+        }
+    }
 }
+

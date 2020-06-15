@@ -107,7 +107,7 @@ class StatTypeGraphView extends Component {
   render() {
     return (
       <IonSlides pager>
-        <IonSlide>
+        <IonSlide id="statGridViewSlider">
           <IonGrid class="statsGrid">
             <IonRow key="header">
               <IonCol class="headerCol" size="6">
@@ -139,10 +139,10 @@ class StatTypeGraphView extends Component {
             ))}
           </IonGrid>
         </IonSlide>
-        <IonSlide>
+        <IonSlide id="graphViewSlider">
           <canvas id="barChart" ref={this.barChart}></canvas>
         </IonSlide>
-        <IonSlide>
+        <IonSlide id="fieldZoneViewSlider">
           <ZoneView {...this.props} statZoneType={'field'} />
         </IonSlide>
       </IonSlides>

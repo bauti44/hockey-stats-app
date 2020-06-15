@@ -16,10 +16,11 @@ ion-button {
     --bullet-background-active: #134f5c !important;
 }
 
+#barChart {
+    max-width: 1024px;
+}
+
 ion-grid {
-    &.statView {
-        margin-bottom: 2rem;
-    }
     &.statsGrid {
         height: auto !important;
         margin-bottom: 2rem;
