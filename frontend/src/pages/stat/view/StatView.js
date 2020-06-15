@@ -261,7 +261,7 @@ class StatView extends Component {
         {this.state.renderState.renderStatType ? <StatTypeView value={this.state.quarter} selectType={this.selectType} selectQuarter={this.selectQuarter} /> : <> </>}
         {this.state.renderState.renderStatZone ? <ZoneView matchStatList={this.state.matchStatList} player={this.state.player} statZoneType={this.state.statZoneType} selectZone={this.selectZone} statType={this.state.statType} /> : <> </>}
         {this.state.renderState.renderStatPlayer ? <StatPlayerView selectPlayer={this.selectPlayer} playerList={this.getPlayerList()} /> : <> </>}
-        {this.state.renderState.renderStatTypeGraphView ? <StatTypeGraphView matchStatList={this.state.matchStatList} player={this.state.player} statType={this.state.statType} /> : <> </>}
+        {this.state.renderState.renderStatTypeGraphView ? <StatTypeGraphView matchStatList={this.state.matchStatList} player={this.state.player} statType={this.state.statType} statZoneType={this.state.statZoneType} /> : <> </>}
         <AuthRedirect />
       </>
     );

@@ -143,7 +143,7 @@ class StatTypeGraphView extends Component {
           <canvas id="barChart" ref={this.barChart}></canvas>
         </IonSlide>
         <IonSlide id="fieldZoneViewSlider">
-          <ZoneView {...this.props} statZoneType={'field'} />
+          <ZoneView {...this.props} />
         </IonSlide>
       </IonSlides>
     );
@@ -154,6 +154,7 @@ StatTypeGraphView.propTypes = {
   matchStatList: PropTypes.array.isRequired,
   player: PropTypes.string.isRequired,
   statType: PropTypes.string.isRequired,
+  statZoneType: PropTypes.string.isRequired,
 }
 
 StatTypeGraphView.defaultProps = {

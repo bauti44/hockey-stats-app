@@ -20,6 +20,13 @@ ion-button {
     max-width: 1024px;
 }
 
+.filterTextLabel {
+    margin-top: 10rem;
+    ion-label {
+        line-height: 2rem;
+    }
+}
+
 ion-grid {
     &.statsGrid {
         height: auto !important;

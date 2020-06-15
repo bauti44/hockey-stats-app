@@ -11,17 +11,17 @@ import {
 import CONSTANTS from '../../../helpers/Constants';
 
 const statTypeList = [
-  { name: 'Salida', value: 'st', zone: 'field' },
-  { name: 'Bloqueo', value: 'bl', zone: 'field' },
-  { name: 'Perdida', value: 'lost', zone: 'field' },
-  { name: 'Recupero', value: 'rec', zone: 'field' },
-  { name: 'Infracción', value: 'fault', zone: 'field' },
-  { name: 'Ingreso 25', value: 'eyrd', zone: 'area' },
-  { name: 'Ingreso area', value: 'earea', zone: 'area' },
-  { name: 'Tiro al arco', value: 'sht', zone: 'area' },
-  { name: 'Corner corto', value: 'pc', zone: 'area' },
-  { name: 'Gol', value: 'g', zone: 'area' },
-  { name: 'Penal', value: 'ps', zone: 'area' },
+  { name: 'Salida', value: 'st', zone: CONSTANTS.FIELD },
+  { name: 'Bloqueo', value: 'bl', zone: CONSTANTS.FIELD },
+  { name: 'Perdida', value: 'lost', zone: CONSTANTS.FIELD },
+  { name: 'Recupero', value: 'rec', zone: CONSTANTS.FIELD },
+  { name: 'Infracción', value: 'fault', zone: CONSTANTS.FIELD },
+  { name: 'Ingreso 25', value: 'eyrd', zone: CONSTANTS.AREA },
+  { name: 'Ingreso area', value: 'earea', zone: CONSTANTS.AREA },
+  { name: 'Tiro al arco', value: 'sht', zone: CONSTANTS.AREA },
+  { name: 'Corner corto', value: 'pc', zone: CONSTANTS.AREA },
+  { name: 'Gol', value: 'g', zone: CONSTANTS.AREA },
+  { name: 'Penal', value: 'ps', zone: CONSTANTS.AREA },
 ];
 
 const quarterList = [

@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import FieldZoneView from './FieldZoneView';
 import AreaZoneView from './AreaZoneView';
 import CONSTANTS from '../../../helpers/Constants';
+import { IonLabel, IonIcon, IonContent } from '@ionic/react';
+import { options } from 'ionicons/icons';
+
 
 class ZoneView extends Component {
   constructor(props) {
@@ -10,13 +13,14 @@ class ZoneView extends Component {
     this.state = {
       showFieldZone: false,
       showAreaZone: false,
+      showFilterText: false,
       statsZoneMap: {
         // Area
-        'er': 0, 'yr': 0,
+        'ar': 0, 'er': 0, 'yr': 0,
         'ar': 0,
         'a0': 0, 'ac': 0, 'ec': 0, 'yc': 0,
         'al': 0,
-        'el': 0, 'yl': 0,
+        'al': 0, 'el': 0, 'yl': 0,
         // Field
         '10': 0, '11': 0, '12': 0,
         '7': 0, '8': 0, '9': 0,
@@ -37,10 +41,12 @@ class ZoneView extends Component {
         return filterMatch;
       }).length
     })
+    var showFilterText = !this.props.statZoneType
     this.setState({
       statsZoneMap: updatedStatsZoneMap,
       showFieldZone: this.props.statZoneType === CONSTANTS.FIELD,
-      showAreaZone: this.props.statZoneType === CONSTANTS.AREA
+      showAreaZone: this.props.statZoneType === CONSTANTS.AREA,
+      showFilterText: showFilterText
     })
   }
 
@@ -48,9 +54,14 @@ class ZoneView extends Component {
     return (
       <>
         {this.state.showFieldZone ?
-          <FieldZoneView statsZoneMap={this.state.statsZoneMap} /> : <></>}
+          <FieldZoneView {...this.props} statsZoneMap={this.state.statsZoneMap} /> : <></>}
         {this.state.showAreaZone ?
-          <AreaZoneView statsZoneMap={this.state.statsZoneMap} /> : <></>}
+          <AreaZoneView {...this.props} statsZoneMap={this.state.statsZoneMap} /> : <></>}
+        {this.state.showFilterText ?
+          <div class="filterTextLabel">
+            <IonLabel>Filtrar por tipo de acción <IonIcon icon={options} /> para ver estadisticas por zona</IonLabel>
+          </div>
+          : <></>}
       </>
     );
   }
