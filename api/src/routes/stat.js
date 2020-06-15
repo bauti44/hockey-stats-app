@@ -62,6 +62,7 @@ statRoutes.post('/api/v1/stat/add', authMiddleware, (request, response) => {
         statType: request.body.statType,
         statZoneType: request.body.statZoneType,
         statZoneValue: request.body.statZoneValue,
+        statSubZoneValue: request.body.statSubZoneValue,
         player: request.body.player,
         userId: request.user._id,
         createdAt: new Date()
