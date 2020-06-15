@@ -21,6 +21,19 @@
 
 @import "./gridsDesktop";
 
+body {
+    background-color: #e0e0e0;
+}
+
+ion-app {
+    max-width: 1024px;
+    margin: auto;
+}
+
+ion-title {
+    text-align: center;
+}
+
 ion-item-divider {
     min-height: 0.5rem !important;
 }
