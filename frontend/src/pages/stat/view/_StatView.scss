@@ -12,10 +12,17 @@ ion-button {
     }
 }
 
+.swiper-pagination {
+    --bullet-background-active: #134f5c !important;
+}
 
 ion-grid {
+    &.statView {
+        margin-bottom: 2rem;
+    }
     &.statsGrid {
         height: auto !important;
+        margin-bottom: 2rem;
         ion-col {
             border: solid 1px #fff;
             background-color: #edf1f2;

@@ -219,19 +219,20 @@ class StatView extends Component {
               <IonIcon icon={closeCircle} />
             </IonChip>
           }
-          {this.state.renderState.renderStatZone && this.state.player ?
+          {(this.state.renderState.renderStatTypeGraphView || this.state.renderState.renderStatZone) && this.state.player ?
             <IonChip color="itemColorLightBlue" onClick={this.onPlayerRemove.bind(this)}>
               <IonLabel><h2>{this.state.player}</h2></IonLabel>
               <IonIcon icon={closeCircle} />
             </IonChip>
-            : <IonLabel></IonLabel>}
-          <IonButtons >
+            : <></>}
+          <IonLabel></IonLabel>
+          <IonButtons>
             {this.state.renderState.renderStatTypeGraphView || this.state.renderState.renderStatZone ?
               <IonButton class="statOptionsButton" onClick={this.onPlayersFilter.bind(this)} shape="round" slot="icon-only">
                 <IonIcon class="statOptionsIcon" icon={people} />
               </IonButton>
               : <></>}
-            {this.state.renderState.renderStatZone ?
+            {this.state.renderState.renderStatZone || this.state.renderState.renderStatTypeGraphView ?
               <IonButton class="statOptionsButton" onClick={this.onStatFilter.bind(this)} shape="round" slot="icon-only">
                 <IonIcon class="statOptionsIcon" icon={options} />
               </IonButton>
@@ -260,7 +261,7 @@ class StatView extends Component {
         {this.state.renderState.renderStatType ? <StatTypeView value={this.state.quarter} selectType={this.selectType} selectQuarter={this.selectQuarter} /> : <> </>}
         {this.state.renderState.renderStatZone ? <ZoneView matchStatList={this.state.matchStatList} player={this.state.player} statZoneType={this.state.statZoneType} selectZone={this.selectZone} statType={this.state.statType} /> : <> </>}
         {this.state.renderState.renderStatPlayer ? <StatPlayerView selectPlayer={this.selectPlayer} playerList={this.getPlayerList()} /> : <> </>}
-        {this.state.renderState.renderStatTypeGraphView ? <StatTypeGraphView matchStatList={this.state.matchStatList} player={this.state.player} /> : <> </>}
+        {this.state.renderState.renderStatTypeGraphView ? <StatTypeGraphView matchStatList={this.state.matchStatList} player={this.state.player} statType={this.state.statType} /> : <> </>}
         <AuthRedirect />
       </>
     );

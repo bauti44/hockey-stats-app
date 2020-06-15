@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 
 import { Chart } from 'chart.js';
 import CONSTANTS from '../../../helpers/Constants';
-import { IonGrid, IonRow, IonCol, IonLabel, IonItemDivider } from '@ionic/react';
+import { IonGrid, IonRow, IonCol, IonLabel, IonSlides, IonSlide } from '@ionic/react';
+import ZoneView from './ZoneView';
 
 const statTypeList =
 {
@@ -105,40 +106,46 @@ class StatTypeGraphView extends Component {
 
   render() {
     return (
-      <>
-        <IonGrid class="statsGrid">
-          <IonRow key="header">
-            <IonCol class="headerCol" size="6">
-              <IonLabel>ACCIÓN</IonLabel>
-            </IonCol>
-            {!this.state.allPlayers ?
-              <IonCol class="statGridCol headerCol">
-                <IonLabel>{this.props.player}</IonLabel>
-              </IonCol>
-              : <></>}
-            <IonCol class="statGridCol headerCol">
-              <IonLabel>EQUIPO</IonLabel>
-            </IonCol>
-          </IonRow>
-          {Object.keys(this.state.updatedMap).map((key) => (
-            <IonRow key={key}>
-              <IonCol size="6">
-                <IonLabel>{key}</IonLabel>
+      <IonSlides pager>
+        <IonSlide>
+          <IonGrid class="statsGrid">
+            <IonRow key="header">
+              <IonCol class="headerCol" size="6">
+                <IonLabel>ACCIÓN</IonLabel>
               </IonCol>
               {!this.state.allPlayers ?
-                <IonCol class="statGridCol">
-                  <IonLabel>{this.state.updatedMap[key].player}</IonLabel>
+                <IonCol class="statGridCol headerCol">
+                  <IonLabel>{this.props.player}</IonLabel>
                 </IonCol>
                 : <></>}
-              <IonCol class="statGridCol">
-                <IonLabel>{this.state.updatedMap[key].team}</IonLabel>
+              <IonCol class="statGridCol headerCol">
+                <IonLabel>EQUIPO</IonLabel>
               </IonCol>
             </IonRow>
-          ))}
-        </IonGrid>
-        <IonItemDivider />
-        <canvas id="barChart" ref={this.barChart}></canvas>
-      </>
+            {Object.keys(this.state.updatedMap).map((key) => (
+              <IonRow key={key}>
+                <IonCol size="6">
+                  <IonLabel>{key}</IonLabel>
+                </IonCol>
+                {!this.state.allPlayers ?
+                  <IonCol class="statGridCol">
+                    <IonLabel>{this.state.updatedMap[key].player}</IonLabel>
+                  </IonCol>
+                  : <></>}
+                <IonCol class="statGridCol">
+                  <IonLabel>{this.state.updatedMap[key].team}</IonLabel>
+                </IonCol>
+              </IonRow>
+            ))}
+          </IonGrid>
+        </IonSlide>
+        <IonSlide>
+          <canvas id="barChart" ref={this.barChart}></canvas>
+        </IonSlide>
+        <IonSlide>
+          <ZoneView {...this.props} statZoneType={'field'} />
+        </IonSlide>
+      </IonSlides>
     );
   }
 }
@@ -146,9 +153,11 @@ class StatTypeGraphView extends Component {
 StatTypeGraphView.propTypes = {
   matchStatList: PropTypes.array.isRequired,
   player: PropTypes.string.isRequired,
+  statType: PropTypes.string.isRequired,
 }
 
 StatTypeGraphView.defaultProps = {
+  statType: '',
   player: CONSTANTS.EMPTY_PLAYERS
 }
 

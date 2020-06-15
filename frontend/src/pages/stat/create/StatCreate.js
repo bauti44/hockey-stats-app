@@ -107,7 +107,7 @@ class StatCreate extends Component {
 
   selectZone(value) {
     this.setState({ statZoneValue: value });
-    if (this.state.statType == CONSTANTS.GOAL) {
+    if (this.state.statType === CONSTANTS.GOAL) {
       this.props.history.push('#statZoneGoal');
     } else {
       this.props.history.push('#statPlayer');

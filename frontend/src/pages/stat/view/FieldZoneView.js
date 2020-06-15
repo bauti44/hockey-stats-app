@@ -9,7 +9,7 @@ class FieldZoneView extends Component {
   render() {
     return (
       <>
-        <IonGrid class="field" fixed={true} >
+        <IonGrid class="field statView" fixed={true} >
           <IonRow>
             <IonCol class="left">
               <IonLabel>{this.props.statsZoneMap['10']}</IonLabel>
