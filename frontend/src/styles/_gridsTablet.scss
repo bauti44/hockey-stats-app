@@ -91,8 +91,18 @@
             }
         }
         &.area {
-            background: url('/assets/area.png') no-repeat center;     
-            background-size: cover;
+            &.inner {
+                background: url('/assets/area-inner.png') no-repeat center;     
+                background-size: cover;
+            }
+            &.entry-area {
+                background: url('/assets/area-entry-area.png') no-repeat center;     
+                background-size: cover;
+            }
+            &.entry-25 {
+                background: url('/assets/area-entry-25.png') no-repeat center;     
+                background-size: cover;
+            }
     
             ion-row {
                 height: 17.1%;
@@ -112,6 +122,7 @@
             }
     
             ion-col {
+                border: solid 1px;
                 height: 100%;           
                 margin: 2% 0;
                 text-align: center;

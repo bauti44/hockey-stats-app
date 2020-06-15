@@ -199,7 +199,7 @@ class StatCreate extends Component {
         {this.state.renderStatType ? <StatType value={this.state.quarter} selectType={this.selectType} selectQuarter={this.selectQuarter} /> : <> </>}
         {this.state.renderStatZoneField ? <FieldZone rotateField={this.state.rotateField} selectZone={this.selectZone} /> : <> </>}
         {this.state.renderStatZoneGoal ? <GoalZone selectSubZone={this.selectSubZone} /> : <> </>}
-        {this.state.renderStatZoneArea ? <AreaZone selectZone={this.selectZone} /> : <> </>}
+        {this.state.renderStatZoneArea ? <AreaZone selectZone={this.selectZone} statType={this.state.statType} /> : <> </>}
         {this.state.renderStatPlayer ? <StatPlayer selectPlayer={this.selectPlayer} playerList={this.props.playerList} /> : <> </>}
         <IonLoading isOpen={this.state.showLoading} message={'Por favor espere...'} />
         <IonToast color="success" isOpen={this.state.showToast} onDidDismiss={() => { this.setState({ showToast: false }) }} message="La estadística se creo exitosamente" duration={2000} />
