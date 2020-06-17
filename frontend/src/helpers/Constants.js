@@ -10,4 +10,19 @@ const CONSTANTS = {
   GOAL: 'g'
 }
 
-export default CONSTANTS;
+const STAT_MAP =
+{
+  'st': 'Salida',
+  'bl': 'Bloqueo',
+  'lost': 'Perdida',
+  'rec': 'Recupero',
+  'fault': 'Infracción',
+  'eyrd': 'Ingreso 25',
+  'earea': 'Ingreso area',
+  'sht': 'Tiro al arco',
+  'pc': 'Corner corto',
+  'g': 'Gol',
+  'ps': 'Penal'
+}
+
+export {CONSTANTS, STAT_MAP};

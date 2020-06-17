@@ -9,7 +9,7 @@ import {
 } from '@ionic/react';
 import AuthRedirect from '../user/AuthRedirect';
 import URL_REPO from '../../helpers/UrlRepo';
-import CONSTANTS from '../../helpers/Constants';
+import {CONSTANTS} from '../../helpers/Constants';
 import { actionStack, ACTION_NAME } from '../../actionStack/ActionStack';
 
 class MatchCreate extends Component {

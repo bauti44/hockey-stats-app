@@ -17,8 +17,7 @@ function keywordReducer(keywords, result) {
   return keywords;
 }
 
-function getSpotted(messages) {
-  console.log("MENSAJES", messages)
+export function getSpotted(messages) {
   return messages.reduce(allResultsReducer, []).reduce(keywordReducer, {});
 }
 
@@ -54,9 +53,3 @@ Keywords.propTypes = {
   keywords: PropTypes.array.isRequired, // eslint-disable-line
   isInProgress: PropTypes.bool.isRequired,
 };
-
-export function getKeywordsSummary(keywords, messages) {
-  const spotted = Object.keys(getSpotted(messages)).length;
-  const total = keywords.length;
-  return `(${spotted}/${total})`;
-}

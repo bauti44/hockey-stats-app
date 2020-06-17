@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Demo from '../../speech/demo'
+import Demo from '../../speech/SpeechMainView'
 
 class SpeechView extends Component {
     render() {

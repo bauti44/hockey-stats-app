@@ -15,7 +15,7 @@ import {
 } from '@ionic/react';
 import { connect } from 'react-redux';
 import { fetchMatchesPlayers } from '../../actions/match'
-import CONSTANTS from '../../helpers/Constants';
+import {CONSTANTS} from '../../helpers/Constants';
 import { trash, personAdd, add, save } from 'ionicons/icons';
 import { actionStack, ACTION_NAME } from '../../actionStack/ActionStack';
 

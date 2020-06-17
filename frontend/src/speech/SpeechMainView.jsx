@@ -2,18 +2,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import recognizeMicrophone from 'watson-speech/speech-to-text/recognize-microphone';
-import Transcript from './transcript.jsx';
-import { Keywords } from './keywords.jsx';
-import TimingView from './timing.jsx';
-import JSONView from './json-view.jsx';
-import cachedModels from '../data/models.json';
-import { IonIcon, IonToast, IonFab, IonFabButton, IonLabel } from '@ionic/react';
-import { fetchSpeechToken } from '../actions/speech.js';
+import Transcript from './Transcript.jsx';
+import { Keywords, getSpotted } from './KeywordSpotter.jsx';
+import { IonIcon, IonToast, IonFab, IonFabButton, IonLabel, IonLoading } from '@ionic/react';
+import { fetchSpeechToken, beginSpottingKeywords, notifySpottedKeywords } from '../actions/speech.js';
 import { connect } from 'react-redux';
 import { square, mic } from 'ionicons/icons';
 import { actionStack, ACTION_NAME } from '../actionStack/ActionStack.jsx';
 
-export class Demo extends Component {
+class SpeechMainView extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,14 +19,16 @@ export class Demo extends Component {
       formattedMessages: [],
       audioSource: null,
       speakerLabels: false,
-      keywords: 'Perdida,Bloqueo,Recupero,Salida,Infracción,Ingreso,Veinticinco,Ingreso,Area,Tiro,Arco,Corner,Corto,Gol, Penal',
+      keywords: this.props.keywords,
+      standaloneView: false,
       settingsAtStreamStart: {
         model: '',
         keywords: [],
         speakerLabels: false,
       },
       error: null,
-      recordingTime: "00:00"
+      recordingTime: "00:00",
+      processingKeywords: false,
     };
     this.timeInterval = null;
     this.reset = this.reset.bind(this);
@@ -42,9 +41,6 @@ export class Demo extends Component {
     this.handleRawMessage = this.handleRawMessage.bind(this);
     this.handleFormattedMessage = this.handleFormattedMessage.bind(this);
     this.handleTranscriptEnd = this.handleTranscriptEnd.bind(this);
-    this.supportsSpeakerLabels = this.supportsSpeakerLabels.bind(this);
-    this.handleSpeakerLabelsChange = this.handleSpeakerLabelsChange.bind(this);
-    this.getKeywordsArr = this.getKeywordsArr.bind(this);
     this.getKeywordsArrUnique = this.getKeywordsArrUnique.bind(this);
     this.getFinalResults = this.getFinalResults.bind(this);
     this.getCurrentInterimResult = this.getCurrentInterimResult.bind(this);
@@ -77,8 +73,6 @@ export class Demo extends Component {
   stopTranscription() {
     if (this.stream) {
       this.stream.stop();
-      // this.stream.removeAllListeners();
-      // this.stream.recognizeStream.removeAllListeners();
     }
     this.setState({ audioSource: null });
   }
@@ -143,10 +137,17 @@ export class Demo extends Component {
     if (this.state.audioSource === 'mic') {
       this.stopRecordingTime()
       this.stopTranscription();
+      this.setState({ processingKeywords: true })
       actionStack.push(ACTION_NAME.STOP_RECORDING)
       return;
     }
+    setTimeout(() => {
+      if (this.state.audioSource === 'mic') {
+        this.handleMicClick()
+      }
+    }, 5000);
     actionStack.push(ACTION_NAME.START_RECORDING)
+    this.props.beginSpottingKeywords()
     this.startRecordingTime()
     this.reset();
     this.setState({ audioSource: 'mic' });
@@ -166,7 +167,6 @@ export class Demo extends Component {
   }
 
   handleStream(stream) {
-    console.log(stream);
     // cleanup old stream if appropriate
     if (this.stream) {
       this.stream.stop();
@@ -215,7 +215,10 @@ export class Demo extends Component {
   handleTranscriptEnd() {
     // note: this function will be called twice on a clean end,
     // but may only be called once in the event of an error
-    this.setState({ audioSource: null });
+    this.setState({ audioSource: null, processingKeywords: false });
+
+    let spottedKeywords = getSpotted(this.getFinalAndLatestInterimResult())
+    this.props.notifySpottedKeywords(spottedKeywords)
   }
 
   componentDidMount() {
@@ -234,7 +237,6 @@ export class Demo extends Component {
 
   fetchToken() {
     this.props.fetchSpeechToken().then((response) => {
-      console.log(response)
       if (!response.success) {
         throw new Error('Error retrieving auth token');
       } else {
@@ -243,26 +245,8 @@ export class Demo extends Component {
     })
   }
 
-  supportsSpeakerLabels(model) {
-    model = model || this.state.model;
-    // todo: read the upd-to-date models list instead of the cached one
-    return cachedModels.some(m => m.name === model && m.supported_features.speaker_labels);
-  }
-
-  handleSpeakerLabelsChange() {
-    this.setState(prevState => ({ speakerLabels: !prevState.speakerLabels }));
-  }
-
-  // cleans up the keywords string into an array of individual, trimmed, non-empty keywords/phrases
-  getKeywordsArr() {
-    return this.state.keywords.split(',').map(k => k.trim()).filter(k => k);
-  }
-
-  // cleans up the keywords string and produces a unique list of keywords
   getKeywordsArrUnique() {
     return this.state.keywords
-      .split(',')
-      .map(k => k.trim())
       .filter((value, index, self) => self.indexOf(value) === index);
   }
 
@@ -309,7 +293,7 @@ export class Demo extends Component {
 
   render() {
     const {
-      audioSource, error, settingsAtStreamStart, formattedMessages, rawMessages
+      audioSource, error, processingKeywords, recordingTime, standaloneView, settingsAtStreamStart
     } = this.state;
 
     const err = error
@@ -322,28 +306,28 @@ export class Demo extends Component {
 
     return (
       <>
-        {(this.state.audioSource === 'mic') ?
-          <IonLabel style={{ position: "absolute", bottom: "30px", right: "75px" }}>{this.state.recordingTime}</IonLabel>
+        {(audioSource === 'mic') ?
+          <IonLabel style={{ position: "absolute", bottom: "30px", right: "75px" }}>{recordingTime}</IonLabel>
           : <></>}
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton id="fabButtonAdd" name="ion-fab-button" onClick={this.handleMicClick.bind(this)}>
-            {(this.state.audioSource === 'mic') ? <IonIcon class="white" icon={square} /> : <IonIcon class="white" icon={mic} />}
+            {(audioSource === 'mic') ? <IonIcon class="white" icon={square} /> : <IonIcon class="white" icon={mic} />}
           </IonFabButton>
         </IonFab>
 
-        {err}
-        <Transcript messages={messages} />
-        <Keywords messages={messages} keywords={settingsAtStreamStart.keywords} isInProgress={!!audioSource} />
+        <IonLoading isOpen={!!processingKeywords} />
 
-        {false ? <TimingView messages={messages} /> : <></>}
-        {false ? <JSONView raw={rawMessages} formatted={formattedMessages} /> : <></>}
+        {err}
+        {standaloneView ? <Transcript messages={messages} /> : <></>}
+        {standaloneView ? <Keywords messages={messages} keywords={settingsAtStreamStart.keywords} isInProgress={!!audioSource} /> : <></>}
       </>
     );
   }
 };
 
-Demo.propTypes = {
-  fetchSpeechToken: PropTypes.func.isRequired
+SpeechMainView.propTypes = {
+  fetchSpeechToken: PropTypes.func.isRequired,
+  keywords: PropTypes.array.isRequired,
 }
 
-export default connect(null, { fetchSpeechToken })(Demo);
+export default connect(null, { fetchSpeechToken, beginSpottingKeywords, notifySpottedKeywords })(SpeechMainView);

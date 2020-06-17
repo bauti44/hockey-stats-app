@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 // App Imports
 import { postLogin } from '../../actions/user'
 import { IonInput, IonButton, IonList, IonLabel, IonItem, IonListHeader, IonToast } from '@ionic/react'
-import CONSTANTS from '../../helpers/Constants'
+import {CONSTANTS} from '../../helpers/Constants'
 
 class UserLogin extends Component {
   constructor(props) {

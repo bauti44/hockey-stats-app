@@ -21,7 +21,7 @@ import StatPlayerView from './StatPlayerView';
 import AuthRedirect from '../../user/AuthRedirect';
 import StatTypeGraphView from './StatTypeGraphView';
 import ZoneView from './ZoneView';
-import CONSTANTS from '../../../helpers/Constants';
+import {CONSTANTS} from '../../../helpers/Constants';
 import URL_REPO from '../../../helpers/UrlRepo';
 import { closeCircle, options, people } from 'ionicons/icons';
 import { actionStack, ACTION_NAME } from '../../../actionStack/ActionStack';

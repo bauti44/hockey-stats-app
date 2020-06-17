@@ -6,7 +6,7 @@ import {
   IonItem,
   IonLabel,
 } from '@ionic/react';
-import CONSTANTS from '../../../helpers/Constants';
+import {CONSTANTS} from '../../../helpers/Constants';
 
 const statTypeList = [
   { name: 'Salida', value: 'st', zone: CONSTANTS.FIELD },

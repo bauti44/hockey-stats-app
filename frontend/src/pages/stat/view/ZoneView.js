@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import FieldZoneView from './FieldZoneView';
 import AreaZoneView from './AreaZoneView';
-import CONSTANTS from '../../../helpers/Constants';
-import { IonLabel, IonIcon, IonContent } from '@ionic/react';
+import { CONSTANTS } from '../../../helpers/Constants';
+import { IonLabel, IonIcon } from '@ionic/react';
 import { options } from 'ionicons/icons';
 
 
@@ -17,9 +17,7 @@ class ZoneView extends Component {
       statsZoneMap: {
         // Area
         'ar': 0, 'er': 0, 'yr': 0,
-        'ar': 0,
         'a0': 0, 'ac': 0, 'ec': 0, 'yc': 0,
-        'al': 0,
         'al': 0, 'el': 0, 'yl': 0,
         // Field
         '10': 0, '11': 0, '12': 0,

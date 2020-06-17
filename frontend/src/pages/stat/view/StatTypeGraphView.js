@@ -2,24 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 
 import { Chart } from 'chart.js';
-import CONSTANTS from '../../../helpers/Constants';
+import {CONSTANTS, STAT_MAP} from '../../../helpers/Constants';
 import { IonGrid, IonRow, IonCol, IonLabel, IonSlides, IonSlide } from '@ionic/react';
 import ZoneView from './ZoneView';
-
-const statTypeList =
-{
-  'st': 'Salida',
-  'bl': 'Bloqueo',
-  'lost': 'Perdida',
-  'rec': 'Recupero',
-  'fault': 'Infracción',
-  'eyrd': 'Ingreso 25',
-  'earea': 'Ingreso area',
-  'sht': 'Tiro al arco',
-  'pc': 'Corner corto',
-  'g': 'Gol',
-  'ps': 'Penal'
-}
 
 class StatTypeGraphView extends Component {
 
@@ -34,7 +19,7 @@ class StatTypeGraphView extends Component {
 
   componentDidMount() {
     var updatedMap = {}
-    Object.keys(statTypeList).forEach(key => {
+    Object.keys(STAT_MAP).forEach(key => {
       var playerQty = this.props.matchStatList.filter(item => {
         return item.player === this.props.player && item.statType === key
       }).length
@@ -43,7 +28,7 @@ class StatTypeGraphView extends Component {
         return item.statType === key && item.player !== CONSTANTS.RIVAL
       }).length
 
-      updatedMap[statTypeList[key]] = {
+      updatedMap[STAT_MAP[key]] = {
         player: playerQty,
         team: teamQty
       }
@@ -142,7 +127,7 @@ class StatTypeGraphView extends Component {
         <IonSlide id="graphViewSlider">
           <canvas id="barChart" ref={this.barChart}></canvas>
         </IonSlide>
-        <IonSlide id="fieldZoneViewSlider">
+        <IonSlide id="zoneViewSlider">
           <ZoneView {...this.props} />
         </IonSlide>
       </IonSlides>

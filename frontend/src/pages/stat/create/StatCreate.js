@@ -13,6 +13,7 @@ import {
   IonButtons,
   IonButton,
   IonIcon,
+  IonAlert,
 } from '@ionic/react';
 import StatType from './StatType';
 import FieldZone from './FieldZone';
@@ -20,22 +21,26 @@ import GoalZone from './GoalZone';
 import StatPlayer from './StatPlayer';
 import AreaZone from './AreaZone';
 import AuthRedirect from '../../user/AuthRedirect';
-import CONSTANTS from '../../../helpers/Constants';
-import { sync, mic } from 'ionicons/icons';
+import { CONSTANTS } from '../../../helpers/Constants';
+import { sync } from 'ionicons/icons';
 import { actionStack, ACTION_NAME } from '../../../actionStack/ActionStack';
+import SpeechMainView from '../../../speech/SpeechMainView';
+import StatRecognition from '../recognition/StatRecognition';
 
 class StatCreate extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      matchId: this.props.match.params.id,
-      quarter: 'q1',
-      statType: '',
-      statZoneType: '',
-      statZoneValue: '',
-      statSubZoneValue: '',
-      player: '',
+      stat: {
+        matchId: this.props.match.params.id,
+        quarter: 'q1',
+        statType: '',
+        statZoneType: '',
+        statZoneValue: '',
+        statSubZoneValue: '',
+        player: ''
+      },
       rotateField: false,
       renderStatType: true,
       renderStatZoneField: false,
@@ -45,8 +50,11 @@ class StatCreate extends Component {
       showLoading: false,
       showToast: false,
       showToastError: false,
-      error: ''
+      error: '',
+      spottedKeywords: ''
     }
+
+    this.statRecognition = new StatRecognition()
 
     this.selectType = this.selectType.bind(this);
     this.selectQuarter = this.selectQuarter.bind(this);
@@ -77,7 +85,13 @@ class StatCreate extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchMatch(this.state.matchId);
+    this.props.fetchMatch(this.state.stat.matchId);
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (newProps.speech && Object.keys(newProps.speech.spottedKeywords).length !== 0) {
+      this.setState({ spottedKeywords: Object.keys(newProps.speech.spottedKeywords).join(',') })
+    }
   }
 
   resetRender() {
@@ -91,7 +105,8 @@ class StatCreate extends Component {
   }
 
   selectType(statType) {
-    this.setState({ statType: statType.value, statZoneType: statType.zone });
+    let stat = Object.assign({}, this.state.stat, { statType: statType.value, statZoneType: statType.zone })
+    this.setState({ stat: stat });
     if (statType.zone === CONSTANTS.FIELD) {
       this.props.history.push('#statZoneField')
     } else {
@@ -101,13 +116,16 @@ class StatCreate extends Component {
   }
 
   selectQuarter(value) {
-    this.setState({ quarter: value });
+    let stat = Object.assign({}, this.state.stat, { quarter: value })
+    this.setState({ stat: stat });
     actionStack.push(ACTION_NAME.SELECT_QUARTER)
   }
 
   selectZone(value) {
-    this.setState({ statZoneValue: value });
-    if (this.state.statType === CONSTANTS.GOAL) {
+    let stat = Object.assign({}, this.state.stat, { statZoneValue: value })
+    console.log(stat)
+    this.setState({ stat: stat });
+    if (this.state.stat.statType === CONSTANTS.GOAL) {
       this.props.history.push('#statZoneGoal');
     } else {
       this.props.history.push('#statPlayer');
@@ -116,28 +134,22 @@ class StatCreate extends Component {
   }
 
   selectSubZone(value) {
-    this.setState({ statSubZoneValue: value });
+    let stat = Object.assign({}, this.state.stat, { statSubZoneValue: value })
+    this.setState({ stat: stat });
     this.props.history.push('#statPlayer');
     actionStack.push(ACTION_NAME.SELECT_SUB_ZONE)
   }
 
   selectPlayer(value) {
-    this.setState({ player: value });
-    setTimeout(() => this.submit(), CONSTANTS.TIMEOUT);
+    let stat = Object.assign({}, this.state.stat, { player: value })
+    this.setState({ stat: stat });
+    setTimeout(() => this.saveStat(), CONSTANTS.TIMEOUT);
     actionStack.push(ACTION_NAME.SELECT_PLAYER)
   }
 
-  submit() {
+  saveStat() {
     this.setState({ showLoading: true })
-    let stat = {
-      quarter: this.state.quarter,
-      statType: this.state.statType,
-      statZoneType: this.state.statZoneType,
-      statZoneValue: this.state.statZoneValue,
-      statSubZoneValue: this.state.statSubZoneValue,
-      player: this.state.player,
-      matchId: this.state.matchId,
-    }
+    let stat = this.state.stat
     this.props.postStat(stat).then(response => {
       if (response.success) {
         setTimeout(() => this.onSuccess(), CONSTANTS.TIMEOUT);
@@ -150,11 +162,7 @@ class StatCreate extends Component {
 
   onSuccess() {
     this.setState({
-      statType: '',
-      statZoneType: '',
-      statZoneValue: '',
-      statSubZoneValue: '',
-      player: '',
+      stat: {},
       showLoading: false,
       showToast: true,
       showToastError: false,
@@ -169,10 +177,8 @@ class StatCreate extends Component {
     actionStack.push(ACTION_NAME.ROTATE_FIELD)
   }
 
-  onSpeech() {
-    let url = `/match/${this.state.matchId}/stat/speech`;
-    this.props.history.push(url);
-    actionStack.push(ACTION_NAME.SPEECH_CLICK)
+  getKeywords() {
+    return this.statRecognition.getKeywords()
   }
 
   render() {
@@ -187,23 +193,20 @@ class StatCreate extends Component {
               </IonButton>
               : <></>
             }
-            {this.state.renderStatType ?
-              <IonButton class="statOptionsButton" onClick={this.onSpeech.bind(this)} shape="round" slot="icon-only">
-                <IonIcon class="statOptionsIcon" icon={mic} />
-              </IonButton>
-              : <></>
-            }
           </IonButtons>
         </IonListHeader>
         <IonItemDivider />
-        {this.state.renderStatType ? <StatType value={this.state.quarter} selectType={this.selectType} selectQuarter={this.selectQuarter} /> : <> </>}
+        {this.state.renderStatType ? <StatType value={this.state.stat.quarter} selectType={this.selectType} selectQuarter={this.selectQuarter} /> : <> </>}
         {this.state.renderStatZoneField ? <FieldZone rotateField={this.state.rotateField} selectZone={this.selectZone} /> : <> </>}
         {this.state.renderStatZoneGoal ? <GoalZone selectSubZone={this.selectSubZone} /> : <> </>}
-        {this.state.renderStatZoneArea ? <AreaZone selectZone={this.selectZone} statType={this.state.statType} /> : <> </>}
+        {this.state.renderStatZoneArea ? <AreaZone selectZone={this.selectZone} statType={this.state.stat.statType} /> : <> </>}
         {this.state.renderStatPlayer ? <StatPlayer selectPlayer={this.selectPlayer} playerList={this.props.playerList} /> : <> </>}
         <IonLoading isOpen={this.state.showLoading} message={'Por favor espere...'} />
         <IonToast color="success" isOpen={this.state.showToast} onDidDismiss={() => { this.setState({ showToast: false }) }} message="La estadística se creo exitosamente" duration={2000} />
         <IonToast color="danger" isOpen={this.state.showToastError} onDidDismiss={() => { this.setState({ showToastError: false }) }} message={this.state.error} duration={2000} />
+        <IonAlert message={this.state.spottedKeywords} isOpen={this.state.spottedKeywords !== ''} buttons={['OK']} onDidDismiss={() => this.setState({spottedKeywords: ''})}/>
+        <SpeechMainView {...this.props} keywords={this.getKeywords()} />
+
         <AuthRedirect />
       </>
     );
@@ -214,6 +217,7 @@ const mapStateToProps = (state) => {
   return {
     playerList: state.match.details.playerList,
     matchDetails: state.match.details,
+    speech: state.speech,
   }
 }
 

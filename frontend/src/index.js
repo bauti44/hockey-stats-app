@@ -16,7 +16,7 @@ import { setCurrentUser } from './actions/user';
 import global from './global'
 import { actionStack } from './actionStack/ActionStack';
 import { postError } from './actions/errors';
-import CONSTANTS from './helpers/Constants';
+import {CONSTANTS} from './helpers/Constants';
 
 const store = createStore(
     rootReducer,

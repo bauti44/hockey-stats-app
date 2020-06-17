@@ -1,6 +1,6 @@
 // App Imports
 import config from '../config'
-import CONSTANTS from '../helpers/Constants'
+import {CONSTANTS} from '../helpers/Constants'
 
 export const SET_STATS = 'SET_STATS'
 export const FETCH_STATS_BEGIN = 'FETCH_STATS_BEGIN'

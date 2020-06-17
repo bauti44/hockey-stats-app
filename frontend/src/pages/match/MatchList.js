@@ -4,7 +4,7 @@ import { fetchMatches, removeMatch } from '../../actions/match'
 import { connect } from 'react-redux'
 import { IonList, IonItemSliding, IonItem, IonLabel, IonItemOptions, IonItemOption, IonListHeader, IonFab, IonFabButton, IonIcon, IonRefresher, IonRefresherContent, IonToast, IonSearchbar, IonButton, IonItemDivider, IonButtons } from '@ionic/react';
 import AuthRedirect from '../user/AuthRedirect';
-import CONSTANTS from '../../helpers/Constants';
+import {CONSTANTS} from '../../helpers/Constants';
 import URL_REPO from '../../helpers/UrlRepo';
 import { trash } from 'ionicons/icons';
 import { options, create, eye, add } from 'ionicons/icons';
