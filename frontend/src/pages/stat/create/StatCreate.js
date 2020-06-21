@@ -89,7 +89,7 @@ class StatCreate extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if (newProps.speech && Object.keys(newProps.speech.spottedKeywords).length !== 0) {
+    if (newProps.speech && Object.keys(newProps.speech.spottedKeywords).length !== 0 && newProps.speech !== this.props.speech) {
       this.setState({ spottedKeywords: Object.keys(newProps.speech.spottedKeywords).join(',') })
     }
   }
@@ -123,7 +123,6 @@ class StatCreate extends Component {
 
   selectZone(value) {
     let stat = Object.assign({}, this.state.stat, { statZoneValue: value })
-    console.log(stat)
     this.setState({ stat: stat });
     if (this.state.stat.statType === CONSTANTS.GOAL) {
       this.props.history.push('#statZoneGoal');
@@ -161,8 +160,11 @@ class StatCreate extends Component {
   }
 
   onSuccess() {
+    var currentQuarter = this.state.stat.quarter;
     this.setState({
-      stat: {},
+      stat: {
+        quarter: currentQuarter,
+      },
       showLoading: false,
       showToast: true,
       showToastError: false,

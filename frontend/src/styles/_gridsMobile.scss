@@ -21,6 +21,12 @@
                 border: solid 1px #ddd;
                 height: 7rem;
                 background-color: rgba($color: #134f5c, $alpha: 0.2);
+                &.high {
+                    background-color: rgba($color: #ff0000, $alpha: 0.2);
+                }
+                &.med {
+                    background-color: rgba($color: #ffff00, $alpha: 0.2);
+                }
                 text-align: center;
                 &.left {
                     margin: 0.4rem 0rem 0.4rem 1rem;
@@ -92,11 +98,11 @@
                 ion-label {
                     font-size: 2rem;
                     line-height: 4.5rem;
-                    &.first {
-                        line-height: 7rem;
+                    &.topAlign {
+                        line-height: 4rem;
                     }
-                    &.last {
-                        line-height: 1rem;
+                    &.bottomAlign {
+                        line-height: 5rem;
                     }
                 }
             }
@@ -104,7 +110,7 @@
     }
     #zoneViewSlider {
         .field,.areaView {
-            margin: 0 0 2rem 0;
+            margin: 0 0 1rem 0;
         }
     }    
 }

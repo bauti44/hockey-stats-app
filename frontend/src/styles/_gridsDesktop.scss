@@ -1,5 +1,3 @@
-//Deprecated
-
 @media screen and (min-width: 1025px) {
     ion-grid {
         max-width: 30rem;
@@ -33,6 +31,12 @@
             ion-col {
                 border: solid 1px #ddd;
                 background-color: rgba($color: #134f5c, $alpha: 0.2);
+                &.high {
+                    background-color: rgba($color: #ff0000, $alpha: 0.2);
+                }
+                &.med {
+                    background-color: rgba($color: #ffff00, $alpha: 0.2);
+                }
                 text-align: center;
                 height: 90%;
                 margin-top: 2%;
@@ -49,7 +53,7 @@
                     margin-right: 0rem;
                 }
                 ion-label {
-                    font-size: 3rem;
+                    font-size: 2rem;
                     line-height: 4;
                 }
             }
@@ -88,14 +92,24 @@
                     margin-right: 0rem;
                 }
                 ion-label {
-                    font-size: 3rem;
+                    font-size: 2rem;
                     line-height: 4;
                 }
             }
         }
         &.area {
-            background: url('/assets/area.png') no-repeat center;     
-            background-size: cover;
+            &.inner {
+                background: url('/assets/area-inner.png') no-repeat center;     
+                background-size: cover;
+            }
+            &.entry-area {
+                background: url('/assets/area-entry-area.png') no-repeat center;     
+                background-size: cover;
+            }
+            &.entry-25 {
+                background: url('/assets/area-entry-25.png') no-repeat center;     
+                background-size: cover;
+            }
     
             ion-row {
                 height: 17.1%;
@@ -122,11 +136,11 @@
                 ion-label {
                     font-size: 2rem;
                     line-height: 3;
-                    &.first {
-                        line-height: 3;
+                    &.topAlign {
+                        line-height: 1;
                     }
-                    &.last {
-                        line-height: 3;
+                    &.bottomAlign {
+                        line-height: 5;
                     }
                 }
             }
@@ -145,4 +159,3 @@
         }
     }
 }
-
