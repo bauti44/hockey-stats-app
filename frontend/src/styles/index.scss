@@ -25,6 +25,12 @@ body {
     background-color: #e0e0e0;
 }
 
+:root{
+    ion-item{
+       font-size: 14px;
+    }
+}
+
 ion-app {
     max-width: 1024px;
     margin: auto;
@@ -52,6 +58,10 @@ ion-icon {
     &.white {
         fill: #fff !important;
     }
+    &.inHeader {
+        font-size: 24px !important;
+        fill: rgba( 0,0,0 ,0.6) !important;
+    }
 }
 
 ion-fab-button {
@@ -63,7 +73,16 @@ ion-menu-button {
     color: #fff !important;
 }
 
+ion-chip {
+    margin: 0.6rem 0;
+}
+
 ion-button {
+    &.iconContainerInHeader {
+        padding-right: 0.5rem;
+        color: rgba( 0,0,0 ,0.6) !important;
+        margin: 0.6rem 0;
+    }
     &.statViewButton {
         height: 60%;
         white-space: normal;
@@ -80,9 +99,23 @@ ion-button {
     --highlight-background: #134f5c;
 }
 
+ion-title {
+    font-size: 1.4rem;
+}
+
 ion-label {
     color: rgba( 0,0,0 ,0.6) !important;
     font-weight: 500 !important;
+
+    &.title {
+        font-size: 1rem !important;
+        margin: 1rem 0;
+    }
+
+    &.chip {
+        font-size: 1rem !important;
+        margin: 0.1rem;
+    }
 
     &.label-secondary {
         color: rgba( 0,0,0 ,0.4) !important;

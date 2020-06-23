@@ -187,11 +187,11 @@ class StatCreate extends Component {
     return (
       <>
         <IonListHeader>
-          <IonLabel><h1>{this.props.matchDetails.teamHome} - {this.props.matchDetails.teamAway}</h1></IonLabel>
+          <IonLabel class="title">{this.props.matchDetails.teamHome} - {this.props.matchDetails.teamAway}</IonLabel>
           <IonButtons>
             {this.state.renderStatZoneField ?
-              <IonButton class="statOptionsButton" onClick={this.onRotateField.bind(this)} shape="round" slot="icon-only">
-                <IonIcon class="statOptionsIcon" icon={sync} />
+              <IonButton class="iconContainerInHeader" onClick={this.onRotateField.bind(this)} shape="round" slot="icon-only">
+                <IonIcon class="inHeader" icon={sync} />
               </IonButton>
               : <></>
             }

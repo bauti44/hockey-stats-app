@@ -215,26 +215,26 @@ class StatView extends Component {
         <IonListHeader>
           {this.state.matchId === CONSTANTS.ALL_MATCHES ? <></> :
             <IonChip color="itemColorLightBlue" onClick={this.onMatchRemove.bind(this)}>
-              <IonLabel><h2>{this.props.matchDetails.teamHome} - {this.props.matchDetails.teamAway}</h2></IonLabel>
+              <IonLabel class="chip">{this.props.matchDetails.teamHome} - {this.props.matchDetails.teamAway}</IonLabel>
               <IonIcon icon={closeCircle} />
             </IonChip>
           }
           {(this.state.renderState.renderStatTypeGraphView || this.state.renderState.renderStatZone) && this.state.player ?
             <IonChip color="itemColorLightBlue" onClick={this.onPlayerRemove.bind(this)}>
-              <IonLabel><h2>{this.state.player}</h2></IonLabel>
+              <IonLabel class="chip">{this.state.player}</IonLabel>
               <IonIcon icon={closeCircle} />
             </IonChip>
             : <></>}
           <IonLabel></IonLabel>
           <IonButtons>
             {this.state.renderState.renderStatTypeGraphView || this.state.renderState.renderStatZone ?
-              <IonButton class="statOptionsButton" onClick={this.onPlayersFilter.bind(this)} shape="round" slot="icon-only">
-                <IonIcon class="statOptionsIcon" icon={people} />
+              <IonButton class="iconContainerInHeader" onClick={this.onPlayersFilter.bind(this)} shape="round" slot="icon-only">
+                <IonIcon class="inHeader" icon={people} />
               </IonButton>
               : <></>}
             {this.state.renderState.renderStatZone || this.state.renderState.renderStatTypeGraphView ?
-              <IonButton class="statOptionsButton" onClick={this.onStatFilter.bind(this)} shape="round" slot="icon-only">
-                <IonIcon class="statOptionsIcon" icon={options} />
+              <IonButton class="iconContainerInHeader" onClick={this.onStatFilter.bind(this)} shape="round" slot="icon-only">
+                <IonIcon class="inHeader" icon={options} />
               </IonButton>
               : <></>
             }

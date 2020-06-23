@@ -90,10 +90,10 @@ class MatchList extends Component {
         </IonRefresher>
         <IonList>
           <IonListHeader>
-            <IonLabel><h1>Partidos</h1></IonLabel>
+            <IonLabel class="title">PARTIDOS</IonLabel>
             <IonButtons>
-              <IonButton class="matchListOptionButton" shape="round" slot="icon-only" onClick={this.toggleSearch.bind(this)}>
-                <IonIcon class="matchListOptionIcon" icon={options} />
+              <IonButton class="iconContainerInHeader" shape="round" slot="icon-only" onClick={this.toggleSearch.bind(this)}>
+                <IonIcon class="inHeader" icon={options} />
               </IonButton>
             </IonButtons>
           </IonListHeader>
