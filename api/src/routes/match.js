@@ -228,7 +228,9 @@ matchRoutes.delete('/api/v1/matches/:matchId', authMiddleware, (request, respons
     }
 
     if (request.params.matchId) {
-      Match.find({ _id: request.params.matchId }).populate('teamAway').populate('teamHome').exec(function (error, documents) {
+      Match.find({ _id: request.params.matchId })
+      .populate('teamAway').populate('teamHome')
+      .exec(function (error, documents) {
         if (error) {
           responseData.errors.push(error)
         } else if (documents && documents.length > 0) {
