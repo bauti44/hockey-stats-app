@@ -4,11 +4,12 @@ import { fetchMatches, removeMatch } from '../../actions/match'
 import { connect } from 'react-redux'
 import { IonList, IonItemSliding, IonItem, IonLabel, IonItemOptions, IonItemOption, IonListHeader, IonFab, IonFabButton, IonIcon, IonRefresher, IonRefresherContent, IonToast, IonSearchbar, IonButton, IonItemDivider, IonButtons } from '@ionic/react';
 import AuthRedirect from '../user/AuthRedirect';
-import {CONSTANTS} from '../../helpers/Constants';
+import { CONSTANTS } from '../../helpers/Constants';
 import URL_REPO from '../../helpers/UrlRepo';
 import { trash } from 'ionicons/icons';
 import { options, create, eye, add } from 'ionicons/icons';
 import { actionStack, ACTION_NAME } from '../../actionStack/ActionStack';
+import { TeamNameView, Separator } from '../../components/team/TeamNameView';
 
 class MatchList extends Component {
 
@@ -103,10 +104,12 @@ class MatchList extends Component {
             : <></>}
           {this.props.matchList.list.map(({ _id, teamHome, teamAway, category, gender, notes }) => (
             <IonItemSliding key={_id}
-              style={{ display: (this.joinText(teamHome, teamAway, category, gender, notes).indexOf(this.state.searchText.toLowerCase()) !== -1) ? 'block' : 'none' }}>
+              style={{ display: (this.joinText(teamHome.name, teamAway.name, category, gender, notes).indexOf(this.state.searchText.toLowerCase()) !== -1) ? 'block' : 'none' }}>
               <IonItem>
-                <IonLabel>{teamHome} - {teamAway}</IonLabel>
-                <IonLabel class="label-secondary">{category} {gender} {notes}</IonLabel>
+                <IonLabel class="no-wrap">
+                  <TeamNameView {...teamHome} position="right" /><Separator /><TeamNameView {...teamAway} position="left" />
+                  <IonLabel class="matchNotes">{`${category} ${gender} ${notes}`}</IonLabel>
+                </IonLabel>
               </IonItem>
               <IonItemOptions side="start">
                 <IonItemOption color="salmon" onClick={this.removeMatch.bind(this, _id)}>

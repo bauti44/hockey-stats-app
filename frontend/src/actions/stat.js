@@ -34,7 +34,7 @@ export function fetchStat (statId) {
       type: FETCH_STAT_BEGIN
     })
 
-    return fetch(`${ config.url.api }stat/${ statId }`, {
+    return fetch(`${ config.url.api }stats/${ statId }`, {
       method: 'get',
 
       headers: {
@@ -63,7 +63,7 @@ export function fetchStat (statId) {
 export function postStat (stat) {
   const token = localStorage.getItem('token')
   return dispatch => {
-    return fetch(`${ config.url.api }stat/add`, {
+    return fetch(`${ config.url.api }stats`, {
       method: 'post',
 
       body: JSON.stringify(stat),

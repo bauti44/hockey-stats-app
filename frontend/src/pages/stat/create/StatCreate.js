@@ -14,6 +14,7 @@ import {
   IonButton,
   IonIcon,
   IonAlert,
+  IonProgressBar,
 } from '@ionic/react';
 import StatType from './StatType';
 import FieldZone from './FieldZone';
@@ -41,6 +42,7 @@ class StatCreate extends Component {
         statSubZoneValue: '',
         player: ''
       },
+      progressValue: 0,
       rotateField: false,
       renderStatType: true,
       renderStatZoneField: false,
@@ -66,20 +68,20 @@ class StatCreate extends Component {
       this.resetRender()
       switch (location.hash) {
         case '#statZoneField':
-          this.setState({ renderStatZoneField: true })
+          this.setState({ renderStatZoneField: true, progressValue: 0.33 })
           break;
         case '#statZoneArea':
-          this.setState({ renderStatZoneArea: true })
+          this.setState({ renderStatZoneArea: true, progressValue: 0.33 })
           break;
         case '#statPlayer':
-          this.setState({ renderStatPlayer: true })
+          this.setState({ renderStatPlayer: true, progressValue: 0.66 })
           break;
         case '#statZoneGoal':
-          this.setState({ renderStatZoneGoal: true })
+          this.setState({ renderStatZoneGoal: true, progressValue: 0.50 })
           break;
         case '#statType':
         default:
-          this.setState({ renderStatType: true })
+          this.setState({ renderStatType: true, progressValue: 0 })
       }
     });
   }
@@ -147,7 +149,7 @@ class StatCreate extends Component {
   }
 
   saveStat() {
-    this.setState({ showLoading: true })
+    this.setState({ showLoading: true, progressValue: 1 })
     let stat = this.state.stat
     this.props.postStat(stat).then(response => {
       if (response.success) {
@@ -187,7 +189,7 @@ class StatCreate extends Component {
     return (
       <>
         <IonListHeader>
-          <IonLabel class="title">{this.props.matchDetails.teamHome} - {this.props.matchDetails.teamAway}</IonLabel>
+          <IonLabel class="title">{this.props.matchDetails.teamHome?.name} - {this.props.matchDetails.teamAway?.name}</IonLabel>
           <IonButtons>
             {this.state.renderStatZoneField ?
               <IonButton class="iconContainerInHeader" onClick={this.onRotateField.bind(this)} shape="round" slot="icon-only">
@@ -198,6 +200,7 @@ class StatCreate extends Component {
           </IonButtons>
         </IonListHeader>
         <IonItemDivider />
+        <IonProgressBar value={this.state.progressValue}></IonProgressBar>
         {this.state.renderStatType ? <StatType value={this.state.stat.quarter} selectType={this.selectType} selectQuarter={this.selectQuarter} /> : <> </>}
         {this.state.renderStatZoneField ? <FieldZone rotateField={this.state.rotateField} selectZone={this.selectZone} /> : <> </>}
         {this.state.renderStatZoneGoal ? <GoalZone selectSubZone={this.selectSubZone} /> : <> </>}
@@ -206,7 +209,7 @@ class StatCreate extends Component {
         <IonLoading isOpen={this.state.showLoading} message={'Por favor espere...'} />
         <IonToast color="success" isOpen={this.state.showToast} onDidDismiss={() => { this.setState({ showToast: false }) }} message="La estadística se creo exitosamente" duration={2000} />
         <IonToast color="danger" isOpen={this.state.showToastError} onDidDismiss={() => { this.setState({ showToastError: false }) }} message={this.state.error} duration={2000} />
-        <IonAlert message={this.state.spottedKeywords} isOpen={this.state.spottedKeywords !== ''} buttons={['OK']} onDidDismiss={() => this.setState({spottedKeywords: ''})}/>
+        <IonAlert message={this.state.spottedKeywords} isOpen={this.state.spottedKeywords !== ''} buttons={['OK']} onDidDismiss={() => this.setState({ spottedKeywords: '' })} />
         <SpeechMainView {...this.props} keywords={this.getKeywords()} />
 
         <AuthRedirect />

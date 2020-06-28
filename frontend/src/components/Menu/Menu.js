@@ -124,7 +124,7 @@ class Menu extends Component {
             isOpen={this.state.showAlert}
             onDidDismiss={() => this.setState({ showAlert: false })}
             header={"Hockey Stats App"}
-            message={"Author: <a href='mailto:bauti44@gmail.com'>@bauti44</a><br>Version: 1.0<br>"}
+            message={"Author: <a href='mailto:bauti44@gmail.com'>@bauti44</a><br>Version: 1.1<br>"}
             buttons={['OK']}
           />
           <IonAlert

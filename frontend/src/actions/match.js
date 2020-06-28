@@ -54,7 +54,7 @@ export function fetchMatch(matchId) {
       type: FETCH_MATCH_BEGIN
     })
 
-    return fetch(`${config.url.api}match/${matchId}`).then(function (response) {
+    return fetch(`${config.url.api}matches/${matchId}`).then(function (response) {
       if (response.ok) {
         response.json().then(function (response) {
           if (response.success) {
@@ -76,7 +76,7 @@ export function fetchMatch(matchId) {
 export function removeMatch(matchId) {
   const token = localStorage.getItem('token')
   return dispatch => {
-    return fetch(`${config.url.api}match/${matchId}`, {
+    return fetch(`${config.url.api}matches/${matchId}`, {
       method: 'delete',
       headers: {
         'Content-Type': 'application/json',
@@ -90,7 +90,7 @@ export function createMatch(match) {
   const token = localStorage.getItem('token')
 
   return dispatch => {
-    return fetch(`${config.url.api}match/add`, {
+    return fetch(`${config.url.api}matches`, {
       method: 'post',
 
       body: JSON.stringify(match),

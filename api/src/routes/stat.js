@@ -47,8 +47,8 @@ statRoutes.get('/api/v1/stats', authMiddleware, (request, response) => {
   }
 })
 
-// Stat Add (/stat/add)
-statRoutes.post('/api/v1/stat/add', authMiddleware, (request, response) => {
+// Stat Create (/stats)
+statRoutes.post('/api/v1/stats', authMiddleware, (request, response) => {
   let responseData = {
     success: false,
     data: {},
@@ -92,8 +92,8 @@ statRoutes.post('/api/v1/stat/add', authMiddleware, (request, response) => {
   }
 })
 
-// Stat Add Batch (/stat/add/batch)
-statRoutes.post('/api/v1/stat/add/batch', authMiddleware, (request, response) => {
+// Stat Add Batch (/stats/batch)
+statRoutes.post('/api/v1/stats/batch', authMiddleware, (request, response) => {
   let responseData = {
     success: false,
     data: {},
@@ -134,8 +134,8 @@ statRoutes.post('/api/v1/stat/add/batch', authMiddleware, (request, response) =>
   }
 })
 
-// Single Stats (/stat/statId)
-statRoutes.get('/api/v1/stat/:statId', authMiddleware, (request, response) => {
+// Single Stats (/stats/statId)
+statRoutes.get('/api/v1/stats/:statId', authMiddleware, (request, response) => {
   let responseData = {
     success: false,
     data: {},
@@ -159,8 +159,8 @@ statRoutes.get('/api/v1/stat/:statId', authMiddleware, (request, response) => {
   }
 })
 
-// Single Stat delete (/stat/statId)
-statRoutes.delete('/api/v1/stat/:statId', authMiddleware, (request, response) => {
+// Single Stat delete (/stats/statId)
+statRoutes.delete('/api/v1/stats/:statId', authMiddleware, (request, response) => {
   let responseData = {
     success: false,
     data: {},
@@ -183,8 +183,8 @@ statRoutes.delete('/api/v1/stat/:statId', authMiddleware, (request, response) =>
   }
 })
 
-// All Stat delete (/stat/) (DEV PURPOSES)
-statRoutes.delete('/api/v1/stat/', authMiddleware, (request, response) => {
+// All Stat delete (/stats/) (DEV PURPOSES)
+statRoutes.delete('/api/v1/stats/batch', authMiddleware, (request, response) => {
   let responseData = {
     success: false,
     data: {},

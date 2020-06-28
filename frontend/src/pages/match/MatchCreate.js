@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { createMatch } from '../../actions/match'
+import { fetchTeams } from '../../actions/team'
 import { connect } from 'react-redux'
 import MatchPlayerList from './MatchPlayerList';
 
@@ -9,7 +10,7 @@ import {
 } from '@ionic/react';
 import AuthRedirect from '../user/AuthRedirect';
 import URL_REPO from '../../helpers/UrlRepo';
-import {CONSTANTS} from '../../helpers/Constants';
+import { CONSTANTS } from '../../helpers/Constants';
 import { actionStack, ACTION_NAME } from '../../actionStack/ActionStack';
 
 class MatchCreate extends Component {
@@ -45,8 +46,12 @@ class MatchCreate extends Component {
     })
   }
 
+  componentDidMount() {
+    this.props.fetchTeams()
+  }
+
   onSavePlayers(savedPlayerList) {
-    this.setState({playerList: savedPlayerList })
+    this.setState({ playerList: savedPlayerList })
     this.props.history.push('#matchDetails')
     actionStack.push(ACTION_NAME.SAVE_PLAYERS_CLICK)
   }
@@ -96,11 +101,19 @@ class MatchCreate extends Component {
             <IonList>
               <IonItem>
                 <IonLabel position="floating">Equipo Local</IonLabel>
-                <IonInput value={this.state.teamHome} onIonChange={e => this.setState({ teamHome: e.target.value })}></IonInput>
+                <IonSelect value={this.state.teamHome} placeholder="Seleccionar" onIonChange={e => this.setState({ teamHome: e.target.value })}>
+                  {this.props.teamList.map(team =>
+                    <IonSelectOption value={team._id}>{team.name}</IonSelectOption>
+                  )}
+                </IonSelect>
               </IonItem>
               <IonItem>
                 <IonLabel position="floating">Equipo Visitante</IonLabel>
-                <IonInput value={this.state.teamAway} onIonChange={e => this.setState({ teamAway: e.target.value })}></IonInput>
+                <IonSelect value={this.state.teamAway} placeholder="Seleccionar" onIonChange={e => this.setState({ teamAway: e.target.value })}>
+                  {this.props.teamList.map(team =>
+                    <IonSelectOption value={team._id}>{team.name}</IonSelectOption>
+                  )}
+                </IonSelect>
               </IonItem>
               <IonItem>
                 <IonLabel position="floating">Categoria</IonLabel>
@@ -137,6 +150,14 @@ class MatchCreate extends Component {
 
 MatchCreate.propTypes = {
   createMatch: PropTypes.func.isRequired,
+  fetchTeams: PropTypes.func.isRequired,
 }
 
-export default connect(null, { createMatch })(MatchCreate)
+const mapStateToProps = (state) => {
+  console.log(state)
+  return {
+    teamList: state.teams.list
+  }
+}
+
+export default connect(mapStateToProps, { createMatch, fetchTeams })(MatchCreate)

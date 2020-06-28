@@ -7,8 +7,8 @@ const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 // Match Collection
 let MatchSchema = mongoose.Schema({
-  teamHome: String,
-  teamAway: String,
+  teamHome: { type: mongoose.Schema.Types.ObjectId, ref: 'teams' },
+  teamAway: { type: mongoose.Schema.Types.ObjectId, ref: 'teams' },
   category: String,
   gender: String,
   notes: String,

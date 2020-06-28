@@ -15,6 +15,9 @@
 // Match View
 @import "../pages/match/MatchList";
 
+// Match Create
+@import "../pages/match/MatchCreate";
+
 @import "./gridsMobile";
 
 @import "./gridsTablet";
@@ -23,6 +26,7 @@
 
 body {
     background-color: #e0e0e0;
+    --ion-color-primary: #134f5c !important;
 }
 
 :root{
@@ -41,7 +45,7 @@ ion-title {
 }
 
 ion-item-divider {
-    min-height: 0.5rem !important;
+    min-height: 0.1rem !important;
 }
 
 h1 {
@@ -50,8 +54,8 @@ h1 {
 ion-segment-button {
     --color-checked:#134f5c;
     --border-color: #134f5c;
-    --background-checked: #edf3f4;
-    min-height: 3rem;
+    //--background-checked: #edf3f4;
+    min-height: 2rem;
 }
 ion-icon {
     fill: rgba( 0,0,0 ,0.6);
@@ -105,11 +109,11 @@ ion-title {
 
 ion-label {
     color: rgba( 0,0,0 ,0.6) !important;
-    font-weight: 500 !important;
+    font-weight: 400 !important;
 
     &.title {
         font-size: 1rem !important;
-        margin: 1rem 0;
+        margin: auto;
     }
 
     &.chip {
@@ -126,23 +130,23 @@ ion-label {
 .ion-color-itemColorLightBlue {
     --ion-color-base: #d0e1e4;
     --ion-color-shade: var(--ion-color-light-shade, #d7d8da) !important;
-    color: rgba( 0,0,0 ,0.6) !important;
-    font-weight: 500 !important;
+    color: #00000099 !important;
+    font-weight: 400 !important;
     --ion-color-base-rgb: var(--ion-color-primary-rgb, 20, 80, 91) !important;
 }
 
 .ion-color-itemColorBlue {
-    --ion-color-base: #89a7ad;
+    --ion-color-base: #b2c5ca;
     --ion-color-shade: var(--ion-color-light-shade, #d7d8da) !important;
     color: rgba( 0,0,0 ,0.6) !important;
-    font-weight: 500 !important;
+    font-weight: 400 !important;
 }
 
 .ion-color-lightBlue {
     --ion-color-base: #a1c4c9;
     --ion-color-shade: var(--ion-color-light-shade, #d7d8da) !important;
     color: rgba( 0,0,0 ,0.6) !important;
-    font-weight: 500 !important;
+    font-weight: 400 !important;
 }
 
 .ion-color-darkBlue {

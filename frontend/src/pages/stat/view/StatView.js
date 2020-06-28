@@ -215,7 +215,7 @@ class StatView extends Component {
         <IonListHeader>
           {this.state.matchId === CONSTANTS.ALL_MATCHES ? <></> :
             <IonChip color="itemColorLightBlue" onClick={this.onMatchRemove.bind(this)}>
-              <IonLabel class="chip">{this.props.matchDetails.teamHome} - {this.props.matchDetails.teamAway}</IonLabel>
+              <IonLabel class="chip">{this.props.matchDetails.teamHome?.name} - {this.props.matchDetails.teamAway?.name}</IonLabel>
               <IonIcon icon={closeCircle} />
             </IonChip>
           }

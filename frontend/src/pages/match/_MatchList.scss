@@ -1,6 +1,44 @@
 
+.matchNotes {
+    color: rgba( 0,0,0 ,0.4) !important;
+    font-size: 0.8rem !important;
+    padding-top: 0.3rem;
+    padding-left: 0.5rem;
+}
+
 ion-icon {
     &.sliderIcon {
         font-size: 1.5rem;
     }
+}
+
+.badgeContainer {
+    display: inline-block !important;
+    font-weight: 400 !important;
+    ion-label {
+        line-height: 1.5rem;
+    }
+    &.separator {
+        line-height: 1.5rem;
+        margin: 0 0.4rem;
+    }
+}
+.badge {
+    width: 1.5rem;
+    &.right {
+        float: right;
+        margin-left: 0.4rem;
+    }
+    &.left {
+        float: left;
+        margin-right: 0.4rem;
+    }
+}
+
+.no-wrap {
+    white-space: normal !important;
+}
+
+.teamName {
+    min-width: 7.5rem;
 }

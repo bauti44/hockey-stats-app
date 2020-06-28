@@ -13,6 +13,7 @@ import jwtDecode from 'jwt-decode'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { setCurrentUser } from './actions/user';
+// eslint-disable-next-line
 import global from './global'
 import { actionStack } from './actionStack/ActionStack';
 import { postError } from './actions/errors';

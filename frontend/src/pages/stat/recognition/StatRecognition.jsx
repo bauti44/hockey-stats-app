@@ -33,11 +33,6 @@ const STAT_RECOGNITION_MAP =
 }
 
 class StatRecognition {
-
-    constructor() {
-
-    }
-
     getKeywords() {
         return Object.keys(STAT_RECOGNITION_MAP)
     }

@@ -21,10 +21,10 @@ class FieldZoneView extends Component {
     var value = this.getValue(zone)
     if (value > this.thresholdMed) {
       return 'high'
-    } else if (value < this.thresholdLow) {
-      return 'low'
-    } else {
+    } else if (value > this.thresholdLow) {
       return 'med'
+    } else {
+      return 'low'
     }
   }
 

@@ -19,6 +19,8 @@
         &.field {
             background: url('/assets/field.png') no-repeat center;     
             background-size: contain;
+            height: 90%;
+            margin-top: 0.5rem;
             
             ion-row {
                 height: 25%;
@@ -64,6 +66,7 @@
             height: 90%;
             padding-top: 11%;
             padding-bottom: 11%;
+            margin-top: 0.5rem;
     
             ion-row {
                 height: 50%;
@@ -97,6 +100,7 @@
             }
         }
         &.area {
+            margin-top: 0.5rem;
             &.inner {
                 background: url('/assets/area-inner.png') no-repeat center;     
                 background-size: cover;
